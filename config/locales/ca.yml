@@ -1,12 +1,12 @@
 ---
-en:
+ca:
   activemodel:
     attributes:
       user:
-        country: Country
-        date_of_birth: Date of birth
-        gender: Gender
-        postal_code: Postal code
+        country: País
+        date_of_birth: Data de naixement
+        gender: Gènere
+        postal_code: Codi postal
   decidim:
     components:
       extra_user_fields:
