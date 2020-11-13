@@ -36,6 +36,10 @@ module Decidim
         Decidim::UpdateAccount.class_eval do
           prepend ExtraUserFields::CommandsOverrides
         end
+
+        Decidim::FormBuilder.class_eval do
+          include ExtraUserFields::FormBuilderMethods
+        end
       end
     end
   end
