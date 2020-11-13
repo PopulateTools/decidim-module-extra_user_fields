@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency "country_select", "~> 4.0"
   s.add_dependency "decidim-core", Decidim::ExtraUserFields.decidim_version
+  s.add_dependency "deface", "~> 1.5"
 end
