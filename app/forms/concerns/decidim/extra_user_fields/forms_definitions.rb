@@ -9,6 +9,8 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        include ApplicationHelper
+
         attribute :country, String
         attribute :postal_code, String
         attribute :date_of_birth, Decidim::Attributes::LocalizedDate

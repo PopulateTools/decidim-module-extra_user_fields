@@ -11,3 +11,7 @@ ca:
     components:
       extra_user_fields:
         name: ExtraUserFields
+    extra_user_fields:
+      genders:
+        female: Dona
+        male: Home

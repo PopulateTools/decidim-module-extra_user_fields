@@ -1,4 +1,4 @@
 <%= f.date_field :date_of_birth %>
-<%= f.text_field :gender %>
+<%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
 <%= f.custom_country_select :country %>
 <%= f.text_field :postal_code %>

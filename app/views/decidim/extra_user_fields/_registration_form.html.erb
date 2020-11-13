@@ -3,7 +3,7 @@
 </div>
 
 <div class="field">
-  <%= f.text_field :gender %>
+  <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
 </div>
 
 <div class="field">
