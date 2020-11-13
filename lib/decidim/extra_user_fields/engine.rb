@@ -2,6 +2,7 @@
 
 require "rails"
 require "decidim/core"
+require "country_select"
 
 module Decidim
   module ExtraUserFields
