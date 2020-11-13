@@ -26,12 +26,20 @@ module Decidim
           include ExtraUserFields::FormsDefinitions
         end
 
+        Decidim::OmniauthRegistrationForm.class_eval do
+          include ExtraUserFields::FormsDefinitions
+        end
+
         Decidim::AccountForm.class_eval do
           include ExtraUserFields::FormsDefinitions
         end
 
         Decidim::CreateRegistration.class_eval do
           prepend ExtraUserFields::CommandsOverrides
+        end
+
+        Decidim::CreateOmniauthRegistration.class_eval do
+          prepend ExtraUserFields::OmniauthCommandsOverrides
         end
 
         Decidim::UpdateAccount.class_eval do
