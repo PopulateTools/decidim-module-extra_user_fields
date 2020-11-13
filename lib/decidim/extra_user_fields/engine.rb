@@ -3,6 +3,7 @@
 require "rails"
 require "decidim/core"
 require "country_select"
+require "deface"
 
 module Decidim
   module ExtraUserFields
