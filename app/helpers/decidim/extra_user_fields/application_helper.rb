@@ -6,7 +6,7 @@ module Decidim
     #
     module ApplicationHelper
       def gender_options_for_select
-        [:male, :female].map do |gender|
+        [:male, :female, :other].map do |gender|
           [gender, I18n.t(gender, scope: "decidim.extra_user_fields.genders")]
         end
       end
