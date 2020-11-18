@@ -11,6 +11,8 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::ExtraUserFields
 
+      DEFAULT_GENDER_OPTIONS = [:male, :female, :other].freeze
+
       routes do
         # Add engine routes here
         # resources :extra_user_fields
