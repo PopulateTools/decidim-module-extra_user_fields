@@ -2,11 +2,6 @@
 
 Allows to collect and manage some extra user fields on registration and profile edition.
 
-## Usage
-
-ExtraUserFields will be available as a Component for a Participatory
-Space.
-
 ## Installation
 
 Add this line to your application's Gemfile:
