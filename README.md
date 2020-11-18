@@ -1,6 +1,7 @@
 # Decidim::ExtraUserFields
 
-Allows to collect and manage some extra user fields on registration and profile edition.
+* Allows to collect and manage some extra user fields on registration and profile edition.
+* Adds a link in admin participants panel to download users of organization in several formats.
 
 ## Installation
 

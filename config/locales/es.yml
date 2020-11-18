@@ -12,6 +12,9 @@ es:
       extra_user_fields:
         name: ExtraUserFields
     extra_user_fields:
+      admin:
+        exports:
+          users: Participantes
       genders:
         female: Mujer
         male: Hombre

@@ -12,6 +12,9 @@ ca:
       extra_user_fields:
         name: ExtraUserFields
     extra_user_fields:
+      admin:
+        exports:
+          users: Participants
       genders:
         female: Dona
         male: Home
