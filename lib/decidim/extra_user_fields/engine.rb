@@ -20,7 +20,7 @@ module Decidim
       end
 
       initializer "decidim_extra_user_fields.assets" do |app|
-        app.config.assets.precompile += %w[decidim_extra_user_fields_manifest.js decidim_extra_user_fields_manifest.css]
+        app.config.assets.precompile += %w(decidim_extra_user_fields_manifest.js decidim_extra_user_fields_manifest.css)
       end
 
       initializer "decidim_extra_user_fields.registration_additions" do
