@@ -9,7 +9,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        include ApplicationHelper
+        include ::Decidim::ExtraUserFields::ApplicationHelper
 
         attribute :country, String
         attribute :postal_code, String
