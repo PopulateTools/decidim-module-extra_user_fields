@@ -25,8 +25,10 @@ module Decidim
       end
 
       initializer "decidim_extra_user_fields.admin_export_users" do
-        Decidim::Admin::ApplicationHelper.class_eval do
-          include ExtraUserFields::Admin::ApplicationHelper
+        config.to_prepare do
+          Decidim::Admin::ApplicationHelper.class_eval do
+            include ExtraUserFields::Admin::ApplicationHelper
+          end
         end
       end
 
