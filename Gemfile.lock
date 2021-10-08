@@ -3,7 +3,7 @@ PATH
   specs:
     decidim-extra_user_fields (0.1)
       country_select (~> 4.0)
-      decidim-core (>= 0.24.0)
+      decidim-core (>= 0.25.0)
       deface (~> 1.5)
 
 GEM
@@ -803,8 +803,8 @@ DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
   country_select (~> 4.0)
-  decidim (>= 0.24)
-  decidim-dev (>= 0.24)
+  decidim (>= 0.25.0)
+  decidim-dev (>= 0.25.0)
   decidim-extra_user_fields!
   faker (~> 2.14)
   letter_opener_web (~> 1.3)
