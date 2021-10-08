@@ -19,10 +19,6 @@ module Decidim
         # root to: "extra_user_fields#index"
       end
 
-      initializer "decidim_extra_user_fields.assets" do |app|
-        app.config.assets.precompile += %w(decidim_extra_user_fields_manifest.js decidim_extra_user_fields_manifest.css)
-      end
-
       initializer "decidim_extra_user_fields.registration_additions" do
         Decidim::RegistrationForm.class_eval do
           include ExtraUserFields::FormsDefinitions
