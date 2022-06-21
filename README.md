@@ -7,6 +7,11 @@
 
 Add this line to your application's Gemfile:
 
+For Decidim 0.26:
+```ruby
+gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields", branch: "release/0.26-stable"
+```
+
 For Decidim 0.25:
 ```ruby
 gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields", branch: "release/0.25-stable"
