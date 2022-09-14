@@ -41,7 +41,9 @@ module Decidim
           country: @form.country,
           postal_code: @form.postal_code,
           date_of_birth: @form.date_of_birth,
-          gender: @form.gender
+          gender: @form.gender,
+          phone_number: @form.phone_number,
+          location: @form.location
         )
       end
     end

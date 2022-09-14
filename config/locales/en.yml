@@ -7,6 +7,8 @@ en:
         date_of_birth: Date of birth
         gender: Gender
         postal_code: Postal code
+        phone_number: Phone Number
+        location: Location
   decidim:
     components:
       extra_user_fields:

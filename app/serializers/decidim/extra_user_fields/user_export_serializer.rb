@@ -13,7 +13,7 @@ module Decidim
       def extra_user_fields
         extended_data = resource.extended_data.symbolize_keys
 
-        [:gender, :country, :postal_code, :date_of_birth].each_with_object({}) do |key, fields|
+        [:gender, :country, :postal_code, :date_of_birth, :phone_number, :location].each_with_object({}) do |key, fields|
           fields[key] = extended_data[key]
         end
       end

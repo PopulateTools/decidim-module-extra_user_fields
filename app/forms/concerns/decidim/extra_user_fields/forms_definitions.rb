@@ -15,6 +15,8 @@ module Decidim
         attribute :postal_code, String
         attribute :date_of_birth, Decidim::Attributes::LocalizedDate
         attribute :gender, String
+        attribute :phone_number, String
+        attribute :location, String
 
         validates :country, presence: true
         validates :postal_code, presence: true
@@ -29,6 +31,8 @@ module Decidim
         self.postal_code = extended_data[:postal_code]
         self.date_of_birth = Date.parse(extended_data[:date_of_birth]) if extended_data[:date_of_birth].present?
         self.gender = extended_data[:gender]
+        self.phone_number = extended_data[:phone_number]
+        self.location = extended_data[:location]
       end
     end
   end
