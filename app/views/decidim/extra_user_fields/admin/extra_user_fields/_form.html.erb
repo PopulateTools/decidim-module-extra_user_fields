@@ -1,0 +1,19 @@
+<p class="callout success"><%== t(".callout.help") %></p>
+<div class="card">
+  <div class="card-section extra_user_fields">
+    <div>
+      <h3><%= t(".global.title") %></h3>
+    </div>
+    <div class="row column">
+      <%= form.check_box :extra_user_fields_enabled, label: "Enable extra user fields" %>
+    </div>
+  </div>
+</div>
+
+<div class="card extra_fields_setup">
+  <div class="card-section">
+    <div>
+      <h3><%= t(".extra_user_fields.section") %></h3>
+    </div>
+  </div>
+</div>
