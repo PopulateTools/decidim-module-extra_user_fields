@@ -18,6 +18,9 @@ en:
     extra_user_fields:
       admin:
         extra_user_fields:
+          create:
+            failure: An error occurred on update
+            success: Extra user fields correctly updated in organization
           form:
             extra_user_fields:
               section: Available extra fields for signup form

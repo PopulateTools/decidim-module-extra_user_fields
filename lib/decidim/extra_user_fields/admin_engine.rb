@@ -13,8 +13,10 @@ module Decidim
 
       routes do
         namespace :extra_user_fields do
-          get :index
           get :export_users
+        end
+
+        resources :extra_user_fields, only: [:index, :create] do
         end
 
         root to: "extra_user_fields#index"

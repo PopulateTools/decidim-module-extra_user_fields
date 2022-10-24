@@ -12,6 +12,25 @@ module Decidim
           @form = form(ExtraUserFieldsForm).instance
         end
 
+        def create
+          @form = form(ExtraUserFieldsForm).from_params(
+            params,
+            current_organization: current_organization
+          )
+
+          UpdateExtraUserFields.call(@form) do
+            on(:ok) do
+              flash[:notice] = t(".success")
+              render action: "index"
+            end
+
+            on(:invalid) do
+              flash.now[:alert] = t(".failure")
+              render action: "index"
+            end
+          end
+        end
+
         def export_users
           enforce_permission_to :read, :officialization
 
