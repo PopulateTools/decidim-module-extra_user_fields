@@ -45,6 +45,14 @@ module Decidim
             prepend ExtraUserFields::CommandsOverrides
           end
 
+          Decidim::Organization.class_eval do
+            prepend ExtraUserFields::OrganizationOverrides
+          end
+
+          Decidim::FormBuilder.class_eval do
+            include ExtraUserFields::FormBuilderMethods
+          end
+
           Decidim::FormBuilder.class_eval do
             include ExtraUserFields::FormBuilderMethods
           end
