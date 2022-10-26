@@ -43,8 +43,30 @@ describe "Extra user fields", type: :system do
     expect(page).to have_content("Postal code")
   end
 
+  it "allows to create a new account" do
+    fill_registration_form
+    fill_extra_user_fields
+
+    within "form.new_user" do
+      find("*[type=submit]").click
+    end
+
+    expect(page).to have_content("message with a confirmation link has been sent")
+  end
+
   it_behaves_like "mandatory extra user fields", "date_of_birth"
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
+
+  context "when extra_user_fields is disabled" do
+    let(:organization) { create(:organization, :extra_user_fields_disabled) }
+
+    it "does not contain extra user fields" do
+      expect(page).not_to have_content("Date of birth")
+      expect(page).not_to have_content("Gender")
+      expect(page).not_to have_content("Country")
+      expect(page).not_to have_content("Postal code")
+    end
+  end
 end
