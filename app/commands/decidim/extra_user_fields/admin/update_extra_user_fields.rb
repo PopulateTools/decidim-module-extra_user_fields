@@ -40,7 +40,7 @@ module Decidim
 
         def extra_user_fields
           {
-            "enabled" => form.extra_user_fields_enabled.presence || false
+            "enabled" => form.enabled.presence || false
           }
         end
       end

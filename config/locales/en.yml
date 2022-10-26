@@ -18,12 +18,13 @@ en:
     extra_user_fields:
       admin:
         extra_user_fields:
-          create:
+          update:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
           form:
             extra_user_fields:
               section: Available extra fields for signup form
+              extra_user_fields_enabled: Enable extra user fields
             global:
               title: Activate / deactivate functionality
             callout:

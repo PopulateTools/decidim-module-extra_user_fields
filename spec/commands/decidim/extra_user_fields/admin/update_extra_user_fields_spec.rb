@@ -12,7 +12,7 @@ module Decidim
         let(:extra_user_fields_enabled) { true }
         let(:form_params) do
           {
-            "extra_user_fields_enabled" => extra_user_fields_enabled
+            "enabled" => extra_user_fields_enabled
           }
         end
         let(:form) do

@@ -16,8 +16,8 @@ module Decidim
           get :export_users
         end
 
-        resources :extra_user_fields, only: [:index, :create] do
-        end
+        resources :extra_user_fields, only: [:index]
+        match "/extra_user_fields" => "extra_user_fields#update", :via => :patch, as: "update"
 
         root to: "extra_user_fields#index"
       end

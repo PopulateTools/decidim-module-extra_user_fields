@@ -6,7 +6,11 @@ module Decidim
       class ExtraUserFieldsForm < Decidim::Form
         include TranslatableAttributes
 
-        attribute :extra_user_fields_enabled, Virtus::Attribute::Boolean
+        attribute :enabled, Virtus::Attribute::Boolean
+
+        def map_model(model)
+          self.enabled = model.extra_user_fields["enabled"]
+        end
       end
     end
   end

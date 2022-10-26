@@ -42,7 +42,7 @@ describe "Admin manages organization extra user fields", type: :system do
 
     context "when form is valid" do
       it "flashes a success message" do
-        page.check("extra_user_fields[extra_user_fields_enabled]")
+        page.check("extra_user_fields[enabled]")
 
         find("*[type=submit]").click
         expect(page).to have_content("Extra user fields correctly updated in organization")

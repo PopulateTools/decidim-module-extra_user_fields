@@ -9,10 +9,10 @@ module Decidim
         layout "decidim/admin/settings"
 
         def index
-          @form = form(ExtraUserFieldsForm).instance
+          @form = form(ExtraUserFieldsForm).from_model(current_organization)
         end
 
-        def create
+        def update
           @form = form(ExtraUserFieldsForm).from_params(
             params,
             current_organization: current_organization
