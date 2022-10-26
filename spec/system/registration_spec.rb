@@ -68,5 +68,15 @@ describe "Extra user fields", type: :system do
       expect(page).not_to have_content("Country")
       expect(page).not_to have_content("Postal code")
     end
+
+    it "allows to create a new account" do
+      fill_registration_form
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_content("message with a confirmation link has been sent")
+    end
   end
 end
