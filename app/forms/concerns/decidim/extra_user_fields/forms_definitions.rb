@@ -34,19 +34,19 @@ module Decidim
       private
 
       def country?
-        extra_user_fields_enabled
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:country)
       end
 
       def date_of_birth?
-        extra_user_fields_enabled
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:date_of_birth)
       end
 
       def gender?
-        extra_user_fields_enabled
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:gender)
       end
 
       def postal_code?
-        extra_user_fields_enabled
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:postal_code)
       end
 
       def extra_user_fields_enabled

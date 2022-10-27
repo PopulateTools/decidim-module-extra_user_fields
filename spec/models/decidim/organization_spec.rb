@@ -8,9 +8,13 @@ module Decidim
 
     let(:extra_user_fields) do
       {
-        "enabled" => true,
-        "date_of_birth" => true
+        "enabled" => extra_user_field,
+        "date_of_birth" => date_of_birth
       }
+    end
+    let(:extra_user_field) { true }
+    let(:date_of_birth) do
+      { "enabled" => true }
     end
 
     it { is_expected.to be_valid }
@@ -22,11 +26,7 @@ module Decidim
       end
 
       context "when extra user fields are disabled" do
-        let(:extra_user_fields) do
-          {
-            "enabled" => false
-          }
-        end
+        let(:extra_user_field) { false }
 
         it "returns true" do
           expect(subject).not_to be_extra_user_fields_enabled
@@ -40,20 +40,15 @@ module Decidim
       end
 
       context "when given key doesn't exist in hash" do
-        it "returns falsey" do
+        it "returns false" do
           expect(subject).not_to be_activated_extra_field(:unknown)
         end
       end
 
       context "when value for given key is nil" do
-        let(:extra_user_fields) do
-          {
-            "enabled" => true,
-            "date_of_birth" => nil
-          }
-        end
+        let(:date_of_birth) { nil }
 
-        it "returns falsey" do
+        it "returns false" do
           expect(subject).not_to be_activated_extra_field(:date_of_birth)
         end
       end

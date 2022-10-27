@@ -10,9 +10,17 @@ module Decidim
         let(:user) { create :user, :admin, :confirmed, organization: organization }
 
         let(:extra_user_fields_enabled) { true }
+        let(:postal_code) { true }
+        let(:country) { true }
+        let(:gender) { true }
+        let(:date_of_birth) { true }
         let(:form_params) do
           {
-            "enabled" => extra_user_fields_enabled
+            "enabled" => extra_user_fields_enabled,
+            "postal_code" => postal_code,
+            "country" => country,
+            "gender" => gender,
+            "date_of_birth" => date_of_birth
           }
         end
         let(:form) do
@@ -52,7 +60,13 @@ module Decidim
               command.call
               organization.reload
 
-              expect(organization.extra_user_fields).to eq({ "enabled" => true })
+              expect(organization.extra_user_fields).to eq({
+                                                             "enabled" => true,
+                                                             "country" => { "enabled" => true },
+                                                             "date_of_birth" => { "enabled" => true },
+                                                             "gender" => { "enabled" => true },
+                                                             "postal_code" => { "enabled" => true }
+                                                           })
             end
           end
         end

@@ -18,6 +18,20 @@ en:
     extra_user_fields:
       admin:
         extra_user_fields:
+          fields:
+            country:
+              description: This field is a list of countries. User will be able to choose a country
+              label: Enable country field
+            date_of_birth:
+              description: This field is a Date field. User will be able to register
+                a birth date by using a Date picker
+              label: Enable date of birth field
+            gender:
+              description: This field is a list of genders. User will be able to choose a gender
+              label: Enable gender field
+            postal_code:
+              description: This field is a String field. User will be able to fill in a postal code
+              label: Enable postal code field
           update:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization

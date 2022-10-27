@@ -28,8 +28,33 @@ describe "Extra user fields", type: :system do
     end
   end
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  let(:extra_user_fields) do
+    {
+      "enabled" => true,
+      "date_of_birth" => date_of_birth,
+      "postal_code" => postal_code,
+      "gender" => gender,
+      "country" => country
+    }
+  end
+
+  let(:date_of_birth) do
+    { "enabled" => true }
+  end
+
+  let(:postal_code) do
+    { "enabled" => true }
+  end
+
+  let(:country) do
+    { "enabled" => true }
+  end
+
+  let(:gender) do
+    { "enabled" => true }
+  end
 
   before do
     switch_to_host(organization.host)
