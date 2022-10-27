@@ -9,10 +9,14 @@ module Decidim
         layout "decidim/admin/settings"
 
         def index
+          enforce_permission_to :read, :extra_user_fields
+
           @form = form(ExtraUserFieldsForm).from_model(current_organization)
         end
 
         def update
+          enforce_permission_to :update, :extra_user_fields
+
           @form = form(ExtraUserFieldsForm).from_params(
             params,
             current_organization: current_organization
