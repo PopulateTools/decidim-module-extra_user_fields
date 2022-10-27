@@ -16,6 +16,9 @@ en:
       extra_user_fields:
         name: ExtraUserFields
     extra_user_fields:
+      registration_form:
+        signup:
+          legend: More information
       admin:
         extra_user_fields:
           fields:

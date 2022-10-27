@@ -62,10 +62,12 @@ describe "Extra user fields", type: :system do
   end
 
   it "contains extra user fields" do
-    expect(page).to have_content("Date of birth")
-    expect(page).to have_content("Gender")
-    expect(page).to have_content("Country")
-    expect(page).to have_content("Postal code")
+    within ".card__extra_user_fields" do
+      expect(page).to have_content("Date of birth")
+      expect(page).to have_content("Gender")
+      expect(page).to have_content("Country")
+      expect(page).to have_content("Postal code")
+    end
   end
 
   it "allows to create a new account" do
