@@ -19,7 +19,7 @@ module Decidim
         validates :country, presence: true, if: :country?
         validates :postal_code, presence: true, if: :postal_code?
         validates :date_of_birth, presence: true, if: :date_of_birth?
-        validates :gender, presence: true, if: :gender?
+        validates :gender, presence: true, inclusion: { in: Decidim::ExtraUserFields::Engine::DEFAULT_GENDER_OPTIONS.map(&:to_s) }, if: :gender?
       end
 
       def map_model(model)
