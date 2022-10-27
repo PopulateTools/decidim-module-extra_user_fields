@@ -3,9 +3,40 @@
 require "spec_helper"
 
 describe "Account", type: :system do
-  let(:user) { create(:user, :confirmed, password: password, password_confirmation: password) }
+  shared_examples_for "does not display extra user field" do |field, label|
+    it "does not display field '#{field}'" do
+      expect(page).not_to have_content(label)
+    end
+  end
+
+  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
+  let(:user) { create(:user, :confirmed, organization: organization, password: password, password_confirmation: password) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
-  let(:organization) { user.organization }
+  let(:extra_user_fields) do
+    {
+      "enabled" => true,
+      "date_of_birth" => date_of_birth,
+      "postal_code" => postal_code,
+      "gender" => gender,
+      "country" => country
+    }
+  end
+
+  let(:date_of_birth) do
+    { "enabled" => true }
+  end
+
+  let(:postal_code) do
+    { "enabled" => true }
+  end
+
+  let(:country) do
+    { "enabled" => true }
+  end
+
+  let(:gender) do
+    { "enabled" => true }
+  end
 
   before do
     switch_to_host(organization.host)
@@ -41,6 +72,38 @@ describe "Account", type: :system do
           expect(page).to have_content("Nikola Tesla")
         end
       end
+    end
+
+    context "when date_of_birth is not enabled" do
+      let(:date_of_birth) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "date_of_birth", "Date of birth"
+    end
+
+    context "when postal_code is not enabled" do
+      let(:postal_code) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "postal_code", "Postal code"
+    end
+
+    context "when country is not enabled" do
+      let(:country) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "country", "Country"
+    end
+
+    context "when gender is not enabled" do
+      let(:gender) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "gender", "Gender"
     end
   end
 end
