@@ -213,3 +213,77 @@ And then add it to the serializer
 :minimum_age,
 #EndBlock
 ```
+
+6. Add your field to the Backoffice configuration form
+
+Add your new field to the admin extra user field form
+
+```ruby
+# File: app/forms/decidim/extra_user_fields/admin/extra_user_fields_form.rb
+
+#Block ExtraUserFields Attributes
+attribute :minimum_age, Virtus::Attribute::Boolean
+#EndBlock
+```
+
+And add it to the `map_model` method of the same file
+
+```ruby
+# File: app/forms/decidim/extra_user_fields/admin/extra_user_fields_form.rb
+
+#Block ExtraUserFields MapModel
+self.minimum_age = model.extra_user_fields.dig("minimum_age", "enabled")
+#EndBlock
+```
+
+Now we can add it to the command to save it in organization's configs
+
+```ruby
+# File: app/commands/decidim/extra_user_fields/admin/update_extra_user_fields.rb
+
+#Block ExtraUserFields SaveFieldInConfig
+"minimum_age" => { "enabled" => form.minimum_age.presence || false },
+#EndBlock
+```
+
+Now we create the field in settings form
+
+```HTML
+# File: app/views/decidim/extra_user_fields/admin/extra_user_fields/_form.html.erb
+
+<%# Block ExtraUserFields ExtraFields %>
+<%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/minimum_age", locals: { form: form } %>
+<%# EndBlock %>
+```
+
+Create a new partial file for your new file
+
+```
+touch app/views/decidim/extra_user_fields/admin/extra_user_fields/fields/_minimum_age.html.erb
+
+# File: app/views/decidim/extra_user_fields/admin/extra_user_fields/fields/_minimum_age.html.erb
+
+<div class="card-section">
+  <div class="row column">
+    <p><%= t(".description") %></p>
+    <%= form.check_box :minimum_age, label: t(".label") %>
+  </div>
+</div>
+```
+
+Then in locales, add your translations
+
+```yaml
+en:
+  decidim:
+    extra_user_fields:
+      admin:
+        extra_user_fields:
+          fields:
+            minimum_age:
+              description: This field requires to be checked
+              label: Enable minimum age field
+```
+
+
+**Nice ! It should be good now !**

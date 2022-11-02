@@ -32,6 +32,9 @@ en:
             gender:
               description: This field is a list of genders. User will be able to choose a gender
               label: Enable gender field
+            minimum_age:
+              description: This field requires to be checked
+              label: Enable minimum age field
             postal_code:
               description: This field is a String field. User will be able to fill in a postal code
               label: Enable postal code field
