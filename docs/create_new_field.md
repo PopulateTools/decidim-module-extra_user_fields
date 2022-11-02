@@ -1,14 +1,27 @@
 # Create a new extra user field
 
-Follow these steps to create a extra user field in the module.
+Let's see how to create a new extra user field in the module using TDD method. For the example, we will create a simple checkbox that must be checked. For the tutorial, field will be `minimum_age` and must be check by user on registration.
+
+
+
+# Table of Contents
+1. [Create field in registration form](#registration-form)
+2. [Create field in user account form](#account-form)
+3. [Add your new field to the user exports](#exports)
+4. [Allow admins to enabled / disable your field from backoffice](#backoffice)
+
 
 ## Getting started
 
-In this example we will create an acceptance checkbox where user must have the required age to register.
+This guide contains multiple steps, please ensure to be attentive to the name of files and refers to the comments to help you.
 
-1. Create a new attribute in forms_definitions
+## Create field in registration form <a name="registration-form"></a>
+
+### Create a new attribute in form
 
 Form contains attributes given to the HTML form and ensure field validations.
+
+1. Add new attribute and validations to the form
 
 In `app/forms/concerns/decidim/extra_user_fields/forms_definitions.rb` add your new attribute between comments "#Block ExtraUserFields" and "#EndBlock"
 
@@ -24,6 +37,8 @@ validates :minimum_age, acceptance: true, if: :minimum_age?
 #EndBlock
 ```
 
+2. Define your new field in the `map_model` method
+
 In the same file, update the method `map_model` with your new field
 
 ```ruby
@@ -33,6 +48,8 @@ In the same file, update the method `map_model` with your new field
 self.minimum_age = extended_data[:minimum_age]
 #EndBlock
 ```
+
+3. Create custom validation for your new attribute
 
 Then create a method to toggle attribute in form in function of admin choices
 ```
@@ -45,11 +62,13 @@ end
 #EndBlock
 ```
 
-Nice your form is ready ! 
+**Nice your form is ready !**
 
-2. Let's update the registration system spec
+### Add a new field in the registration form
 
-If you don't update specs, continuous integration will fail...
+1. Update the registration system spec
+
+_If you don't update specs, continuous integration will fail..._
 
 Open file `spec/system/registration_spec.rb` and add your new field in extra_user_fields variable
 
@@ -101,9 +120,7 @@ expect(page).not_to have_content("Minimum age")
 #EndBlock
 ```
 
-3. Once system spec ready, let's make it pass
-
-Add your new field in the registration form HTML file
+2. Add your new field in the registration form HTML file
 
 ```HTML
 # File: app/views/decidim/extra_user_fields/_registration_form.html.erb
@@ -120,6 +137,8 @@ Add your new field in the registration form HTML file
 Now the field `check_box minimum_age` refers to the attribute previously defined in `app/forms/concerns/decidim/extra_user_fields/forms_definitions.rb:20`
 
 We must now ensure that field is saved in user extended data.
+
+3. Save your new field in the user extended data
 
 In file `app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb` and in file `app/commands/concerns/decidim/extra_user_fields/omniauth_commands_overrides.rb` , add your new field
 
@@ -143,9 +162,9 @@ In the example above, trailing comma is important or it could occur synthax erro
 
 **Now your new field is available in the signup form and saved in user extended data !**
 
-4. Add the new field to the account form
+## Create field in the user account form<a name="account-form"></a>
 
-Add system specs for account form in `spec/system/account_spec.rb`
+1. Add system specs for account form in `spec/system/account_spec.rb`
 
 Add your field to the `extra_user_fields` Hash
 ```ruby
@@ -178,6 +197,8 @@ check :user_minimum_age
 #EndBlock
 ```
 
+2. Add field to the account form
+
 Once tests are added to the account system file, you can define your field in the account form
 
 ```HTML
@@ -192,7 +213,9 @@ Once tests are added to the account system file, you can define your field in th
 
 **You should now see your new field in the account form !**
 
-5. Add your field to the user exports
+## Add your new extra user field to the user exports<a name="exports"></a>
+
+1. Add your field to the user exports
 
 First of all, let's define your field in the serializer specs 
 
@@ -204,7 +227,7 @@ let(:minimum_age) { true }
 #EndBlock
 ```
 
-And then add it to the serializer
+2. Then add it to the serializer
 
 ```ruby
 # File: app/serializers/decidim/extra_user_fields/user_export_serializer.rb
@@ -214,9 +237,9 @@ And then add it to the serializer
 #EndBlock
 ```
 
-6. Add your field to the Backoffice configuration form
+## Allow admin to enable / disable your new field in backoffice<a name="backoffice"></a>
 
-Add your new field to the admin extra user field form
+1. Add your new field to the admin extra user field form
 
 ```ruby
 # File: app/forms/decidim/extra_user_fields/admin/extra_user_fields_form.rb
@@ -226,7 +249,7 @@ attribute :minimum_age, Virtus::Attribute::Boolean
 #EndBlock
 ```
 
-And add it to the `map_model` method of the same file
+2. Add it to the `map_model` method of the same file
 
 ```ruby
 # File: app/forms/decidim/extra_user_fields/admin/extra_user_fields_form.rb
@@ -236,7 +259,7 @@ self.minimum_age = model.extra_user_fields.dig("minimum_age", "enabled")
 #EndBlock
 ```
 
-Now we can add it to the command to save it in organization's configs
+3. Now we can add it to the command to save it in organization's configs
 
 ```ruby
 # File: app/commands/decidim/extra_user_fields/admin/update_extra_user_fields.rb
@@ -246,7 +269,7 @@ Now we can add it to the command to save it in organization's configs
 #EndBlock
 ```
 
-Now we create the field in settings form
+4. Now we create the field in settings form
 
 ```HTML
 # File: app/views/decidim/extra_user_fields/admin/extra_user_fields/_form.html.erb
@@ -256,7 +279,7 @@ Now we create the field in settings form
 <%# EndBlock %>
 ```
 
-Create a new partial file for your new file
+5. Create a new partial file for your new file
 
 ```
 touch app/views/decidim/extra_user_fields/admin/extra_user_fields/fields/_minimum_age.html.erb
@@ -271,7 +294,7 @@ touch app/views/decidim/extra_user_fields/admin/extra_user_fields/fields/_minimu
 </div>
 ```
 
-Then in locales, add your translations
+6. Then in locales, add your translations
 
 ```yaml
 en:
