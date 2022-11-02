@@ -194,6 +194,18 @@ Once tests are added to the account system file, you can define your field in th
 
 5. Add your field to the user exports
 
+First of all, let's define your field in the serializer specs 
+
+```ruby
+# File: spec/serializers/user_export_serializer_spec.rb
+
+#Block ExtraUserFields RspecVar
+let(:minimum_age) { true }
+#EndBlock
+```
+
+And then add it to the serializer
+
 ```ruby
 # File: app/serializers/decidim/extra_user_fields/user_export_serializer.rb
 
