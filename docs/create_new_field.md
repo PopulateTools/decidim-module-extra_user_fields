@@ -121,10 +121,18 @@ Now the field `check_box minimum_age` refers to the attribute previously defined
 
 We must now ensure that field is saved in user extended data.
 
-In file `app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb`, add your new field
+In file `app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb` and in file `app/commands/concerns/decidim/extra_user_fields/omniauth_commands_overrides.rb` , add your new field
 
 ```ruby
 # File: app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb
+
+#Block ExtraUserFields SaveInExtendedData
+minimum_age: @form.minimum_age,
+#EndBlock
+```
+
+```ruby
+# File: app/commands/concerns/decidim/extra_user_fields/omniauth_commands_overrides.rb
 
 #Block ExtraUserFields SaveInExtendedData
 minimum_age: @form.minimum_age,
@@ -135,3 +143,61 @@ In the example above, trailing comma is important or it could occur synthax erro
 
 **Now your new field is available in the signup form and saved in user extended data !**
 
+4. Add the new field to the account form
+
+Add system specs for account form in `spec/system/account_spec.rb`
+
+Add your field to the `extra_user_fields` Hash
+```ruby
+# File: spec/system/account_spec.rb
+
+#Block ExtraUserFields ExtraUserFields
+"minimum_age" => minimum_age,
+#EndBlock
+```
+
+And create the missing Rspec variable
+
+```ruby
+# File: spec/system/account_spec.rb
+
+#Block ExtraUserFields RspecVar
+let(:minimum_age) do
+  { "enabled" => true }
+end
+#EndBlock
+```
+
+Now we can ensure field is present and selectable
+
+```ruby
+# File: spec/system/account_spec.rb
+
+#Block ExtraUserFields FillFieldSpec
+check :user_minimum_age
+#EndBlock
+```
+
+Once tests are added to the account system file, you can define your field in the account form
+
+```HTML
+# File: app/views/decidim/extra_user_fields/_profile_form.html.erb
+
+<%# Block ExtraUserFields AccountFormFields %>
+<% if current_organization.activated_extra_field?(:minimum_age) %>
+  <%= f.check_box :minimum_age %>
+<% end %>
+<%# EndBlock %>
+```
+
+**You should now see your new field in the account form !**
+
+5. Add your field to the user exports
+
+```ruby
+# File: app/serializers/decidim/extra_user_fields/user_export_serializer.rb
+
+#Block ExtraUserFields AddExtraField
+:minimum_age,
+#EndBlock
+```

@@ -30,6 +30,7 @@ describe "Extra user fields", type: :system do
 
   let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
       "enabled" => true,
@@ -42,6 +43,7 @@ describe "Extra user fields", type: :system do
       #EndBlock
     }
   end
+  # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
     { "enabled" => true }
