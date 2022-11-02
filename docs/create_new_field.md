@@ -49,7 +49,7 @@ Nice your form is ready !
 
 2. Let's update the registration system spec
 
-If you don't update specs continuous integration will fail...
+If you don't update specs, continuous integration will fail...
 
 Open file `spec/system/registration_spec.rb` and add your new field in extra_user_fields variable
 
@@ -100,4 +100,38 @@ Check that field disappear when extra user fields is disabled
 expect(page).not_to have_content("Minimum age")
 #EndBlock
 ```
+
+3. Once system spec ready, let's make it pass
+
+Add your new field in the registration form HTML file
+
+```HTML
+# File: app/views/decidim/extra_user_fields/_registration_form.html.erb
+
+<%# Block ExtraUserFields SignUpFormFields %>
+<% if current_organization.activated_extra_field?(:minimum_age) %>
+<div class="field">
+    <%= f.check_box :minimum_age %>
+</div>
+<% end %>
+<%# EndBlock %>
+```
+
+Now the field `check_box minimum_age` refers to the attribute previously defined in `app/forms/concerns/decidim/extra_user_fields/forms_definitions.rb:20`
+
+We must now ensure that field is saved in user extended data.
+
+In file `app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb`, add your new field
+
+```ruby
+# File: app/commands/concerns/decidim/extra_user_fields/commands_overrides.rb
+
+#Block ExtraUserFields SaveInExtendedData
+minimum_age: @form.minimum_age,
+#EndBlock
+```
+
+In the example above, trailing comma is important or it could occur synthax error in future.
+
+**Now your new field is available in the signup form and saved in user extended data !**
 
