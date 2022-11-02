@@ -85,6 +85,15 @@ Then create the rspec variable in same file
 ```ruby
 # File: spec/system/registration_spec.rb
 
+#Block ExtraUserFields FillExtraUserFields
+check :minimum_age
+#EndBlock
+```
+
+
+```ruby
+# File: spec/system/registration_spec.rb
+
 #Block ExtraUserFields RspecVar
 let(:minimum_age) do
   { "enabled" => true }
@@ -222,8 +231,31 @@ First of all, let's define your field in the serializer specs
 ```ruby
 # File: spec/serializers/user_export_serializer_spec.rb
 
+
+#Block ExtraUserFields ExtraUserFields
+minimum_age: minimum_age,
+#EndBlock
+```
+
+```ruby
+# File: spec/serializers/user_export_serializer_spec.rb
+
 #Block ExtraUserFields RspecVar
 let(:minimum_age) { true }
+#EndBlock
+```
+
+And add an inclusion test for your field
+
+
+```ruby
+# File: spec/serializers/user_export_serializer_spec.rb
+
+
+#Block ExtraUserFields IncludeExtraField
+it "includes the minimum_age" do
+  expect(serialized).to include(minimum_age: resource.extended_data["minimum_age"])
+end
 #EndBlock
 ```
 
@@ -260,6 +292,27 @@ self.minimum_age = model.extra_user_fields.dig("minimum_age", "enabled")
 ```
 
 3. Now we can add it to the command to save it in organization's configs
+
+First we add the spec in `spec/commands/decidim/extra_user_fields/admin/update_extra_user_fields_spec.rb`
+
+```ruby
+# File: spec/commands/decidim/extra_user_fields/admin/update_extra_user_fields_spec.rb
+
+#Block ExtraUserFields RspecVar
+let(:minimum_age) { true }
+#EndBlock
+
+#Block ExtraUserFields ExtraUserFields
+"minimum_age" => minimum_age,
+#EndBlock
+
+#Block ExtraUserFields InclusionSpec
+expect(extra_user_fields).to include("minimum_age" => { "enabled" => true })
+#EndBlock
+
+```
+
+And add it to the command to make it pass
 
 ```ruby
 # File: app/commands/decidim/extra_user_fields/admin/update_extra_user_fields.rb
