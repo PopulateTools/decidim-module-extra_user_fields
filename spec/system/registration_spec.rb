@@ -28,8 +28,33 @@ describe "Extra user fields", type: :system do
     end
   end
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  let(:extra_user_fields) do
+    {
+      "enabled" => true,
+      "date_of_birth" => date_of_birth,
+      "postal_code" => postal_code,
+      "gender" => gender,
+      "country" => country
+    }
+  end
+
+  let(:date_of_birth) do
+    { "enabled" => true }
+  end
+
+  let(:postal_code) do
+    { "enabled" => true }
+  end
+
+  let(:country) do
+    { "enabled" => true }
+  end
+
+  let(:gender) do
+    { "enabled" => true }
+  end
 
   before do
     switch_to_host(organization.host)
@@ -37,14 +62,48 @@ describe "Extra user fields", type: :system do
   end
 
   it "contains extra user fields" do
-    expect(page).to have_content("Date of birth")
-    expect(page).to have_content("Gender")
-    expect(page).to have_content("Country")
-    expect(page).to have_content("Postal code")
+    within ".card__extra_user_fields" do
+      expect(page).to have_content("Date of birth")
+      expect(page).to have_content("Gender")
+      expect(page).to have_content("Country")
+      expect(page).to have_content("Postal code")
+    end
+  end
+
+  it "allows to create a new account" do
+    fill_registration_form
+    fill_extra_user_fields
+
+    within "form.new_user" do
+      find("*[type=submit]").click
+    end
+
+    expect(page).to have_content("message with a confirmation link has been sent")
   end
 
   it_behaves_like "mandatory extra user fields", "date_of_birth"
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
+
+  context "when extra_user_fields is disabled" do
+    let(:organization) { create(:organization, :extra_user_fields_disabled) }
+
+    it "does not contain extra user fields" do
+      expect(page).not_to have_content("Date of birth")
+      expect(page).not_to have_content("Gender")
+      expect(page).not_to have_content("Country")
+      expect(page).not_to have_content("Postal code")
+    end
+
+    it "allows to create a new account" do
+      fill_registration_form
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_content("message with a confirmation link has been sent")
+    end
+  end
 end
