@@ -14,15 +14,23 @@ module Decidim
         let(:country) { true }
         let(:gender) { true }
         let(:date_of_birth) { true }
+        #Block ExtraUserFields RspecVar
+        #EndBlock
+
+        # rubocop:disable Style/TrailingCommaInHashLiteral
         let(:form_params) do
           {
             "enabled" => extra_user_fields_enabled,
             "postal_code" => postal_code,
             "country" => country,
             "gender" => gender,
-            "date_of_birth" => date_of_birth
+            "date_of_birth" => date_of_birth,
+            #Block ExtraUserFields ExtraUserFields
+            #EndBlock
           }
         end
+        # rubocop:enable Style/TrailingCommaInHashLiteral
+
         let(:form) do
           ExtraUserFieldsForm.from_params(
             form_params
@@ -60,13 +68,14 @@ module Decidim
               command.call
               organization.reload
 
-              expect(organization.extra_user_fields).to eq({
-                                                             "enabled" => true,
-                                                             "country" => { "enabled" => true },
-                                                             "date_of_birth" => { "enabled" => true },
-                                                             "gender" => { "enabled" => true },
-                                                             "postal_code" => { "enabled" => true }
-                                                           })
+              extra_user_fields = organization.extra_user_fields
+              expect(extra_user_fields).to include("enabled" => true)
+              expect(extra_user_fields).to include("country" => { "enabled" => true })
+              expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true })
+              expect(extra_user_fields).to include("gender" => { "enabled" => true })
+              expect(extra_user_fields).to include("country" => { "enabled" => true })
+              #Block ExtraUserFields InclusionSpec
+              #EndBlock
             end
           end
         end
