@@ -86,7 +86,7 @@ Then create the rspec variable in same file
 # File: spec/system/registration_spec.rb
 
 #Block ExtraUserFields FillExtraUserFields
-check :minimum_age
+check :registration_user_minimum_age
 #EndBlock
 ```
 
