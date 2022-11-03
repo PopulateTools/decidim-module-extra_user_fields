@@ -38,17 +38,20 @@ module Decidim
           )
         end
 
+        # rubocop:disable Style/TrailingCommaInHashLiteral
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
             "date_of_birth" => { "enabled" => form.date_of_birth.presence || false },
             "country" => { "enabled" => form.country.presence || false },
             "postal_code" => { "enabled" => form.postal_code.presence || false },
-            "gender" => { "enabled" => form.gender.presence || false }
+            "gender" => { "enabled" => form.gender.presence || false },
             # Block ExtraUserFields SaveFieldInConfig
+
             # EndBlock
           }
         end
+        # rubocop:enable Style/TrailingCommaInHashLiteral
       end
     end
   end

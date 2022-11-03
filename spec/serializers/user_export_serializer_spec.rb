@@ -13,7 +13,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       date_of_birth: date_of_birth,
       country: country,
       # Block ExtraUserFields ExtraUserFields
-      minimum_age: minimum_age,
+
       # EndBlock
     }
   end
@@ -24,7 +24,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   let(:date_of_birth) { "01/01/2000" }
   let(:country) { "Argentina" }
   # Block ExtraUserFields RspecVar
-  let(:minimum_age) { true }
+
   # EndBlock
   let(:serialized) { subject.serialize }
 
@@ -50,9 +50,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
     end
 
     # Block ExtraUserFields IncludeExtraField
-    it "includes the minimum_age" do
-      expect(serialized).to include(minimum_age: resource.extended_data["minimum_age"])
-    end
+
     # EndBlock
   end
 end

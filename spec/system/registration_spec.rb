@@ -18,6 +18,7 @@ def fill_extra_user_fields
   select "Argentina", from: :registration_user_country
   fill_in :registration_user_postal_code, with: "00000"
   # Block ExtraUserFields FillExtraUserFields
+
   # EndBlock
 end
 
@@ -41,6 +42,7 @@ describe "Extra user fields", type: :system do
       "gender" => gender,
       "country" => country,
       # Block ExtraUserFields ExtraUserFields
+
       # EndBlock
     }
   end
@@ -63,6 +65,7 @@ describe "Extra user fields", type: :system do
   end
 
   # Block ExtraUserFields RspecVar
+
   # EndBlock
 
   before do
@@ -77,6 +80,7 @@ describe "Extra user fields", type: :system do
       expect(page).to have_content("Country")
       expect(page).to have_content("Postal code")
       # Block ExtraUserFields ContainsFieldSpec
+
       # EndBlock
     end
   end
@@ -97,6 +101,7 @@ describe "Extra user fields", type: :system do
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
   # Block ExtraUserFields ItBehavesLikeSpec
+
   # EndBlock
 
   context "when extra_user_fields is disabled" do
@@ -108,6 +113,7 @@ describe "Extra user fields", type: :system do
       expect(page).not_to have_content("Country")
       expect(page).not_to have_content("Postal code")
       # Block ExtraUserFields DoesNotContainFieldSpec
+
       # EndBlock
     end
 

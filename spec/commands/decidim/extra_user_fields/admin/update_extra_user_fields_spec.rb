@@ -15,6 +15,7 @@ module Decidim
         let(:gender) { true }
         let(:date_of_birth) { true }
         # Block ExtraUserFields RspecVar
+
         # EndBlock
 
         # rubocop:disable Style/TrailingCommaInHashLiteral
@@ -26,6 +27,7 @@ module Decidim
             "gender" => gender,
             "date_of_birth" => date_of_birth,
             # Block ExtraUserFields ExtraUserFields
+
             # EndBlock
           }
         end
@@ -75,6 +77,7 @@ module Decidim
               expect(extra_user_fields).to include("gender" => { "enabled" => true })
               expect(extra_user_fields).to include("country" => { "enabled" => true })
               # Block ExtraUserFields InclusionSpec
+
               # EndBlock
             end
           end

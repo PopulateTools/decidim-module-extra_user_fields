@@ -48,6 +48,7 @@ module Decidim
           date_of_birth: @form.date_of_birth,
           gender: @form.gender,
           # Block ExtraUserFields SaveInExtendedData
+
           # EndBlock
         )
       end
