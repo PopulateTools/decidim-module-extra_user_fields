@@ -18,19 +18,16 @@ module Decidim
         end
       end
 
-
-      # rubocop:disable Style/TrailingCommaInArguments
       def extra_fields
         [
           :gender,
           :country,
           :postal_code,
-          :date_of_birth,
-          #Block ExtraUserFields AddExtraField
-          #EndBlock
+          :date_of_birth
+          # Block ExtraUserFields AddExtraField
+          # EndBlock
         ]
       end
-      # rubocop:enable Style/TrailingCommaInArguments
     end
   end
 end

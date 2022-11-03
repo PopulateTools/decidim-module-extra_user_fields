@@ -38,19 +38,17 @@ module Decidim
           )
         end
 
-        # rubocop:disable Style/TrailingCommaInArguments
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
             "date_of_birth" => { "enabled" => form.date_of_birth.presence || false },
             "country" => { "enabled" => form.country.presence || false },
             "postal_code" => { "enabled" => form.postal_code.presence || false },
-            "gender" => { "enabled" => form.gender.presence || false },
-            #Block ExtraUserFields SaveFieldInConfig
-            #EndBlock
+            "gender" => { "enabled" => form.gender.presence || false }
+            # Block ExtraUserFields SaveFieldInConfig
+            # EndBlock
           }
         end
-        # rubocop:enable Style/TrailingCommaInArguments
       end
     end
   end

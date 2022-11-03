@@ -20,9 +20,9 @@ describe "Account", type: :system do
       "postal_code" => postal_code,
       "gender" => gender,
       "country" => country,
-      #Block ExtraUserFields ExtraUserFields
+      # Block ExtraUserFields ExtraUserFields
 
-      #EndBlock
+      # EndBlock
     }
   end
   # rubocop:enable Style/TrailingCommaInHashLiteral
@@ -43,9 +43,9 @@ describe "Account", type: :system do
     { "enabled" => true }
   end
 
-  #Block ExtraUserFields RspecVar
+  # Block ExtraUserFields RspecVar
 
-  #EndBlock
+  # EndBlock
 
   before do
     switch_to_host(organization.host)
@@ -69,9 +69,9 @@ describe "Account", type: :system do
           select "Other", from: :user_gender
           select "Argentina", from: :user_country
           fill_in :user_postal_code, with: "00000"
-          #Block ExtraUserFields FillFieldSpec
+          # Block ExtraUserFields FillFieldSpec
 
-          #EndBlock
+          # EndBlock
 
           find("*[type=submit]").click
         end

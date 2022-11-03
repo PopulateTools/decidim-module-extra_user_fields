@@ -17,8 +17,8 @@ def fill_extra_user_fields
   select "Other", from: :registration_user_gender
   select "Argentina", from: :registration_user_country
   fill_in :registration_user_postal_code, with: "00000"
-  #Block ExtraUserFields FillExtraUserFields
-  #EndBlock
+  # Block ExtraUserFields FillExtraUserFields
+  # EndBlock
 end
 
 describe "Extra user fields", type: :system do
@@ -40,8 +40,8 @@ describe "Extra user fields", type: :system do
       "postal_code" => postal_code,
       "gender" => gender,
       "country" => country,
-      #Block ExtraUserFields ExtraUserFields
-      #EndBlock
+      # Block ExtraUserFields ExtraUserFields
+      # EndBlock
     }
   end
   # rubocop:enable Style/TrailingCommaInHashLiteral
@@ -62,8 +62,8 @@ describe "Extra user fields", type: :system do
     { "enabled" => true }
   end
 
-  #Block ExtraUserFields RspecVar
-  #EndBlock
+  # Block ExtraUserFields RspecVar
+  # EndBlock
 
   before do
     switch_to_host(organization.host)
@@ -76,8 +76,8 @@ describe "Extra user fields", type: :system do
       expect(page).to have_content("Gender")
       expect(page).to have_content("Country")
       expect(page).to have_content("Postal code")
-      #Block ExtraUserFields ContainsFieldSpec
-      #EndBlock
+      # Block ExtraUserFields ContainsFieldSpec
+      # EndBlock
     end
   end
 
@@ -96,8 +96,8 @@ describe "Extra user fields", type: :system do
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
-  #Block ExtraUserFields ItBehavesLikeSpec
-  #EndBlock
+  # Block ExtraUserFields ItBehavesLikeSpec
+  # EndBlock
 
   context "when extra_user_fields is disabled" do
     let(:organization) { create(:organization, :extra_user_fields_disabled) }
@@ -107,8 +107,8 @@ describe "Extra user fields", type: :system do
       expect(page).not_to have_content("Gender")
       expect(page).not_to have_content("Country")
       expect(page).not_to have_content("Postal code")
-      #Block ExtraUserFields DoesNotContainFieldSpec
-      #EndBlock
+      # Block ExtraUserFields DoesNotContainFieldSpec
+      # EndBlock
     end
 
     it "allows to create a new account" do
