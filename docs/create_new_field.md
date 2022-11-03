@@ -33,7 +33,7 @@ attribute :minimum_age, Virtus::Attribute::Boolean
 #EndBlock
 
 #Block ExtraUserFields Validations
-validates :minimum_age, acceptance: true, if: :minimum_age?
+validates :minimum_age, acceptance: true, presence: true, if: :minimum_age?
 #EndBlock
 ```
 
