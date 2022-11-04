@@ -12,15 +12,20 @@ describe "Account", type: :system do
   let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
   let(:user) { create(:user, :confirmed, organization: organization, password: password, password_confirmation: password) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
+  # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
       "enabled" => true,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
-      "country" => country
+      "country" => country,
+      # Block ExtraUserFields ExtraUserFields
+
+      # EndBlock
     }
   end
+  # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
     { "enabled" => true }
@@ -37,6 +42,10 @@ describe "Account", type: :system do
   let(:gender) do
     { "enabled" => true }
   end
+
+  # Block ExtraUserFields RspecVar
+
+  # EndBlock
 
   before do
     switch_to_host(organization.host)
@@ -60,6 +69,9 @@ describe "Account", type: :system do
           select "Other", from: :user_gender
           select "Argentina", from: :user_country
           fill_in :user_postal_code, with: "00000"
+          # Block ExtraUserFields FillFieldSpec
+
+          # EndBlock
 
           find("*[type=submit]").click
         end

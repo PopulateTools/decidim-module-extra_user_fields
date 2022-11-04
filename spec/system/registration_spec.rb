@@ -17,6 +17,9 @@ def fill_extra_user_fields
   select "Other", from: :registration_user_gender
   select "Argentina", from: :registration_user_country
   fill_in :registration_user_postal_code, with: "00000"
+  # Block ExtraUserFields FillExtraUserFields
+
+  # EndBlock
 end
 
 describe "Extra user fields", type: :system do
@@ -30,15 +33,20 @@ describe "Extra user fields", type: :system do
 
   let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
   let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
       "enabled" => true,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
-      "country" => country
+      "country" => country,
+      # Block ExtraUserFields ExtraUserFields
+
+      # EndBlock
     }
   end
+  # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
     { "enabled" => true }
@@ -56,6 +64,10 @@ describe "Extra user fields", type: :system do
     { "enabled" => true }
   end
 
+  # Block ExtraUserFields RspecVar
+
+  # EndBlock
+
   before do
     switch_to_host(organization.host)
     visit decidim.new_user_registration_path
@@ -67,6 +79,9 @@ describe "Extra user fields", type: :system do
       expect(page).to have_content("Gender")
       expect(page).to have_content("Country")
       expect(page).to have_content("Postal code")
+      # Block ExtraUserFields ContainsFieldSpec
+
+      # EndBlock
     end
   end
 
@@ -85,6 +100,9 @@ describe "Extra user fields", type: :system do
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
   it_behaves_like "mandatory extra user fields", "postal_code"
+  # Block ExtraUserFields ItBehavesLikeSpec
+
+  # EndBlock
 
   context "when extra_user_fields is disabled" do
     let(:organization) { create(:organization, :extra_user_fields_disabled) }
@@ -94,6 +112,9 @@ describe "Extra user fields", type: :system do
       expect(page).not_to have_content("Gender")
       expect(page).not_to have_content("Country")
       expect(page).not_to have_content("Postal code")
+      # Block ExtraUserFields DoesNotContainFieldSpec
+
+      # EndBlock
     end
 
     it "allows to create a new account" do

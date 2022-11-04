@@ -5,20 +5,27 @@ require "spec_helper"
 describe Decidim::ExtraUserFields::UserExportSerializer do
   let(:subject) { described_class.new(resource) }
   let(:resource) { create(:user, extended_data: registration_metadata) }
+  # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:registration_metadata) do
     {
       gender: gender,
       postal_code: postal_code,
       date_of_birth: date_of_birth,
-      country: country
+      country: country,
+      # Block ExtraUserFields ExtraUserFields
+
+      # EndBlock
     }
   end
+  # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:gender) { "Other" }
   let(:postal_code) { "00000" }
   let(:date_of_birth) { "01/01/2000" }
   let(:country) { "Argentina" }
+  # Block ExtraUserFields RspecVar
 
+  # EndBlock
   let(:serialized) { subject.serialize }
 
   describe "#serialize" do
@@ -41,5 +48,9 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
     it "includes the country" do
       expect(serialized).to include(country: resource.extended_data["country"])
     end
+
+    # Block ExtraUserFields IncludeExtraField
+
+    # EndBlock
   end
 end
