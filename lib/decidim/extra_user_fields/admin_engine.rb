@@ -12,10 +12,14 @@ module Decidim
       paths["lib/tasks"] = nil
 
       routes do
-        # Add admin engine routes here
         namespace :extra_user_fields do
           get :export_users
         end
+
+        resources :extra_user_fields, only: [:index]
+        match "/extra_user_fields" => "extra_user_fields#update", :via => :patch, as: "update"
+
+        root to: "extra_user_fields#index"
       end
 
       initializer "decidim_extra_user_fields.admin_mount_routes" do
@@ -29,6 +33,15 @@ module Decidim
           Decidim::Admin::ApplicationHelper.class_eval do
             include ExtraUserFields::Admin::ApplicationHelper
           end
+        end
+      end
+
+      initializer "decidim_extra_user_fields.admin_settings_menu" do
+        Decidim.menu :admin_settings_menu do |menu|
+          menu.add_item :extra_user_fields,
+                        t("decidim.admin.extra_user_fields.menu.title"),
+                        decidim_extra_user_fields.root_path,
+                        position: 11
         end
       end
 

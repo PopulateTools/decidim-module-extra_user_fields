@@ -13,10 +13,24 @@ module Decidim
       def extra_user_fields
         extended_data = resource.extended_data.symbolize_keys
 
-        [:gender, :country, :postal_code, :date_of_birth].each_with_object({}) do |key, fields|
-          fields[key] = extended_data[key]
+        extra_fields.index_with do |key|
+          extended_data[key]
         end
       end
+
+      # rubocop:disable Style/TrailingCommaInArrayLiteral
+      def extra_fields
+        [
+          :gender,
+          :country,
+          :postal_code,
+          :date_of_birth,
+          # Block ExtraUserFields AddExtraField
+
+          # EndBlock
+        ]
+      end
+      # rubocop:enable Style/TrailingCommaInArrayLiteral
     end
   end
 end

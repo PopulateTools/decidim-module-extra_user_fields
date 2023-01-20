@@ -1,4 +1,18 @@
-<%= f.date_field :date_of_birth %>
-<%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
-<%= f.custom_country_select :country %>
-<%= f.text_field :postal_code %>
+<% if current_organization.activated_extra_field?(:date_of_birth) %>
+  <%= f.date_field :date_of_birth %>
+<% end %>
+<% if current_organization.activated_extra_field?(:gender) %>
+  <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
+<% end %>
+
+<% if current_organization.activated_extra_field?(:country) %>
+  <%= f.custom_country_select :country %>
+<% end %>
+
+<% if current_organization.activated_extra_field?(:postal_code) %>
+  <%= f.text_field :postal_code %>
+<% end %>
+
+<%# Block ExtraUserFields AccountFormFields %>
+
+<%# EndBlock %>
