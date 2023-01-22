@@ -8,11 +8,49 @@ en:
         gender: Gender
         postal_code: Postal code
   decidim:
+    admin:
+      extra_user_fields:
+        menu:
+          title: Manage extra user fields
     components:
       extra_user_fields:
         name: ExtraUserFields
     extra_user_fields:
+      registration_form:
+        signup:
+          legend: More information
       admin:
+        extra_user_fields:
+          fields:
+            country:
+              description: This field is a list of countries. User will be able to choose a country
+              label: Enable country field
+            date_of_birth:
+              description: This field is a Date field. User will be able to register
+                a birth date by using a Date picker
+              label: Enable date of birth field
+            gender:
+              description: This field is a list of genders. User will be able to choose a gender
+              label: Enable gender field
+            postal_code:
+              description: This field is a String field. User will be able to fill in a postal code
+              label: Enable postal code field
+          update:
+            failure: An error occurred on update
+            success: Extra user fields correctly updated in organization
+          form:
+            extra_user_fields:
+              section: Available extra fields for signup form
+              extra_user_fields_enabled: Enable extra user fields
+            global:
+              title: Activate / deactivate functionality
+            callout:
+              help: Enable custom extra user fields functionality to be able to manage extra fields
+                in your signup form. Even if option is checked, signup form will be
+                updated <strong>only if there is at least one extra field enabled</strong>
+          index:
+            save: Save configuration
+            title: Manage extra user fields
         exports:
           users: Participants
       genders:

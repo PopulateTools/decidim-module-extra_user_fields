@@ -40,14 +40,19 @@ module Decidim
         @user.save!
       end
 
+      # rubocop:disable Style/TrailingCommaInArguments
       def extended_data
         @extended_data ||= (@user&.extended_data || {}).merge(
-          country: form.country,
-          postal_code: form.postal_code,
-          date_of_birth: form.date_of_birth,
-          gender: form.gender
+          country: @form.country,
+          postal_code: @form.postal_code,
+          date_of_birth: @form.date_of_birth,
+          gender: @form.gender,
+          # Block ExtraUserFields SaveInExtendedData
+
+          # EndBlock
         )
       end
+      # rubocop:enable Style/TrailingCommaInArguments
     end
   end
 end

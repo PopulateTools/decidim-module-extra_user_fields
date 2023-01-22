@@ -1,15 +1,37 @@
-<div class="field">
-    <%= f.date_field :date_of_birth %>
-</div>
+<% if current_organization.extra_user_fields_enabled? %>
+  <div class="card">
+    <div class="card__content card__extra_user_fields">
+      <div class="legend">
+        <h3><%= t(".signup.legend") %></h3>
+      </div>
 
-<div class="field">
-  <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
-</div>
+      <% if current_organization.activated_extra_field?(:date_of_birth) %>
+        <div class="field">
+          <%= f.date_field :date_of_birth %>
+        </div>
+      <% end %>
 
-<div class="field">
-  <%= f.custom_country_select :country %>
-</div>
+      <% if current_organization.activated_extra_field?(:gender) %>
+        <div class="field">
+          <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
+        </div>
+      <% end %>
 
-<div class="field">
-  <%= f.text_field :postal_code %>
-</div>
+      <% if current_organization.activated_extra_field?(:country) %>
+        <div class="field">
+          <%= f.custom_country_select :country %>
+        </div>
+      <% end %>
+
+      <% if current_organization.activated_extra_field?(:postal_code) %>
+        <div class="field">
+          <%= f.text_field :postal_code %>
+        </div>
+      <% end %>
+
+      <%# Block ExtraUserFields SignUpFormFields %>
+
+      <%# EndBlock %>
+    </div>
+  </div>
+<% end %>
