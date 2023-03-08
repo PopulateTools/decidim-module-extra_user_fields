@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-DECIDIM_VERSION = ">= 0.25.0"
+DECIDIM_VERSION = "0.27.2"
 
 source "https://rubygems.org"
 
@@ -12,7 +12,7 @@ gem "decidim-extra_user_fields", path: "."
 gem "bootsnap", "~> 1.4"
 gem "country_select", "~> 4.0"
 gem "puma", ">= 4.3"
-gem "uglifier", "~> 4.1"
+gem "rectify"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
