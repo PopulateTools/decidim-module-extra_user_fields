@@ -3,7 +3,7 @@
 module Decidim
   # This class serializes a User so can be exported to CSV
   module ExtraUserFields
-    class UserExportSerializer < Decidim::DataPortabilitySerializers::DataPortabilityUserSerializer
+    class UserExportSerializer < Decidim::DownloadYourDataSerializers::DownloadYourDataUserSerializer
       # Public: Exports a hash with the serialized data for the user including
       # extra user fields
       def serialize
