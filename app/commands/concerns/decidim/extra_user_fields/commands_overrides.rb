@@ -36,6 +36,7 @@ module Decidim
         @user.extended_data = extended_data
       end
 
+      # rubocop:disable Style/TrailingCommaInArguments
       def extended_data
         @extended_data ||= (@user&.extended_data || {}).merge(
           country: @form.country,
@@ -46,6 +47,7 @@ module Decidim
           location: @form.location
         )
       end
+      # rubocop:enable Style/TrailingCommaInArguments
     end
   end
 end

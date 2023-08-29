@@ -1,0 +1,27 @@
+<p class="callout success"><%== t(".callout.help") %></p>
+<div class="card">
+  <div class="card-section extra_user_fields">
+    <div>
+      <h3><%= t(".global.title") %></h3>
+    </div>
+    <div class="row column">
+      <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled") %>
+    </div>
+  </div>
+</div>
+
+<div class="card extra_fields_setup">
+  <div class="card-section">
+    <div>
+      <h3><%= t(".extra_user_fields.section") %></h3>
+    </div>
+
+    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/date_of_birth", locals: { form: form } %>
+    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/country", locals: { form: form } %>
+    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/postal_code", locals: { form: form } %>
+    <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/gender", locals: { form: form } %>
+    <%# Block ExtraUserFields ExtraFields %>
+
+    <%# EndBlock %>
+  </div>
+</div>

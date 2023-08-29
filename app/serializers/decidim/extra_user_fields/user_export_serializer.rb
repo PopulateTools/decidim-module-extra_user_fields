@@ -17,6 +17,20 @@ module Decidim
           fields[key] = extended_data[key]
         end
       end
+
+      # rubocop:disable Style/TrailingCommaInArrayLiteral
+      def extra_fields
+        [
+          :gender,
+          :country,
+          :postal_code,
+          :date_of_birth,
+          # Block ExtraUserFields AddExtraField
+
+          # EndBlock
+        ]
+      end
+      # rubocop:enable Style/TrailingCommaInArrayLiteral
     end
   end
 end
