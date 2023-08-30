@@ -15,7 +15,7 @@ module Decidim::ExtraUserFields::Admin
     let(:action) do
       { scope: :admin, action: :read, subject: :extra_user_fields }
     end
-    let(:permission_action) { Decidim::PermissionAction.new(action) }
+    let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
     context "when user is admin" do
       let(:user) { create :user, :admin, organization: organization }

@@ -14,6 +14,8 @@ module Decidim
         let(:country) { true }
         let(:gender) { true }
         let(:date_of_birth) { true }
+        let(:phone_number) { true }
+        let(:location) { true }
         # Block ExtraUserFields RspecVar
 
         # EndBlock
@@ -26,6 +28,8 @@ module Decidim
             "country" => country,
             "gender" => gender,
             "date_of_birth" => date_of_birth,
+            "phone_number" => phone_number,
+            "location" => location,
             # Block ExtraUserFields ExtraUserFields
 
             # EndBlock
@@ -76,6 +80,8 @@ module Decidim
               expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true })
               expect(extra_user_fields).to include("gender" => { "enabled" => true })
               expect(extra_user_fields).to include("country" => { "enabled" => true })
+              expect(extra_user_fields).to include("phone_number" => { "enabled" => true })
+              expect(extra_user_fields).to include("location" => { "enabled" => true })
               # Block ExtraUserFields InclusionSpec
 
               # EndBlock
