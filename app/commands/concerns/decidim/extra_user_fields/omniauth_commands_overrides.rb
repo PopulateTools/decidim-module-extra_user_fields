@@ -43,12 +43,12 @@ module Decidim
       # rubocop:disable Style/TrailingCommaInArguments
       def extended_data
         @extended_data ||= (@user&.extended_data || {}).merge(
-          country: form.country,
-          postal_code: form.postal_code,
-          date_of_birth: form.date_of_birth,
-          gender: form.gender,
-          phone_number: form.phone_number,
-          location: form.location
+          country: @form.country,
+          postal_code: @form.postal_code,
+          date_of_birth: @form.date_of_birth,
+          gender: @form.gender,
+          phone_number: @form.phone_number,
+          location: @form.location
         )
       end
       # rubocop:enable Style/TrailingCommaInArguments

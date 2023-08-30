@@ -29,6 +29,18 @@
         </div>
       <% end %>
 
+      <% if current_organization.activated_extra_field?(:phone_number) %>
+        <div class="field">
+          <%= f.text_field :phone_number %>
+        </div>
+      <% end %>
+
+      <% if current_organization.activated_extra_field?(:location) %>
+        <div class="field">
+          <%= f.text_field :location %>
+        </div>
+      <% end %>
+
       <%# Block ExtraUserFields SignUpFormFields %>
 
       <%# EndBlock %>

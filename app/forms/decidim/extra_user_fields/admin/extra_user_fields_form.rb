@@ -11,6 +11,8 @@ module Decidim
         attribute :postal_code, Virtus::Attribute::Boolean
         attribute :date_of_birth, Virtus::Attribute::Boolean
         attribute :gender, Virtus::Attribute::Boolean
+        attribute :phone_number, Virtus::Attribute::Boolean
+        attribute :location, Virtus::Attribute::Boolean
         # Block ExtraUserFields Attributes
 
         # EndBlock
@@ -21,6 +23,8 @@ module Decidim
           self.postal_code = model.extra_user_fields.dig("postal_code", "enabled")
           self.date_of_birth = model.extra_user_fields.dig("date_of_birth", "enabled")
           self.gender = model.extra_user_fields.dig("gender", "enabled")
+          self.phone_number = model.extra_user_fields.dig("phone_number", "enabled")
+          self.location = model.extra_user_fields.dig("location", "enabled")
           # Block ExtraUserFields MapModel
 
           # EndBlock

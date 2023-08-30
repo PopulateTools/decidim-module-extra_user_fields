@@ -11,6 +11,8 @@ module Decidim
       included do
         include ::Decidim::ExtraUserFields::ApplicationHelper
 
+        # Block ExtraUserFields Attributes
+
         attribute :country, String
         attribute :postal_code, String
         attribute :date_of_birth, Decidim::Attributes::LocalizedDate
@@ -18,16 +20,16 @@ module Decidim
         attribute :phone_number, String
         attribute :location, String
 
-        # Block ExtraUserFields Attributes
-
         # EndBlock
+
+        # Block ExtraUserFields Validations
 
         validates :country, presence: true, if: :country?
         validates :postal_code, presence: true, if: :postal_code?
         validates :date_of_birth, presence: true, if: :date_of_birth?
         validates :gender, presence: true, inclusion: { in: Decidim::ExtraUserFields::Engine::DEFAULT_GENDER_OPTIONS.map(&:to_s) }, if: :gender?
-
-        # Block ExtraUserFields Validations
+        validates :phone_number, presence: true, if: :phone_number?
+        validates :location, presence: true, if: :location?
 
         # EndBlock
       end
@@ -49,6 +51,7 @@ module Decidim
 
       private
 
+      # Block ExtraUserFields EnableFieldMethod
       def country?
         extra_user_fields_enabled && current_organization.activated_extra_field?(:country)
       end
@@ -65,7 +68,13 @@ module Decidim
         extra_user_fields_enabled && current_organization.activated_extra_field?(:postal_code)
       end
 
-      # Block ExtraUserFields EnableFieldMethod
+      def phone_number?
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:phone_number)
+      end
+
+      def location?
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:location)
+      end
 
       # EndBlock
 
