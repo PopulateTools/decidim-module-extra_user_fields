@@ -14,12 +14,14 @@ module Decidim
       end
 
       def at_least_one_extra_field?
-        extra_user_fields.reject { |key| key == "enabled" }.map { |_, value| value["enabled"] }.include?(true)
+        extra_user_fields.reject { |key| key == "enabled" }
+                         .map { |_, value| value["enabled"] }
+                         .any? { |value| value == "1" }
       end
 
       # Check if the given value is enabled in extra_user_fields
       def activated_extra_field?(sym)
-        extra_user_fields.dig(sym.to_s, "enabled")
+        extra_user_fields.dig(sym.to_s, "enabled") == "1"
       end
     end
   end

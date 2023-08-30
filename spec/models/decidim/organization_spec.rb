@@ -12,9 +12,9 @@ module Decidim
         "date_of_birth" => date_of_birth
       }
     end
-    let(:extra_user_field) { true }
+    let(:extra_user_field) { "1" }
     let(:date_of_birth) do
-      { "enabled" => true }
+      { "enabled" => "1" }
     end
 
     it { is_expected.to be_valid }
