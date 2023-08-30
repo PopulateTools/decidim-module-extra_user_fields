@@ -22,6 +22,6 @@ describe "Admin manages officializations", type: :system do
   it "includes export dropdown button" do
     click_link "Participants"
 
-    expect(page).to have_content("Export all")
+    expect(page).to have_content("Export")
   end
 end

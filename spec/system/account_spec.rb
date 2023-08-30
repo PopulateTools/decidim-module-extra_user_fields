@@ -15,11 +15,13 @@ describe "Account", type: :system do
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
-      "enabled" => true,
+      "enabled" => "1",
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
       "country" => country,
+      "phone_number" => phone_number,
+      "location" => location,
       # Block ExtraUserFields ExtraUserFields
 
       # EndBlock
@@ -28,19 +30,27 @@ describe "Account", type: :system do
   # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
-    { "enabled" => true }
+    { "enabled" => "1" }
   end
 
   let(:postal_code) do
-    { "enabled" => true }
+    { "enabled" => "1" }
   end
 
   let(:country) do
-    { "enabled" => true }
+    { "enabled" => "1" }
   end
 
   let(:gender) do
-    { "enabled" => true }
+    { "enabled" => "1" }
+  end
+
+  let(:phone_number) do
+    { "enabled" => "1" }
+  end
+
+  let(:location) do
+    { "enabled" => "1" }
   end
 
   # Block ExtraUserFields RspecVar
@@ -69,6 +79,8 @@ describe "Account", type: :system do
           select "Other", from: :user_gender
           select "Argentina", from: :user_country
           fill_in :user_postal_code, with: "00000"
+          fill_in :user_phone_number, with: "0123456789"
+          fill_in :user_location, with: "Cahors"
           # Block ExtraUserFields FillFieldSpec
 
           # EndBlock
@@ -116,6 +128,22 @@ describe "Account", type: :system do
       end
 
       it_behaves_like "does not display extra user field", "gender", "Gender"
+    end
+
+    context "when phone number is not enabled" do
+      let(:phone_number) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "phone number", "Phone number"
+    end
+
+    context "when location is not enabled" do
+      let(:location) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "location", "Location"
     end
   end
 end
