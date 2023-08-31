@@ -85,7 +85,7 @@ jobs:
           path: ./spec/decidim_dummy_app/tmp/screenshots
           if-no-files-found: ignore
   system-tests:
-    name: Tests
+    name: System tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
     services:
