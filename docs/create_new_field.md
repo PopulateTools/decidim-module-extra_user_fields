@@ -29,7 +29,7 @@ In `app/forms/concerns/decidim/extra_user_fields/forms_definitions.rb` add your 
 # File: app/forms/concerns/decidim/extra_user_fields/forms_definitions.rb
 
 #Block ExtraUserFields Attributes
-attribute :minimum_age, Virtus::Attribute::Boolean
+attribute :minimum_age, Boolean
 #EndBlock
 
 #Block ExtraUserFields Validations
@@ -277,7 +277,7 @@ end
 # File: app/forms/decidim/extra_user_fields/admin/extra_user_fields_form.rb
 
 #Block ExtraUserFields Attributes
-attribute :minimum_age, Virtus::Attribute::Boolean
+attribute :minimum_age, Boolean
 #EndBlock
 ```
 

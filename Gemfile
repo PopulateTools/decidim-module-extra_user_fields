@@ -12,7 +12,6 @@ gem "decidim-extra_user_fields", path: "."
 gem "bootsnap", "~> 1.4"
 gem "country_select", "~> 4.0"
 gem "puma", ">= 4.3"
-gem "rectify"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
