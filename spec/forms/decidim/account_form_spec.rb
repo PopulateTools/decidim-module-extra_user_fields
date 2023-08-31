@@ -15,7 +15,13 @@ module Decidim
         remove_avatar: remove_avatar,
         personal_url: personal_url,
         about: about,
-        locale: "es"
+        locale: "es",
+        country: country,
+        postal_code: postal_code,
+        date_of_birth: date_of_birth,
+        gender: gender,
+        phone_number: phone_number,
+        location: location
       ).with_context(
         current_organization: organization,
         current_user: user
@@ -34,6 +40,12 @@ module Decidim
     let(:remove_avatar) { false }
     let(:personal_url) { "http://example.org" }
     let(:about) { "This is a description about me" }
+    let(:country) { "Argentina" }
+    let(:date_of_birth) { "01/01/2000" }
+    let(:gender) { "Other" }
+    let(:location) { "Paris" }
+    let(:phone_number) { "0123456789" }
+    let(:postal_code) { "75001" }
 
     context "with correct data" do
       it "is valid" do

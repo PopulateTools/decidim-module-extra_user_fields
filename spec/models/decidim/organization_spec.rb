@@ -130,38 +130,38 @@ module Decidim
         end
       end
     end
-  end
 
-  describe "#extra_user_fields_enabled?" do
-    it "returns true" do
-      expect(subject).to be_extra_user_fields_enabled
-    end
-
-    context "when extra user fields are disabled" do
-      let(:extra_user_field) { false }
-
+    describe "#extra_user_fields_enabled?" do
       it "returns true" do
-        expect(subject).not_to be_extra_user_fields_enabled
+        expect(subject).to be_extra_user_fields_enabled
       end
-    end
-  end
 
-  describe "#activated_extra_field?" do
-    it "returns the value of given key" do
-      expect(subject).to be_activated_extra_field(:date_of_birth)
-    end
+      context "when extra user fields are disabled" do
+        let(:extra_user_field) { false }
 
-    context "when given key doesn't exist in hash" do
-      it "returns false" do
-        expect(subject).not_to be_activated_extra_field(:unknown)
+        it "returns true" do
+          expect(subject).not_to be_extra_user_fields_enabled
+        end
       end
     end
 
-    context "when value for given key is nil" do
-      let(:date_of_birth) { nil }
+    describe "#activated_extra_field?" do
+      it "returns the value of given key" do
+        expect(subject).to be_activated_extra_field(:date_of_birth)
+      end
 
-      it "returns false" do
-        expect(subject).not_to be_activated_extra_field(:date_of_birth)
+      context "when given key doesn't exist in hash" do
+        it "returns false" do
+          expect(subject).not_to be_activated_extra_field(:unknown)
+        end
+      end
+
+      context "when value for given key is nil" do
+        let(:date_of_birth) { nil }
+
+        it "returns false" do
+          expect(subject).not_to be_activated_extra_field(:date_of_birth)
+        end
       end
     end
   end

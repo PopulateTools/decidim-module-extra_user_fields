@@ -16,6 +16,22 @@ module Decidim
         let(:tos_agreement) { "1" }
         let(:newsletter) { "1" }
         let(:current_locale) { "es" }
+        let(:country) { "Argentina" }
+        let(:date_of_birth) { "01/01/2000" }
+        let(:gender) { "Other" }
+        let(:location) { "Paris" }
+        let(:phone_number) { "0123456789" }
+        let(:postal_code) { "75001" }
+        let(:extended_data) do
+          {
+            country: country,
+            date_of_birth: date_of_birth,
+            gender: gender,
+            location: location,
+            phone_number: phone_number,
+            postal_code: postal_code
+          }
+        end
 
         let(:form_params) do
           {
@@ -26,7 +42,13 @@ module Decidim
               "password" => password,
               "password_confirmation" => password_confirmation,
               "tos_agreement" => tos_agreement,
-              "newsletter_at" => newsletter
+              "newsletter_at" => newsletter,
+              "country" => country,
+              "postal_code" => postal_code,
+              "date_of_birth" => date_of_birth,
+              "gender" => gender,
+              "phone_number" => phone_number,
+              "location" => location
             }
           }
         end
@@ -69,7 +91,7 @@ module Decidim
                 command.call
                 user.reload
               end.to broadcast(:invalid)
-                .and change(user.reload, :invitation_token)
+                       .and change(user.reload, :invitation_token)
               expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.on_queue("mailers").twice
             end
           end
@@ -92,7 +114,15 @@ module Decidim
               newsletter_notifications_at: form.newsletter_at,
               organization: organization,
               accepted_tos_version: organization.tos_version,
-              locale: form.current_locale
+              locale: form.current_locale,
+              extended_data: {
+                country: country,
+                date_of_birth: Date.parse(date_of_birth),
+                gender: gender,
+                location: location,
+                phone_number: phone_number,
+                postal_code: postal_code
+              }
             ).and_call_original
 
             expect { command.call }.to change(User, :count).by(1)

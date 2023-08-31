@@ -22,39 +22,35 @@ module Decidim
       initializer "decidim_extra_user_fields.registration_additions" do
         config.to_prepare do
           Decidim::RegistrationForm.class_eval do
-            include ExtraUserFields::FormsDefinitions
+            include Decidim::ExtraUserFields::FormsDefinitions
           end
 
           Decidim::OmniauthRegistrationForm.class_eval do
-            include ExtraUserFields::FormsDefinitions
+            include Decidim::ExtraUserFields::FormsDefinitions
           end
 
           Decidim::AccountForm.class_eval do
-            include ExtraUserFields::FormsDefinitions
+            include Decidim::ExtraUserFields::FormsDefinitions
           end
 
           Decidim::CreateRegistration.class_eval do
-            prepend ExtraUserFields::CommandsOverrides
+            prepend Decidim::ExtraUserFields::CreateRegistrationsCommandsOverrides
           end
 
           Decidim::CreateOmniauthRegistration.class_eval do
-            prepend ExtraUserFields::OmniauthCommandsOverrides
+            prepend Decidim::ExtraUserFields::OmniauthCommandsOverrides
           end
 
           Decidim::UpdateAccount.class_eval do
-            prepend ExtraUserFields::CommandsOverrides
+            prepend Decidim::ExtraUserFields::UpdateAccountCommandsOverrides
           end
 
           Decidim::Organization.class_eval do
-            prepend ExtraUserFields::OrganizationOverrides
+            prepend Decidim::ExtraUserFields::OrganizationOverrides
           end
 
           Decidim::FormBuilder.class_eval do
-            include ExtraUserFields::FormBuilderMethods
-          end
-
-          Decidim::FormBuilder.class_eval do
-            include ExtraUserFields::FormBuilderMethods
+            include Decidim::ExtraUserFields::FormBuilderMethods
           end
         end
       end

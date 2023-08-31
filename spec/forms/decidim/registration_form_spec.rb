@@ -19,6 +19,12 @@ module Decidim
     let(:password) { "S4CGQ9AM4ttJdPKS" }
     let(:password_confirmation) { password }
     let(:tos_agreement) { "1" }
+    let(:country) { "Argentina" }
+    let(:date_of_birth) { "01/01/2000" }
+    let(:gender) { "Other" }
+    let(:location) { "Paris" }
+    let(:phone_number) { "0123456789" }
+    let(:postal_code) { "75001" }
 
     let(:attributes) do
       {
@@ -27,7 +33,13 @@ module Decidim
         email: email,
         password: password,
         password_confirmation: password_confirmation,
-        tos_agreement: tos_agreement
+        tos_agreement: tos_agreement,
+        country: country,
+        postal_code: postal_code,
+        date_of_birth: date_of_birth,
+        gender: gender,
+        phone_number: phone_number,
+        location: location
       }
     end
 
