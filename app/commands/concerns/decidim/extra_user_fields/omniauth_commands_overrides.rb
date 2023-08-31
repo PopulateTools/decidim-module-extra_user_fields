@@ -28,7 +28,6 @@ module Decidim
           @user.name = form.name
           @user.nickname = form.normalized_nickname
           @user.newsletter_notifications_at = nil
-          @user.email_on_notification = true
           @user.password = generated_password
           @user.password_confirmation = generated_password
           @user.remote_avatar_url = form.avatar_url if form.avatar_url.present?
