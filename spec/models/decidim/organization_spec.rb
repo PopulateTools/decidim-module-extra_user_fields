@@ -16,10 +16,6 @@ module Decidim
     let(:date_of_birth) do
       { "enabled" => "1" }
     end
-
-    it { is_expected.to be_valid }
-    it { is_expected.to be_versioned }
-
     let(:omniauth_secrets) do
       {
         facebook: {

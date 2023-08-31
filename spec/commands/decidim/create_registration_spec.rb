@@ -91,7 +91,7 @@ module Decidim
                 command.call
                 user.reload
               end.to broadcast(:invalid)
-                       .and change(user.reload, :invitation_token)
+                .and change(user.reload, :invitation_token)
               expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.on_queue("mailers").twice
             end
           end

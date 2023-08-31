@@ -3,7 +3,8 @@
 require "spec_helper"
 
 describe Decidim::ExtraUserFields::UserExportSerializer do
-  let(:subject) { described_class.new(resource) }
+  subject { described_class.new(resource) }
+
   let(:resource) { create(:user, extended_data: registration_metadata) }
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:registration_metadata) do
