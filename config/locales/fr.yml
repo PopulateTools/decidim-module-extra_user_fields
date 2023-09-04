@@ -1,0 +1,77 @@
+---
+fr:
+  activemodel:
+    attributes:
+      user:
+        country: Pays
+        date_of_birth: Date de naissance
+        gender: Genre
+        location: Localisation
+        phone_number: Numéro de téléphone
+        postal_code: Code postal
+  decidim:
+    admin:
+      actions:
+        export: Exporter
+      exports:
+        export_as: Exporter au format %{export_format}
+      extra_user_fields:
+        menu:
+          title: Gérer les champs d'inscription personnalisés
+    components:
+      extra_user_fields:
+        name: Champs d'inscription personnalisés
+    extra_user_fields:
+      admin:
+        exports:
+          users: Participants
+        extra_user_fields:
+          fields:
+            country:
+              description: Ce champ contient une liste de pays. L'utilisateur pourra
+                choisir un pays.
+              label: Activer le champ pays
+            date_of_birth:
+              description: Ce champ est un champ date de naissance. L'utilisateur
+                pourra choisir une date.
+              label: Activer le champ date de naissance
+            gender:
+              description: Ce champ contient une liste de genres. L'utilisateur pourra
+                choisir un genre.
+              label: Activer le champ genre
+            location:
+              description: Ce champ permet l'ajout de texte. L'utilisateur pourra
+                choisir une localisation.
+              label: Activer le champ localisation
+            phone_number:
+              description: Ce champ est un champ de numéro de téléphone. L'utilisateur
+                pourra choisir un numéro.
+              label: Activer le champ numéro de téléphone
+            postal_code:
+              description: Ce champ est un champ code postal. L'utilisateur pourra
+                choisir un code postal.
+              label: Activer le champ code postal
+          form:
+            callout:
+              help: Activez la fonctionnalité des champs d'inscription personnalisés
+                pour pouvoir gérer des champs supplémentaires dans votre formulaire
+                d'inscription. Même si l'option est cochée, le formulaire d'inscription
+                ne sera mis à jour que si au moins un champ supplémentaire est activé.
+            extra_user_fields:
+              extra_user_fields_enabled: Activer les champs d'inscription personnalisés
+              section: Champs d'inscription disponibles pour le formulaire d'inscription
+            global:
+              title: Activer / Désactiver les champs d'inscription personnalisés
+          index:
+            save: Sauvegarder
+            title: Gérer les champs d'inscription personnalisés
+          update:
+            failure: Une erreur est survenue lors de la mise à jour
+            success: Les champs d'inscription ont été mis à jour avec succ§s
+      genders:
+        female: Femme
+        male: Homme
+        other: Autre
+      registration_form:
+        signup:
+          legend: Plus d'information

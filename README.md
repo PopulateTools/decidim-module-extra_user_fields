@@ -5,21 +5,38 @@
 
 ## Installation
 
+### For Decidim 0.27 and 0.26
+
 Add this line to your application's Gemfile:
+
+For Decidim 0.27:
+```ruby
+gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields.git", branch: "release/0.27-stable"
+```
 
 For Decidim 0.26:
 ```ruby
-gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields", branch: "release/0.26-stable"
+gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields.git", branch: "release/0.26-stable"
 ```
+
+And then execute:
+
+```bash
+bundle
+bundle exec rake railties:install:migrations
+bundle exec rake db:migrate
+```
+
+### For Decidim 0.25 and 0.24
 
 For Decidim 0.25:
 ```ruby
-gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields", branch: "release/0.25-stable"
+gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields.git, branch: "release/0.25-stable"
 ```
 
 For Decidim 0.24:
 ```ruby
-gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields", branch: "release/0.24-stable"
+gem "decidim-extra_user_fields", git: "https://github.com/PopulateTools/decidim-module-extra_user_fields.git, branch: "release/0.24-stable"
 ```
 
 And then execute:
@@ -29,6 +46,12 @@ bundle
 ```
 
 ## Contributing
+
+### Adding a new field to the module
+
+You can fing the development guidelines for adding a new field in this module in the docs/create_new_field.md file.
+
+### Contribute to Decidim
 
 See [Decidim](https://github.com/decidim/decidim).
 

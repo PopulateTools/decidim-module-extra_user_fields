@@ -6,9 +6,9 @@ ca:
         country: País
         date_of_birth: Data de naixement
         gender: Gènere
-        postal_code: Codi postal
-        phone_number: Telèfon
         location: Localització
+        phone_number: Telèfon
+        postal_code: Codi postal
   decidim:
     components:
       extra_user_fields:

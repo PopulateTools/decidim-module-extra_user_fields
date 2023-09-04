@@ -4,7 +4,7 @@ module Decidim
   module ExtraUserFields
     module Admin
       # Command to export organization users from the participants admin panel.
-      class ExportUsers < Rectify::Command
+      class ExportUsers < Decidim::Command
         # format - a string representing the export format
         # current_user - the user performing the action
         def initialize(format, current_user)
