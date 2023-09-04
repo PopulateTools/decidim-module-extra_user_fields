@@ -39,7 +39,7 @@ describe "Extra user fields", type: :system do
   let(:extra_user_fields) do
     {
       # Block ExtraUserFields ExtraUserFields
-      "enabled" => "1",
+      "enabled" => true,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
@@ -52,27 +52,27 @@ describe "Extra user fields", type: :system do
   # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   let(:postal_code) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   let(:country) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   let(:gender) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   let(:phone_number) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   let(:location) do
-    { "enabled" => "1" }
+    { "enabled" => true }
   end
 
   # Block ExtraUserFields RspecVar

@@ -12,9 +12,9 @@ module Decidim
         "date_of_birth" => date_of_birth
       }
     end
-    let(:extra_user_field) { "1" }
+    let(:extra_user_field) { true }
     let(:date_of_birth) do
-      { "enabled" => "1" }
+      { "enabled" => true }
     end
     let(:omniauth_secrets) do
       {
