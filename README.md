@@ -60,6 +60,8 @@ bundle exec rake db:migrate
 
 After installing the gem and migrating the database, you can enable the extra fields in the admin panel of the organization. Go to Settings > Manage extra user fields. There you can enable the fields you want to use. By default all fields are required and don't include any format validation.
 
+![Admin panel](https://github.com/PopulateTools/decidim-module-extra_user_fields/blob/extra-fields-0-27/docs/resources/extra_user_fields_admin.png)
+
 Most of the fields are plain text inputs, but other have a special format:
 
 * Date of birth displays a date picker
@@ -69,10 +71,16 @@ Most of the fields are plain text inputs, but other have a special format:
 
 Once the fields are enabled, they will be shown in the user signup form and in the user profile.
 
+![User signup](https://github.com/PopulateTools/decidim-module-extra_user_fields/blob/extra-fields-0-27/docs/resources/extra_user_fields_signup.png)
+
+![User profile](https://github.com/PopulateTools/decidim-module-extra_user_fields/blob/extra-fields-0-27/docs/resources/extra_user_fields_profile.png)
+
+
 ### Admin users export
 
 An extra feature of this plugin is to enable an Export action in the participants admin panel. This action allows to download a list of participants in CSV, JSON or Excel. The fields included in the export are the Decidim User attributes plus the extra fields enabled in the admin panel.
 
+![User export](https://github.com/PopulateTools/decidim-module-extra_user_fields/blob/extra-fields-0-27/docs/resources/extra_user_fields_export.png)
 
 ## Contributing
 
