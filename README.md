@@ -1,10 +1,6 @@
 # Decidim::ExtraUserFields
 
-Extra features for Decidim users.
-
-This plugin allows administrators to define a set of extra fields for users, and to download the users of an organization in several formats.
-
-These fields are configurable in the admin panel of the organization. When enabled, they are shown in the user profile and in the user registration form.
+This module allows administrators to define a set of extra fields for users. The fields are configurable in the admin panel of the organization. When enabled, they are shown in the user profile and in the registration form.
 
 Supported extra fields for users:
 
@@ -15,7 +11,7 @@ Supported extra fields for users:
 * Phone number
 * Postal code
 
-This plugin also enables an Export action in the participants admin panel, which allows to download a list of participants in CSV, JSON or Excel.
+This module also enables an Export action in the participants admin panel, which allows to download a list of participants in CSV, JSON or Excel.
 
 ## Installation
 
