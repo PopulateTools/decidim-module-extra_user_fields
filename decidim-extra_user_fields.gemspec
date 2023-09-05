@@ -6,15 +6,15 @@ require "decidim/extra_user_fields/version"
 
 Gem::Specification.new do |s|
   s.version = Decidim::ExtraUserFields.version
-  s.authors = ["Eduardo Martínez"]
-  s.email = ["entantoencuanto.rb@gmail.com"]
+  s.authors = ["Eduardo Martínez", "Fernando Blat"]
+  s.email = ["fernando@populate.tools"]
   s.license = "AGPL-3.0"
-  s.homepage = "https://github.com/decidim/decidim-module-extra_user_fields"
-  s.required_ruby_version = ">= 2.7"
+  s.homepage = "https://github.com/PopulateTools/decidim-module-extra_user_fields"
+  s.required_ruby_version = ">= 3.0.2"
 
   s.name = "decidim-extra_user_fields"
-  s.summary = "A decidim extra_user_fields module"
-  s.description = "Allows to collect and manage some extra user fields on registration and profile edition."
+  s.summary = "Decidim module to add extra fields to users."
+  s.description = "Allows to collect and manage some extra user fields on registration and profile."
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
