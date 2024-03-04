@@ -94,6 +94,7 @@ describe "Account", type: :system do
 
         within ".title-bar" do
           expect(page).to have_content("Nikola Tesla")
+          expect(page).to have_content("Castellano")
         end
       end
     end
