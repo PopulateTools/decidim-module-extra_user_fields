@@ -31,11 +31,8 @@ describe "Admin manages organization extra user fields", type: :system do
     end
 
     it "allows to enable extra user fields functionality" do
-      within ".extra_user_fields" do
+      within "#extra_user_fields" do
         expect(page).to have_content("Enable extra user fields")
-      end
-
-      within ".extra_fields_setup" do
         expect(page).to have_content("Available extra fields for signup form")
       end
     end

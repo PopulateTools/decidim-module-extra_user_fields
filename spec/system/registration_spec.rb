@@ -85,7 +85,7 @@ describe "Extra user fields", type: :system do
   end
 
   it "contains extra user fields" do
-    within ".card__extra_user_fields" do
+    within "#card__extra_user_fields" do
       expect(page).to have_content("Date of birth")
       expect(page).to have_content("Gender")
       expect(page).to have_content("Country")

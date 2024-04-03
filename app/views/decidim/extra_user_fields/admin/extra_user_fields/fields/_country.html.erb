@@ -1,6 +1,5 @@
 <div class="card-section">
   <div class="row column">
-    <p><%= t(".description") %></p>
-    <%= form.check_box :country, label: t(".label") %>
+    <%= form.check_box :country, label: t(".label"), help_text: t(".description") %>
   </div>
 </div>
