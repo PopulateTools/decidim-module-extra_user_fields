@@ -2,4 +2,21 @@
   <div class="row column">
     <%= form.check_box :phone_number, label: t(".label"), help_text: t(".description") %>
   </div>
+  <div class="row column pl-4">
+    <%
+      # TODO: move wherever it takes
+      def telephone_pattern
+        "^(\\+34)?[0-9]{9}$"
+      end
+
+      def telephone_placeholder
+        "+34987654321"
+      end
+    %>
+    <%# TODO: replace with the proper rails helpers fields %>
+    <label for=""><%= t(".pattern") %> <input type="text" placeholder="<%= telephone_pattern %>"></label>
+    <label for=""><%= t(".placeholder") %> <input type="text" placeholder="<%= telephone_placeholder %>"></label>
+    <%#= form.text_field :phone_number_pattern, label: t(".pattern"), placeholder: telephone_pattern %>
+    <%#= form.text_field :phone_number_placeholder, label: t(".placeholder"), placeholder: telephone_placeholder %>
+  </div>
 </div>

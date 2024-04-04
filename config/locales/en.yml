@@ -44,9 +44,11 @@ en:
                 in a location
               label: Enable location field
             phone_number:
-              description: This field is a String field. User will be able to fill
+              description: This field is a telephone field. User will be able to fill
                 in a phone number
               label: Enable phone number field
+              pattern: Phone number pattern
+              placeholder: Phone number placeholder
             postal_code:
               description: This field is a String field. User will be able to fill
                 in a postal code
