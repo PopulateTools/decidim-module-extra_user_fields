@@ -47,6 +47,8 @@ fr:
               description: Ce champ est un champ de numéro de téléphone. L'utilisateur
                 pourra choisir un numéro.
               label: Activer le champ numéro de téléphone
+              pattern: Motif de validation des numéros de téléphone (regex)
+              placeholder: Placeholder pour le numéro de téléphone
             postal_code:
               description: Ce champ est un champ code postal. L'utilisateur pourra
                 choisir un code postal.
