@@ -12,7 +12,6 @@ module Decidim
         let(:nickname) { "nickname" }
         let(:email) { "user@example.org" }
         let(:password) { "Y1fERVzL2F" }
-        let(:password_confirmation) { password }
         let(:tos_agreement) { "1" }
         let(:newsletter) { "1" }
         let(:current_locale) { "es" }
@@ -40,7 +39,6 @@ module Decidim
               "nickname" => nickname,
               "email" => email,
               "password" => password,
-              "password_confirmation" => password_confirmation,
               "tos_agreement" => tos_agreement,
               "newsletter_at" => newsletter,
               "country" => country,
@@ -108,7 +106,6 @@ module Decidim
               nickname: form.nickname,
               email: form.email,
               password: form.password,
-              password_confirmation: form.password_confirmation,
               password_updated_at: an_instance_of(ActiveSupport::TimeWithZone),
               tos_agreement: form.tos_agreement,
               newsletter_notifications_at: form.newsletter_at,
