@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-extra_user_fields (0.27.2)
+    decidim-extra_user_fields (0.28.0)
       country_select (~> 4.0)
       decidim-core (>= 0.28)
       deface (~> 1.5)

@@ -4,7 +4,7 @@ module Decidim
   # This holds the decidim-extra_user_fields version.
   module ExtraUserFields
     def self.version
-      "0.27.2"
+      "0.28.0"
     end
 
     def self.decidim_version
