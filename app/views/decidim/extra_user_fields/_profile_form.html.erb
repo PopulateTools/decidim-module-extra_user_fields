@@ -16,18 +16,8 @@
   <%= f.text_field :postal_code %>
 <% end %>
 
-<%
-# TODO: move wherever it takes
-def telephone_pattern
-  "^(\\+34)?[0-9 ]{9,12}$"
-end
-
-def telephone_placeholder
-  "+34987654321"
-end
-%>
 <% if current_organization.activated_extra_field?(:phone_number) %>
-  <%= f.telephone_field :phone_number, placeholder: telephone_placeholder, pattern: telephone_pattern %>
+  <%= f.telephone_field :phone_number, placeholder: f.object.phone_number_extra_user_field_placeholder, pattern: f.object.phone_number_extra_user_field_pattern %>
 <% end %>
 
 <% if current_organization.activated_extra_field?(:location) %>
