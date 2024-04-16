@@ -8,9 +8,7 @@
 
 <% if current_organization.activated_extra_field?(:country) %>
   <%= f.label :country do %>
-    <%# TODO: include the required attribute properly %>
-    <%= t("activemodel.attributes.user.country") %>
-    <%= f.country_select :country %>
+    <%= f.custom_country_select :country %>
   <% end %>
 <% end %>
 
