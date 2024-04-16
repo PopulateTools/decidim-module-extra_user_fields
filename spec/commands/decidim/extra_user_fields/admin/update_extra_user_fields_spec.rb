@@ -7,7 +7,7 @@ module Decidim
     module Admin
       describe UpdateExtraUserFields do
         let(:organization) { create(:organization, extra_user_fields: {}) }
-        let(:user) { create :user, :admin, :confirmed, organization: organization }
+        let(:user) { create(:user, :admin, :confirmed, organization:) }
 
         let(:extra_user_fields_enabled) { true }
         let(:postal_code) { true }

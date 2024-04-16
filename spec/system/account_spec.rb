@@ -5,12 +5,12 @@ require "spec_helper"
 describe "Account", type: :system do
   shared_examples_for "does not display extra user field" do |field, label|
     it "does not display field '#{field}'" do
-      expect(page).not_to have_content(label)
+      expect(page).to have_no_content(label)
     end
   end
 
-  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
-  let(:user) { create(:user, :confirmed, organization: organization, password: password, password_confirmation: password) }
+  let(:organization) { create(:organization, extra_user_fields:) }
+  let(:user) { create(:user, :confirmed, organization:, password:, password_confirmation: password) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do

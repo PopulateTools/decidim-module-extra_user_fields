@@ -10,7 +10,7 @@ describe "Admin manages officializations", type: :system do
 
   let(:organization) { create(:organization) }
 
-  let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:admin) { create(:user, :admin, :confirmed, organization:) }
 
   before do
     switch_to_host(organization.host)

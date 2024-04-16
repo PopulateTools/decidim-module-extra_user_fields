@@ -12,7 +12,7 @@ module Decidim
               content_tag(:li, class: "exports--format--#{format.downcase} export--users") do
                 link_to(
                   t("decidim.admin.exports.export_as", name: t("decidim.extra_user_fields.admin.exports.users"), export_format: format.upcase),
-                  AdminEngine.routes.url_helpers.extra_user_fields_export_users_path(format: format)
+                  AdminEngine.routes.url_helpers.extra_user_fields_export_users_path(format:)
                 )
               end
             end.join.html_safe

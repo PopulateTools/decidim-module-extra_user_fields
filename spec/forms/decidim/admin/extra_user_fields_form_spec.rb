@@ -19,7 +19,7 @@ module Decidim
 
         let(:attributes) do
           {
-            extra_user_fields: extra_user_fields
+            extra_user_fields:
           }
         end
 

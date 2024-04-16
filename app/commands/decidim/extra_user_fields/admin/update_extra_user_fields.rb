@@ -34,7 +34,7 @@ module Decidim
           Decidim.traceability.update!(
             form.current_organization,
             form.current_user,
-            extra_user_fields: extra_user_fields
+            extra_user_fields:
           )
         end
 

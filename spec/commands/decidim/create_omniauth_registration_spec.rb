@@ -20,12 +20,12 @@ module Decidim
         let(:postal_code) { "75001" }
         let(:extended_data) do
           {
-            country: country,
-            date_of_birth: date_of_birth,
-            gender: gender,
-            location: location,
-            phone_number: phone_number,
-            postal_code: postal_code
+            country:,
+            date_of_birth:,
+            gender:,
+            location:,
+            phone_number:,
+            postal_code:
           }
         end
 
@@ -119,7 +119,7 @@ module Decidim
           end
 
           it "notifies about registration with oauth data" do
-            user = create(:user, email: email, organization: organization)
+            user = create(:user, email:, organization:)
             identity = Decidim::Identity.new(id: 1234)
             allow(command).to receive(:create_identity).and_return(identity)
 
@@ -129,9 +129,9 @@ module Decidim
                 "decidim.user.omniauth_registration",
                 user_id: user.id,
                 identity_id: 1234,
-                provider: provider,
-                uid: uid,
-                email: email,
+                provider:,
+                uid:,
+                email:,
                 name: "Facebook User",
                 nickname: "facebook_user",
                 avatar_url: "http://www.example.com/foo.jpg",
@@ -145,17 +145,17 @@ module Decidim
               let(:verified_email) { email }
 
               it "links a previously existing user" do
-                user = create(:user, email: email, organization: organization)
+                user = create(:user, email:, organization:)
                 expect { command.call }.not_to change(User, :count)
 
                 expect(user.identities.length).to eq(1)
               end
 
               it "confirms a previously existing user" do
-                create(:user, email: email, organization: organization)
+                create(:user, email:, organization:)
                 expect { command.call }.not_to change(User, :count)
 
-                user = User.find_by(email: email)
+                user = User.find_by(email:)
                 expect(user).to be_confirmed
               end
             end
@@ -164,17 +164,17 @@ module Decidim
               let(:verified_email) { nil }
 
               it "doesn't link a previously existing user" do
-                user = create(:user, email: email, organization: organization)
+                user = create(:user, email:, organization:)
                 expect { command.call }.to broadcast(:error)
 
                 expect(user.identities.length).to eq(0)
               end
 
               it "doesn't confirm a previously existing user" do
-                create(:user, email: email, organization: organization)
+                create(:user, email:, organization:)
                 expect { command.call }.to broadcast(:error)
 
-                user = User.find_by(email: email)
+                user = User.find_by(email:)
                 expect(user).not_to be_confirmed
               end
             end
@@ -200,8 +200,8 @@ module Decidim
 
         context "when a user exists with that identity" do
           before do
-            user = create(:user, email: email, organization: organization)
-            create(:identity, user: user, provider: provider, uid: uid)
+            user = create(:user, email:, organization:)
+            create(:identity, user:, provider:, uid:)
           end
 
           it "broadcasts ok" do
@@ -212,7 +212,7 @@ module Decidim
             it "confirms the user" do
               command.call
 
-              user = User.find_by(email: email)
+              user = User.find_by(email:)
               expect(user).to be_confirmed
             end
           end
@@ -223,7 +223,7 @@ module Decidim
             it "doesn't confirm the user" do
               command.call
 
-              user = User.find_by(email: email)
+              user = User.find_by(email:)
               expect(user).not_to be_confirmed
             end
           end

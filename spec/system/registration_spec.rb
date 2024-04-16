@@ -33,8 +33,8 @@ describe "Extra user fields", type: :system do
     end
   end
 
-  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
-  let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  let(:organization) { create(:organization, extra_user_fields:) }
+  let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization:) }
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
@@ -123,12 +123,12 @@ describe "Extra user fields", type: :system do
     let(:organization) { create(:organization, :extra_user_fields_disabled) }
 
     it "does not contain extra user fields" do
-      expect(page).not_to have_content("Date of birth")
-      expect(page).not_to have_content("Gender")
-      expect(page).not_to have_content("Country")
-      expect(page).not_to have_content("Postal code")
-      expect(page).not_to have_content("Phone Number")
-      expect(page).not_to have_content("Location")
+      expect(page).to have_no_content("Date of birth")
+      expect(page).to have_no_content("Gender")
+      expect(page).to have_no_content("Country")
+      expect(page).to have_no_content("Postal code")
+      expect(page).to have_no_content("Phone Number")
+      expect(page).to have_no_content("Location")
       # Block ExtraUserFields DoesNotContainFieldSpec
 
       # EndBlock

@@ -9,12 +9,12 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:registration_metadata) do
     {
-      gender: gender,
-      postal_code: postal_code,
-      date_of_birth: date_of_birth,
-      country: country,
-      phone_number: phone_number,
-      location: location,
+      gender:,
+      postal_code:,
+      date_of_birth:,
+      country:,
+      phone_number:,
+      location:,
       # Block ExtraUserFields ExtraUserFields
 
       # EndBlock

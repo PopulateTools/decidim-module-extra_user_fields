@@ -24,12 +24,12 @@ module Decidim
         let(:postal_code) { "75001" }
         let(:extended_data) do
           {
-            country: country,
-            date_of_birth: date_of_birth,
-            gender: gender,
-            location: location,
-            phone_number: phone_number,
-            postal_code: postal_code
+            country:,
+            date_of_birth:,
+            gender:,
+            location:,
+            phone_number:,
+            postal_code:
           }
         end
 
@@ -55,7 +55,7 @@ module Decidim
         let(:form) do
           RegistrationForm.from_params(
             form_params,
-            current_locale: current_locale
+            current_locale:
           ).with_context(
             current_organization: organization
           )
@@ -78,7 +78,7 @@ module Decidim
           end
 
           context "when the user was already invited" do
-            let(:user) { build(:user, email: email, organization: organization) }
+            let(:user) { build(:user, email:, organization:) }
 
             before do
               user.invite!
@@ -112,16 +112,16 @@ module Decidim
               password_updated_at: an_instance_of(ActiveSupport::TimeWithZone),
               tos_agreement: form.tos_agreement,
               newsletter_notifications_at: form.newsletter_at,
-              organization: organization,
+              organization:,
               accepted_tos_version: organization.tos_version,
               locale: form.current_locale,
               extended_data: {
-                country: country,
+                country:,
                 date_of_birth: Date.parse(date_of_birth),
-                gender: gender,
-                location: location,
-                phone_number: phone_number,
-                postal_code: postal_code
+                gender:,
+                location:,
+                phone_number:,
+                postal_code:
               }
             ).and_call_original
 

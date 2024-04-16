@@ -27,19 +27,19 @@ module Decidim
 
     let(:attributes) do
       {
-        email: email,
+        email:,
         email_verified: true,
-        name: name,
-        provider: provider,
-        uid: uid,
-        oauth_signature: oauth_signature,
+        name:,
+        provider:,
+        uid:,
+        oauth_signature:,
         avatar_url: "http://www.example.org/foo.jpg",
-        country: country,
-        postal_code: postal_code,
-        date_of_birth: date_of_birth,
-        gender: gender,
-        phone_number: phone_number,
-        location: location
+        country:,
+        postal_code:,
+        date_of_birth:,
+        gender:,
+        phone_number:,
+        location:
       }
     end
 
