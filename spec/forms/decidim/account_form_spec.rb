@@ -163,7 +163,7 @@ module Decidim
       context "when the password is weak" do
         let(:password) { "aaaabbbbcccc" }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
     end
 

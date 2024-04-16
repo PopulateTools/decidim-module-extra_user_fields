@@ -24,7 +24,7 @@ def fill_extra_user_fields
   # EndBlock
 end
 
-describe "Extra user fields", type: :system do
+describe "Extra user fields" do
   shared_examples_for "mandatory extra user fields" do |field|
     it "displays #{field} as mandatory" do
       within "label[for='registration_user_#{field}']" do

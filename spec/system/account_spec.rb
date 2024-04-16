@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Account", type: :system do
+describe "Account" do
   shared_examples_for "does not display extra user field" do |field, label|
     it "does not display field '#{field}'" do
       expect(page).to have_no_content(label)

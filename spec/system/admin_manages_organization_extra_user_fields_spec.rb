@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin manages organization extra user fields", type: :system do
+describe "Admin manages organization extra user fields" do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :admin, :confirmed, organization:) }
 
