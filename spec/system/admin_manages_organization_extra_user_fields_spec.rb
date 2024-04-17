@@ -14,7 +14,7 @@ describe "Admin manages organization extra user fields" do
   it "creates a new item in submenu" do
     visit decidim_admin.edit_organization_path
 
-    within ".secondary-nav" do
+    within ".sidebar-menu" do
       expect(page).to have_content("Manage extra user fields")
     end
   end
@@ -25,8 +25,9 @@ describe "Admin manages organization extra user fields" do
     end
 
     it "displays the form" do
-      within "#extra_user_fields" do
+      within ".item_show__wrapper" do
         expect(page).to have_content("Manage extra user fields")
+        expect(page).to have_css("#extra_user_fields")
       end
     end
 
@@ -41,7 +42,7 @@ describe "Admin manages organization extra user fields" do
       it "flashes a success message" do
         page.check("extra_user_fields[enabled]")
 
-        find("*[type=submit]").click
+        find("*[type=submit]", text: "Save configuration").click
         expect(page).to have_content("Extra user fields correctly updated in organization")
       end
     end
