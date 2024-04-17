@@ -28,8 +28,17 @@ module Decidim
       )
     end
 
-    let(:user) { create(:user) }
-    let(:organization) { user.organization }
+    let(:user) { create(:user, password: user_password, organization:) }
+    let(:organization) { create(:organization, extra_user_fields:) }
+    let(:extra_user_fields) do
+      {
+        "enabled" => true,
+        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
+      }
+    end
+    let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
+    let(:user_password) { "decidim1234567890" }
+    let(:old_password) { user_password }
 
     let(:name) { "Lord of the Foo" }
     let(:email) { "depths@ofthe.bar" }
@@ -54,6 +63,14 @@ module Decidim
 
     context "with an empty name" do
       let(:name) { "" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+      end
+    end
+
+    context "with invalid phone number format" do
+      let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
 
       it "is invalid" do
         expect(subject).not_to be_valid
