@@ -22,7 +22,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   end
   # rubocop:enable Style/TrailingCommaInHashLiteral
 
-  let(:gender) { "Other" }
+  let(:gender) { "other" }
   let(:postal_code) { "00000" }
   let(:date_of_birth) { "01/01/2000" }
   let(:country) { "Argentina" }
