@@ -16,11 +16,15 @@ describe "Admin manages officializations" do
     switch_to_host(organization.host)
     login_as admin, scope: :user
     visit decidim_admin.root_path
-    click_on "Participants"
+    within ".layout-nav" do
+      click_on "Participants"
+    end
   end
 
   it "includes export dropdown button" do
-    click_on "Participants"
+    within ".sidebar-menu" do
+      click_on "Participants"
+    end
 
     expect(page).to have_content("Export")
   end
