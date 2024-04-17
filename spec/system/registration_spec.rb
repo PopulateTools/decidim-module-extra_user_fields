@@ -4,10 +4,8 @@ require "spec_helper"
 
 def fill_registration_form
   fill_in :registration_user_name, with: "Nikola Tesla"
-  fill_in :registration_user_nickname, with: "the-greatest-genius-in-history"
   fill_in :registration_user_email, with: "nikola.tesla@example.org"
   fill_in :registration_user_password, with: "sekritpass123"
-  fill_in :registration_user_password_confirmation, with: "sekritpass123"
   page.check("registration_user_newsletter")
   page.check("registration_user_tos_agreement")
 end
