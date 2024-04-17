@@ -14,7 +14,19 @@ module Decidim
       )
     end
 
-    let(:organization) { create(:organization) }
+    let(:organization) { create(:organization, extra_user_fields:) }
+    let(:extra_user_fields) do
+      {
+        "enabled" => true,
+        "country" => { "enabled" => true },
+        "postal_code" => { "enabled" => true },
+        "date_of_birth" => { "enabled" => true },
+        "gender" => { "enabled" => true },
+        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil },
+        "location" => { "enabled" => true }
+      }
+    end
+    let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
     let(:name) { "User" }
     let(:email) { "user@example.org" }
     let(:password) { "S4CGQ9AM4ttJdPKS" }
@@ -63,6 +75,14 @@ module Decidim
       let(:name) { nil }
 
       it { is_expected.not_to be_valid }
+    end
+
+    context "with invalid phone number format" do
+      let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+      end
     end
 
     context "when the email is not present" do
