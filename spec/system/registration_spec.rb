@@ -66,8 +66,9 @@ describe "Extra user fields" do
   end
 
   let(:phone_number) do
-    { "enabled" => true }
+    { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
   end
+  let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
 
   let(:location) do
     { "enabled" => true }
@@ -105,6 +106,39 @@ describe "Extra user fields" do
     end
 
     expect(page).to have_content("message with a confirmation link has been sent")
+  end
+
+  context "with phone number pattern blank" do
+    let(:phone_number_pattern) { nil }
+
+    it "allows to create a new account" do
+      fill_registration_form
+      fill_extra_user_fields
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_content("message with a confirmation link has been sent")
+    end
+  end
+
+  context "with phone number pattern not compatible with number" do
+    let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
+
+    it "does not allow to create a new account" do
+      fill_registration_form
+      fill_extra_user_fields
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_no_content("message with a confirmation link has been sent")
+      within("label[for='registration_user_phone_number']") do
+        expect(page).to have_content("There is an error in this field.")
+      end
+    end
   end
 
   it_behaves_like "mandatory extra user fields", "date_of_birth"
