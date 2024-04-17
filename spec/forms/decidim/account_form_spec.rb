@@ -33,7 +33,12 @@ module Decidim
     let(:extra_user_fields) do
       {
         "enabled" => true,
-        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
+        "country" => { "enabled" => true },
+        "postal_code" => { "enabled" => true },
+        "date_of_birth" => { "enabled" => true },
+        "gender" => { "enabled" => true },
+        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil },
+        "location" => { "enabled" => true }
       }
     end
     let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
