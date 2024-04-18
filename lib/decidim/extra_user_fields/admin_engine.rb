@@ -36,17 +36,13 @@ module Decidim
         end
       end
 
-      initializer "decidim_extra_user_fields.icons" do
-        Decidim.icons.register(name: "input-field", icon: "input-field", category: "system", description: "", engine: :extra_user_fields)
-      end
-
       initializer "decidim_extra_user_fields.admin_settings_menu" do
         Decidim.menu :admin_settings_menu do |menu|
           menu.add_item :extra_user_fields,
                         t("decidim.admin.extra_user_fields.menu.title"),
                         decidim_extra_user_fields.root_path,
                         position: 11,
-                        icon_name: "input-field"
+                        icon_name: "list-check"
         end
       end
 
