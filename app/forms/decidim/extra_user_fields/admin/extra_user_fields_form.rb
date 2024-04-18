@@ -15,7 +15,7 @@ module Decidim
         attribute :location, Boolean
 
         attribute :phone_number_pattern, String
-        attribute :phone_number_placeholder, String
+        translatable_attribute :phone_number_placeholder, String
         # Block ExtraUserFields Attributes
 
         # EndBlock
