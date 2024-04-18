@@ -47,7 +47,10 @@ en:
               description: This field is a telephone field. If checked, user will
                 have to fill in a phone number
               label: Enable phone number field
-              pattern: Phone numbers validation pattern (regex)
+              pattern: Phone numbers validation pattern (regexp)
+              pattern_help_html: Copy this regular expression <code class="label">^(\+34|0034|34)?[
+                -]*[6-9][ -]*([0-9][ -]*){8}$</code> to validate this phone format
+                +34999111222
               placeholder: Phone number placeholder
             postal_code:
               description: This field is a String field. If checked, user will have

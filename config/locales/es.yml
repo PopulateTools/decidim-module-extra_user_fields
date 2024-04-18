@@ -42,7 +42,8 @@ es:
             phone_number:
               description: Este campo es un campo telefónico. Si está marcado, el usuario deberá ingresar un número de teléfono.
               label: Habilitar campo de número de teléfono
-              pattern: Patrón de validación de números de teléfono (regex)
+              pattern: Patrón de validación de números de teléfono (regexp)
+              pattern_help_html: 'Copia esta expresión regular <code class="label">^(\+34|0034|34)?[ -]*[6-9][ -]*([0-9][ -]*){8}$</code> para validar este formato de teléfono +34999111222'
               placeholder: Placeholder para el número de teléfono
             postal_code:
               description: este campo es un campo de texto. Si está marcado, el usuario deberá ingresar un código postal.
