@@ -11,12 +11,12 @@
 
     <div id="panel-global" class="card-section">
       <div class="row column">
-        <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled") %>
+        <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled"), data: { toggle: "accordion-setup" } %>
       </div>
     </div>
   </div>
 
-  <div class="card" data-component="accordion" id="accordion-setup">
+  <div class="card" data-component="accordion" id="accordion-setup" <%= "hidden" unless form.object.enabled %>>
     <div class="card-divider">
       <button class="card-divider-button" data-open="true" data-controls="panel-setup" type="button">
         <%= icon "arrow-right-s-line" %>

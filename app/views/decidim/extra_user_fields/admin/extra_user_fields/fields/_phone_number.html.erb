@@ -1,8 +1,8 @@
 <div class="card-section">
   <div class="row column">
-    <%= form.check_box :phone_number, label: t(".label"), help_text: t(".description") %>
+    <%= form.check_box :phone_number, label: t(".label"), help_text: t(".description"), data: { toggle: "phone_fields" } %>
   </div>
-  <div class="row column pl-4">
+  <div class="row column pl-4" id="phone_fields" <%= "hidden" unless form.object.phone_number %>>
     <%= form.text_field :phone_number_pattern, label: t(".pattern"), placeholder: "^(\\+34)?[0-9 ]{9,12}$" %>
     <%= form.text_field :phone_number_placeholder, label: t(".placeholder"), placeholder: "+34987654321" %>
   </div>
