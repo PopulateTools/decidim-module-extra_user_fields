@@ -50,7 +50,8 @@ es:
               pattern: Patrón de validación de números de teléfono (regexp)
               pattern_help_html: Copia esta expresión regular <code class="label">^(\+34|0034|34)?[
                 -]*[6-9][ -]*([0-9][ -]*){8}$</code> para validar este formato de
-                teléfono +34999111222
+                teléfono +34999111222. Puedes revisar y editar la expresión regular
+                <a href="https://rubular.com/r/dJZGjlLIadxElo" target="_blank">aquí</a>.
               placeholder: Placeholder para el número de teléfono
             postal_code:
               description: este campo es un campo de texto. Si está marcado, el usuario

@@ -51,7 +51,8 @@ ca:
               pattern: Patró de validació de números de telèfon (regexp)
               pattern_help_html: Copia aquesta expressió regular <code class="label">^(\+34|0034|34)?[
                 -]*[6-9][ -]*([0-9][ -]*){8}$</code> per validar aquest format de
-                telèfono +34999111222
+                telèfono +34999111222. Podeu revisar i comprovar l'expressió regular
+                <a href="https://rubular.com/r/dJZGjlLIadxElo" target="_blank">aquí</a>.
               placeholder: Placeholder pel número de telèfon
             postal_code:
               description: Aquest camp és un camp de text. Si está activat, l'usuari
