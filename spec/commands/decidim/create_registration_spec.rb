@@ -12,24 +12,23 @@ module Decidim
         let(:nickname) { "nickname" }
         let(:email) { "user@example.org" }
         let(:password) { "Y1fERVzL2F" }
-        let(:password_confirmation) { password }
         let(:tos_agreement) { "1" }
         let(:newsletter) { "1" }
         let(:current_locale) { "es" }
         let(:country) { "Argentina" }
         let(:date_of_birth) { "01/01/2000" }
-        let(:gender) { "Other" }
+        let(:gender) { "other" }
         let(:location) { "Paris" }
         let(:phone_number) { "0123456789" }
         let(:postal_code) { "75001" }
         let(:extended_data) do
           {
-            country: country,
-            date_of_birth: date_of_birth,
-            gender: gender,
-            location: location,
-            phone_number: phone_number,
-            postal_code: postal_code
+            country:,
+            date_of_birth:,
+            gender:,
+            location:,
+            phone_number:,
+            postal_code:
           }
         end
 
@@ -40,7 +39,6 @@ module Decidim
               "nickname" => nickname,
               "email" => email,
               "password" => password,
-              "password_confirmation" => password_confirmation,
               "tos_agreement" => tos_agreement,
               "newsletter_at" => newsletter,
               "country" => country,
@@ -55,7 +53,7 @@ module Decidim
         let(:form) do
           RegistrationForm.from_params(
             form_params,
-            current_locale: current_locale
+            current_locale:
           ).with_context(
             current_organization: organization
           )
@@ -78,7 +76,7 @@ module Decidim
           end
 
           context "when the user was already invited" do
-            let(:user) { build(:user, email: email, organization: organization) }
+            let(:user) { build(:user, email:, organization:) }
 
             before do
               user.invite!
@@ -108,20 +106,19 @@ module Decidim
               nickname: form.nickname,
               email: form.email,
               password: form.password,
-              password_confirmation: form.password_confirmation,
               password_updated_at: an_instance_of(ActiveSupport::TimeWithZone),
               tos_agreement: form.tos_agreement,
               newsletter_notifications_at: form.newsletter_at,
-              organization: organization,
+              organization:,
               accepted_tos_version: organization.tos_version,
               locale: form.current_locale,
               extended_data: {
-                country: country,
+                country:,
                 date_of_birth: Date.parse(date_of_birth),
-                gender: gender,
-                location: location,
-                phone_number: phone_number,
-                postal_code: postal_code
+                gender:,
+                location:,
+                phone_number:,
+                postal_code:
               }
             ).and_call_original
 

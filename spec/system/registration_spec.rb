@@ -4,10 +4,8 @@ require "spec_helper"
 
 def fill_registration_form
   fill_in :registration_user_name, with: "Nikola Tesla"
-  fill_in :registration_user_nickname, with: "the-greatest-genius-in-history"
   fill_in :registration_user_email, with: "nikola.tesla@example.org"
   fill_in :registration_user_password, with: "sekritpass123"
-  fill_in :registration_user_password_confirmation, with: "sekritpass123"
   page.check("registration_user_newsletter")
   page.check("registration_user_tos_agreement")
 end
@@ -24,7 +22,7 @@ def fill_extra_user_fields
   # EndBlock
 end
 
-describe "Extra user fields", type: :system do
+describe "Extra user fields" do
   shared_examples_for "mandatory extra user fields" do |field|
     it "displays #{field} as mandatory" do
       within "label[for='registration_user_#{field}']" do
@@ -33,8 +31,8 @@ describe "Extra user fields", type: :system do
     end
   end
 
-  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
-  let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization) }
+  let(:organization) { create(:organization, extra_user_fields:) }
+  let!(:terms_and_conditions_page) { Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization:) }
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
     {
@@ -68,8 +66,9 @@ describe "Extra user fields", type: :system do
   end
 
   let(:phone_number) do
-    { "enabled" => true }
+    { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
   end
+  let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
 
   let(:location) do
     { "enabled" => true }
@@ -85,7 +84,7 @@ describe "Extra user fields", type: :system do
   end
 
   it "contains extra user fields" do
-    within ".card__extra_user_fields" do
+    within "#card__extra_user_fields" do
       expect(page).to have_content("Date of birth")
       expect(page).to have_content("Gender")
       expect(page).to have_content("Country")
@@ -109,6 +108,39 @@ describe "Extra user fields", type: :system do
     expect(page).to have_content("message with a confirmation link has been sent")
   end
 
+  context "with phone number pattern blank" do
+    let(:phone_number_pattern) { nil }
+
+    it "allows to create a new account" do
+      fill_registration_form
+      fill_extra_user_fields
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_content("message with a confirmation link has been sent")
+    end
+  end
+
+  context "with phone number pattern not compatible with number" do
+    let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
+
+    it "does not allow to create a new account" do
+      fill_registration_form
+      fill_extra_user_fields
+
+      within "form.new_user" do
+        find("*[type=submit]").click
+      end
+
+      expect(page).to have_no_content("message with a confirmation link has been sent")
+      within("label[for='registration_user_phone_number']") do
+        expect(page).to have_content("There is an error in this field.")
+      end
+    end
+  end
+
   it_behaves_like "mandatory extra user fields", "date_of_birth"
   it_behaves_like "mandatory extra user fields", "gender"
   it_behaves_like "mandatory extra user fields", "country"
@@ -123,12 +155,12 @@ describe "Extra user fields", type: :system do
     let(:organization) { create(:organization, :extra_user_fields_disabled) }
 
     it "does not contain extra user fields" do
-      expect(page).not_to have_content("Date of birth")
-      expect(page).not_to have_content("Gender")
-      expect(page).not_to have_content("Country")
-      expect(page).not_to have_content("Postal code")
-      expect(page).not_to have_content("Phone Number")
-      expect(page).not_to have_content("Location")
+      expect(page).to have_no_content("Date of birth")
+      expect(page).to have_no_content("Gender")
+      expect(page).to have_no_content("Country")
+      expect(page).to have_no_content("Postal code")
+      expect(page).to have_no_content("Phone Number")
+      expect(page).to have_no_content("Location")
       # Block ExtraUserFields DoesNotContainFieldSpec
 
       # EndBlock

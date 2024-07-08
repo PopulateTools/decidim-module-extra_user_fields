@@ -10,6 +10,14 @@ ca:
         phone_number: Telèfon
         postal_code: Codi postal
   decidim:
+    admin:
+      actions:
+        export: Exporta
+      exports:
+        export_as: Exporta com a %{export_format}
+      extra_user_fields:
+        menu:
+          title: Gestiona camps d'usuari addicionals
     components:
       extra_user_fields:
         name: ExtraUserFields
@@ -17,7 +25,60 @@ ca:
       admin:
         exports:
           users: Participants
+        extra_user_fields:
+          fields:
+            country:
+              description: Aquest camp és una llista de països. Si está activat, l'usuari
+                haurà de triar un país.
+              label: Habilitar camp de país
+            date_of_birth:
+              description: Aquest camp és un camp de data. Si está activat, l'usuari
+                haurà de registrar una data de naixement mitjançant un selector de
+                data.
+              label: Habilitar camp de data de naixement
+            gender:
+              description: Aquest camp és una llista de gèneres. Si está activat,
+                l'usuari haurà de triar un gènere.
+              label: Habilitar camp de gènere
+            location:
+              description: Aquest camp és un camp de text. Si está activat, l'usuari
+                haurà de completar una ubicació.
+              label: Habilita camp d'ubicació
+            phone_number:
+              description: Aquest camp és un camp telefònic. Si está activat, l'usuari
+                haurà d'introduir un número de telèfon.
+              label: Habilitar camp de número de telèfon
+              pattern: Patró de validació de números de telèfon (regexp)
+              pattern_help_html: Copia aquesta expressió regular <code class="label">^(\+34|0034|34)?[
+                -]*[6-9][ -]*([0-9][ -]*){8}$</code> per validar aquest format de
+                telèfono +34999111222. Podeu revisar i comprovar l'expressió regular
+                <a href="https://rubular.com/r/dJZGjlLIadxElo" target="_blank">aquí</a>.
+              placeholder: Placeholder pel número de telèfon
+            postal_code:
+              description: Aquest camp és un camp de text. Si está activat, l'usuari
+                haurà d'introduir un codi postal.
+              label: Habilitar camp de codi postal
+          form:
+            callout:
+              help: Activa la funcionalitat de camps d'usuari addicionals personalitzats
+                per poder gestionar-los al vostre formulari de registre. Fins i tot
+                si l'opció està marcada, el formulari de registre només s'actualitzarà
+                si hi ha almenys un camp activat
+            extra_user_fields:
+              extra_user_fields_enabled: Activa els camps d'usuari addicionals
+              section: Camps addicionals disponibles per al formulari d'inscripció
+            global:
+              title: Activar / desactivar la funcionalitat
+          index:
+            save: Desa la configuració
+            title: Gestiona camps d'usuari addicionals
+          update:
+            failure: S'ha produït un error en l'actualització
+            success: Camps d'usuari addicionals actualitzats correctament a l'organització
       genders:
         female: Dona
         male: Home
         other: Altre
+      registration_form:
+        signup:
+          legend: Més informació

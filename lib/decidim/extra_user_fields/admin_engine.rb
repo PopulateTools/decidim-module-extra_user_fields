@@ -41,7 +41,8 @@ module Decidim
           menu.add_item :extra_user_fields,
                         t("decidim.admin.extra_user_fields.menu.title"),
                         decidim_extra_user_fields.root_path,
-                        position: 11
+                        position: 11,
+                        icon_name: "list-check"
         end
       end
 

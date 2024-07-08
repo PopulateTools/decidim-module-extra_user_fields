@@ -5,6 +5,7 @@ require "decidim/extra_user_fields/test/factories"
 FactoryBot.modify do
   factory :organization, class: "Decidim::Organization" do
     transient do
+      skip_injection { false }
       create_static_pages { true }
     end
 
@@ -22,7 +23,6 @@ FactoryBot.modify do
     default_locale { Decidim.default_locale }
     available_locales { Decidim.available_locales }
     users_registration_mode { :enabled }
-    official_img_header { Decidim::Dev.test_file("avatar.jpg", "image/jpeg") }
     official_img_footer { Decidim::Dev.test_file("avatar.jpg", "image/jpeg") }
     official_url { Faker::Internet.url }
     highlighted_content_banner_enabled { false }
@@ -31,7 +31,7 @@ FactoryBot.modify do
     user_groups_enabled { true }
     send_welcome_notification { true }
     comments_max_length { 1000 }
-    admin_terms_of_use_body { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    admin_terms_of_service_body { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     force_users_to_authenticate_before_access_organization { false }
     machine_translation_display_priority { "original" }
     external_domain_whitelist { ["example.org", "twitter.com", "facebook.com", "youtube.com", "github.com", "mytesturl.me"] }
@@ -51,6 +51,25 @@ FactoryBot.modify do
         "enabled" => true
       }
     end
+    content_security_policy do
+      {
+        "default-src" => "localhost:* #{host}:*",
+        "script-src" => "localhost:* #{host}:*",
+        "style-src" => "localhost:* #{host}:*",
+        "img-src" => "localhost:* #{host}:*",
+        "font-src" => "localhost:* #{host}:*",
+        "connect-src" => "localhost:* #{host}:*",
+        "frame-src" => "localhost:* #{host}:* www.example.org",
+        "media-src" => "localhost:* #{host}:*"
+      }
+    end
+    colors do
+      {
+        primary: "#e02d2d",
+        secondary: "#155abf",
+        tertiary: "#ebc34b"
+      }
+    end
 
     trait :extra_user_fields_disabled do
       extra_user_fields do
@@ -66,8 +85,8 @@ FactoryBot.modify do
 
     after(:create) do |organization, evaluator|
       if evaluator.create_static_pages
-        tos_page = Decidim::StaticPage.find_by(slug: "terms-and-conditions", organization: organization)
-        create(:static_page, :tos, organization: organization) if tos_page.nil?
+        tos_page = Decidim::StaticPage.find_by(slug: "terms-of-service", organization:)
+        create(:static_page, :tos, organization:, skip_injection: evaluator.skip_injection) if tos_page.nil?
       end
     end
   end

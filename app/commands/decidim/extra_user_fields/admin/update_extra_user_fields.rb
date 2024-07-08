@@ -34,7 +34,7 @@ module Decidim
           Decidim.traceability.update!(
             form.current_organization,
             form.current_user,
-            extra_user_fields: extra_user_fields
+            extra_user_fields:
           )
         end
 
@@ -46,7 +46,11 @@ module Decidim
             "country" => { "enabled" => form.country.presence || false },
             "postal_code" => { "enabled" => form.postal_code.presence || false },
             "gender" => { "enabled" => form.gender.presence || false },
-            "phone_number" => { "enabled" => form.phone_number.presence || false },
+            "phone_number" => {
+              "enabled" => form.phone_number.presence || false,
+              "pattern" => form.phone_number_pattern.presence,
+              "placeholder" => form.phone_number_placeholder.presence
+            },
             "location" => { "enabled" => form.location.presence || false },
             # Block ExtraUserFields SaveFieldInConfig
 

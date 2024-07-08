@@ -28,35 +28,40 @@ en:
         extra_user_fields:
           fields:
             country:
-              description: This field is a list of countries. User will be able to
-                choose a country
+              description: This field is a list of countries. If checked, user will
+                have to choose a country
               label: Enable country field
             date_of_birth:
-              description: This field is a Date field. User will be able to register
-                a birth date by using a Date picker
+              description: This field is a Date field. If checked, user will have
+                to register a birth date by using a Date picker
               label: Enable date of birth field
             gender:
-              description: This field is a list of genders. User will be able to choose
-                a gender
+              description: This field is a list of genders. If checked, user will
+                have to choose a gender
               label: Enable gender field
             location:
-              description: This field is a String field. User will be able to fill
-                in a location
+              description: This field is a String field. If checked, user will have
+                to fill in a location
               label: Enable location field
             phone_number:
-              description: This field is a String field. User will be able to fill
-                in a phone number
+              description: This field is a telephone field. If checked, user will
+                have to fill in a phone number
               label: Enable phone number field
+              pattern: Phone numbers validation pattern (regexp)
+              pattern_help_html: Copy this regular expression <code class="label">^(\+34|0034|34)?[
+                -]*[6-9][ -]*([0-9][ -]*){8}$</code> to validate this phone format
+                +34999111222. You can review and check the regular expression <a href="https://rubular.com/r/dJZGjlLIadxElo"
+                target="_blank">here</a>.
+              placeholder: Phone number placeholder
             postal_code:
-              description: This field is a String field. User will be able to fill
-                in a postal code
+              description: This field is a String field. If checked, user will have
+                to fill in a postal code
               label: Enable postal code field
           form:
             callout:
               help: Enable custom extra user fields functionality to be able to manage
                 extra fields in your signup form. Even if option is checked, signup
-                form will be updated <strong>only if there is at least one extra field
-                enabled</strong>
+                form will be updated only if there is at least one extra field enabled
             extra_user_fields:
               extra_user_fields_enabled: Enable extra user fields
               section: Available extra fields for signup form

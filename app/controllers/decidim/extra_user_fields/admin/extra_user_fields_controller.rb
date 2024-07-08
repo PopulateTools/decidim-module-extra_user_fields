@@ -19,7 +19,7 @@ module Decidim
 
           @form = form(ExtraUserFieldsForm).from_params(
             params,
-            current_organization: current_organization
+            current_organization:
           )
 
           UpdateExtraUserFields.call(@form) do

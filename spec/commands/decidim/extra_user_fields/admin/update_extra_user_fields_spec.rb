@@ -7,7 +7,7 @@ module Decidim
     module Admin
       describe UpdateExtraUserFields do
         let(:organization) { create(:organization, extra_user_fields: {}) }
-        let(:user) { create :user, :admin, :confirmed, organization: organization }
+        let(:user) { create(:user, :admin, :confirmed, organization:) }
 
         let(:extra_user_fields_enabled) { true }
         let(:postal_code) { true }
@@ -15,6 +15,8 @@ module Decidim
         let(:gender) { true }
         let(:date_of_birth) { true }
         let(:phone_number) { true }
+        let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
+        let(:phone_number_placeholder) { "+34999888777" }
         let(:location) { true }
         # Block ExtraUserFields RspecVar
 
@@ -29,6 +31,8 @@ module Decidim
             "gender" => gender,
             "date_of_birth" => date_of_birth,
             "phone_number" => phone_number,
+            "phone_number_pattern" => phone_number_pattern,
+            "phone_number_placeholder" => phone_number_placeholder,
             "location" => location,
             # Block ExtraUserFields ExtraUserFields
 
@@ -80,7 +84,7 @@ module Decidim
               expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true })
               expect(extra_user_fields).to include("gender" => { "enabled" => true })
               expect(extra_user_fields).to include("country" => { "enabled" => true })
-              expect(extra_user_fields).to include("phone_number" => { "enabled" => true })
+              expect(extra_user_fields).to include("phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => phone_number_placeholder })
               expect(extra_user_fields).to include("location" => { "enabled" => true })
               # Block ExtraUserFields InclusionSpec
 

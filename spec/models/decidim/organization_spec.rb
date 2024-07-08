@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim
   describe Organization do
-    subject(:organization) { build(:organization, extra_user_fields: extra_user_fields) }
+    subject(:organization) { build(:organization, extra_user_fields:) }
 
     let(:extra_user_fields) do
       {
@@ -47,17 +47,17 @@ module Decidim
     describe "has an association for scopes" do
       subject(:organization_scopes) { organization.scopes }
 
-      let(:scopes) { create_list(:scope, 2, organization: organization) }
+      let(:scopes) { create_list(:scope, 2, organization:) }
 
-      it { is_expected.to contain_exactly(*scopes) }
+      it { is_expected.to match_array(scopes) }
     end
 
     describe "has an association for scope types" do
       subject(:organization_scopes_types) { organization.scope_types }
 
-      let(:scope_types) { create_list(:scope_type, 2, organization: organization) }
+      let(:scope_types) { create_list(:scope_type, 2, organization:) }
 
-      it { is_expected.to contain_exactly(*scope_types) }
+      it { is_expected.to match_array(scope_types) }
     end
 
     describe "validations" do
@@ -109,7 +109,7 @@ module Decidim
           }
         end
 
-        before { organization.update!(omniauth_settings: omniauth_settings) }
+        before { organization.update!(omniauth_settings:) }
 
         it "returns only the enabled settings" do
           expect(subject[:facebook][:app_id]).to eq("overriden-app-id")

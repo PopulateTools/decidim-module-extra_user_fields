@@ -29,6 +29,12 @@ module Decidim
         validates :date_of_birth, presence: true, if: :date_of_birth?
         validates :gender, presence: true, inclusion: { in: Decidim::ExtraUserFields::Engine::DEFAULT_GENDER_OPTIONS.map(&:to_s) }, if: :gender?
         validates :phone_number, presence: true, if: :phone_number?
+        validates(
+          :phone_number,
+          format: { with: ->(form) { Regexp.new(form.current_organization.extra_user_field_configuration(:phone_number)["pattern"]) } },
+          if: :phone_number_format?
+        )
+
         validates :location, presence: true, if: :location?
 
         # EndBlock
@@ -70,6 +76,12 @@ module Decidim
 
       def phone_number?
         extra_user_fields_enabled && current_organization.activated_extra_field?(:phone_number)
+      end
+
+      def phone_number_format?
+        return unless phone_number?
+
+        current_organization.extra_user_field_configuration(:phone_number)["pattern"].present?
       end
 
       def location?

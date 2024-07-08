@@ -1,5 +1,3 @@
-<!-- insert_bottom "h2.card-title" -->
+<!-- insert_bottom "h2.item_show__header-title" -->
 
-<div class="button--title">
-  <%= render partial: "decidim/extra_user_fields/admin/export_users/dropdown" %>
-</div>
+<%= render partial: "decidim/extra_user_fields/admin/export_users/dropdown" %>

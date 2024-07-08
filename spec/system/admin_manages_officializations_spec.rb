@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin manages officializations", type: :system do
+describe "Admin manages officializations" do
   include_context "with filterable context"
 
   let(:model_name) { Decidim::User.model_name }
@@ -10,17 +10,21 @@ describe "Admin manages officializations", type: :system do
 
   let(:organization) { create(:organization) }
 
-  let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:admin) { create(:user, :admin, :confirmed, organization:) }
 
   before do
     switch_to_host(organization.host)
     login_as admin, scope: :user
     visit decidim_admin.root_path
-    click_link "Participants"
+    within ".layout-nav" do
+      click_on "Participants"
+    end
   end
 
   it "includes export dropdown button" do
-    click_link "Participants"
+    within ".sidebar-menu" do
+      click_on "Participants"
+    end
 
     expect(page).to have_content("Export")
   end

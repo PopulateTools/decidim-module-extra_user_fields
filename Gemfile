@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-DECIDIM_VERSION = "~> 0.27.4"
+DECIDIM_VERSION = "~> 0.28"
 
 source "https://rubygems.org"
 
@@ -20,7 +20,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "faker", "~> 2.14"
+  gem "faker", "~> 3.3.1"
   gem "letter_opener_web", "~> 1.3"
   gem "listen", "~> 3.1"
   gem "rubocop-faker"

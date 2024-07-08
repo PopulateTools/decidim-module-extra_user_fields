@@ -22,6 +22,12 @@ module Decidim
       def activated_extra_field?(sym)
         extra_user_fields.dig(sym.to_s, "enabled") == true
       end
+
+      def extra_user_field_configuration(sym)
+        return {} unless activated_extra_field?(sym)
+
+        extra_user_fields[sym.to_s].except("enabled")
+      end
     end
   end
 end

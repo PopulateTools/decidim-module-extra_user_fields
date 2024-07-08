@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
-describe "Account", type: :system do
+describe "Account" do
   shared_examples_for "does not display extra user field" do |field, label|
     it "does not display field '#{field}'" do
-      expect(page).not_to have_content(label)
+      expect(page).to have_no_content(label)
     end
   end
 
-  let(:organization) { create(:organization, extra_user_fields: extra_user_fields) }
-  let(:user) { create(:user, :confirmed, organization: organization, password: password, password_confirmation: password) }
+  let(:organization) { create(:organization, extra_user_fields:) }
+  let(:user) { create(:user, :confirmed, organization:, password:, password_confirmation: password) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
   # rubocop:disable Style/TrailingCommaInHashLiteral
   let(:extra_user_fields) do
@@ -46,8 +46,9 @@ describe "Account", type: :system do
   end
 
   let(:phone_number) do
-    { "enabled" => true }
+    { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
   end
+  let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
 
   let(:location) do
     { "enabled" => true }
@@ -68,7 +69,7 @@ describe "Account", type: :system do
     end
 
     describe "updating personal data" do
-      it "updates the user's data" do
+      before do
         within "form.edit_user" do
           select "Castellano", from: :user_locale
           fill_in :user_name, with: "Nikola Tesla"
@@ -87,13 +88,31 @@ describe "Account", type: :system do
 
           find("*[type=submit]").click
         end
+      end
 
+      it "updates the user's data" do
         within_flash_messages do
           expect(page).to have_content("successfully")
         end
+      end
 
-        within ".title-bar" do
-          expect(page).to have_content("Nikola Tesla")
+      context "with phone number pattern blank" do
+        let(:phone_number_pattern) { nil }
+
+        it "updates the user's data" do
+          within_flash_messages do
+            expect(page).to have_content("successfully")
+          end
+        end
+      end
+
+      context "with phone number pattern not compatible with number" do
+        let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
+
+        it "does not update the user's data" do
+          within("label[for='user_phone_number']") do
+            expect(page).to have_content("There is an error in this field.")
+          end
         end
       end
     end

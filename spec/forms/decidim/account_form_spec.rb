@@ -6,43 +6,56 @@ module Decidim
   describe AccountForm do
     subject do
       described_class.new(
-        name: name,
-        email: email,
-        nickname: nickname,
-        password: password,
-        password_confirmation: password_confirmation,
-        avatar: avatar,
-        remove_avatar: remove_avatar,
-        personal_url: personal_url,
-        about: about,
+        name:,
+        email:,
+        nickname:,
+        password:,
+        old_password:,
+        avatar:,
+        remove_avatar:,
+        personal_url:,
+        about:,
         locale: "es",
-        country: country,
-        postal_code: postal_code,
-        date_of_birth: date_of_birth,
-        gender: gender,
-        phone_number: phone_number,
-        location: location
+        country:,
+        postal_code:,
+        date_of_birth:,
+        gender:,
+        phone_number:,
+        location:
       ).with_context(
         current_organization: organization,
         current_user: user
       )
     end
 
-    let(:user) { create(:user) }
-    let(:organization) { user.organization }
+    let(:user) { create(:user, password: user_password, organization:) }
+    let(:organization) { create(:organization, extra_user_fields:) }
+    let(:extra_user_fields) do
+      {
+        "enabled" => true,
+        "country" => { "enabled" => true },
+        "postal_code" => { "enabled" => true },
+        "date_of_birth" => { "enabled" => true },
+        "gender" => { "enabled" => true },
+        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil },
+        "location" => { "enabled" => true }
+      }
+    end
+    let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
+    let(:user_password) { "decidim1234567890" }
+    let(:old_password) { user_password }
 
     let(:name) { "Lord of the Foo" }
     let(:email) { "depths@ofthe.bar" }
     let(:nickname) { "foo_bar" }
     let(:password) { "Rf9kWTqQfyqkwseH" }
-    let(:password_confirmation) { password }
     let(:avatar) { upload_test_file(Decidim::Dev.test_file("avatar.jpg", "image/jpeg")) }
     let(:remove_avatar) { false }
     let(:personal_url) { "http://example.org" }
     let(:about) { "This is a description about me" }
     let(:country) { "Argentina" }
     let(:date_of_birth) { "01/01/2000" }
-    let(:gender) { "Other" }
+    let(:gender) { "other" }
     let(:location) { "Paris" }
     let(:phone_number) { "0123456789" }
     let(:postal_code) { "75001" }
@@ -55,6 +68,14 @@ module Decidim
 
     context "with an empty name" do
       let(:name) { "" }
+
+      it "is invalid" do
+        expect(subject).not_to be_valid
+      end
+    end
+
+    context "with invalid phone number format" do
+      let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
 
       it "is invalid" do
         expect(subject).not_to be_valid
@@ -88,9 +109,9 @@ module Decidim
         end
       end
 
-      context "when it's already in use in the same organization" do
+      context "when it is already in use in the same organization" do
         context "and belongs to a user" do
-          let!(:existing_user) { create(:user, email: email, organization: organization) }
+          let!(:existing_user) { create(:user, email:, organization:) }
 
           it "is invalid" do
             expect(subject).not_to be_valid
@@ -98,7 +119,7 @@ module Decidim
         end
 
         context "and belongs to a group" do
-          let!(:existing_group) { create(:user_group, email: email, organization: organization) }
+          let!(:existing_group) { create(:user_group, email:, organization:) }
 
           it "is invalid" do
             expect(subject).not_to be_valid
@@ -106,8 +127,8 @@ module Decidim
         end
       end
 
-      context "when it's already in use in another organization" do
-        let!(:existing_user) { create(:user, email: email) }
+      context "when it is already in use in another organization" do
+        let!(:existing_user) { create(:user, email:) }
 
         it "is valid" do
           expect(subject).to be_valid
@@ -124,9 +145,9 @@ module Decidim
         end
       end
 
-      context "when it's already in use in the same organization" do
+      context "when it is already in use in the same organization" do
         context "and belongs to a user" do
-          let!(:existing_user) { create(:user, nickname: nickname, organization: organization) }
+          let!(:existing_user) { create(:user, nickname:, organization:) }
 
           it "is invalid" do
             expect(subject).not_to be_valid
@@ -134,7 +155,7 @@ module Decidim
         end
 
         context "and belongs to a group" do
-          let!(:existing_group) { create(:user_group, nickname: nickname, organization: organization) }
+          let!(:existing_group) { create(:user_group, nickname:, organization:) }
 
           it "is invalid" do
             expect(subject).not_to be_valid
@@ -142,8 +163,8 @@ module Decidim
         end
       end
 
-      context "when it's already in use in another organization" do
-        let!(:existing_user) { create(:user, nickname: nickname) }
+      context "when it is already in use in another organization" do
+        let!(:existing_user) { create(:user, nickname:) }
 
         it "is valid" do
           expect(subject).to be_valid
@@ -163,12 +184,47 @@ module Decidim
       context "when the password is weak" do
         let(:password) { "aaaabbbbcccc" }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe "validate_old_password" do
+      context "when email changed" do
+        let(:password) { "" }
+        let(:email) { "foo@example.org" }
+
+        context "with correct old_password" do
+          it "is valid" do
+            expect(subject).to be_valid
+          end
+        end
+
+        context "with incorrect old_password" do
+          let(:old_password) { "foobar1234567890" }
+
+          it { is_expected.not_to be_valid }
+        end
+      end
+
+      context "when password present" do
+        let(:email) { user.email }
+
+        context "with correct old_password" do
+          it "is valid" do
+            expect(subject).to be_valid
+          end
+        end
+
+        context "with incorrect old_password" do
+          let(:old_password) { "foobar1234567890" }
+
+          it { is_expected.not_to be_valid }
+        end
       end
     end
 
     describe "personal_url" do
-      context "when it doesn't start with http" do
+      context "when it does not start with http" do
         let(:personal_url) { "example.org" }
 
         it "adds it" do
@@ -176,7 +232,7 @@ module Decidim
         end
       end
 
-      context "when it's not a valid URL" do
+      context "when it is not a valid URL" do
         let(:personal_url) { "foobar, aa" }
 
         it "is invalid" do
