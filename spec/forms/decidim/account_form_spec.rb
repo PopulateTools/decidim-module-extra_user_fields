@@ -24,8 +24,8 @@ module Decidim
         gender:,
         phone_number:,
         location:,
-        underage: underage,
-        statutory_representative_email: statutory_representative_email
+        underage:,
+        statutory_representative_email:
       ).with_context(
         current_organization: organization,
         current_user: user

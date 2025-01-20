@@ -18,7 +18,6 @@ module Decidim
         end
       end
 
-      # rubocop:disable Style/TrailingCommaInArrayLiteral
       def extra_fields
         [
           :gender,
@@ -34,7 +33,6 @@ module Decidim
           # EndBlock
         ]
       end
-      # rubocop:enable Style/TrailingCommaInArrayLiteral
     end
   end
 end

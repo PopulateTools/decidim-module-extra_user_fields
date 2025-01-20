@@ -8,7 +8,7 @@ module Decidim
       def retrieve_underage_limit
         underage_limit = current_organization.extra_user_fields["underage_limit"]
         if underage_limit.present?
-          render json: { underage_limit: underage_limit }
+          render json: { underage_limit: }
         else
           render json: { error: "Underage limit not found" }, status: :not_found
         end

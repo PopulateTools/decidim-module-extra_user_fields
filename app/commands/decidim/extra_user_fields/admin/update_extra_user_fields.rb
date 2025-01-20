@@ -38,7 +38,6 @@ module Decidim
           )
         end
 
-        # rubocop:disable Style/TrailingCommaInHashLiteral
         # rubocop:disable Metrics/CyclomaticComplexity
         def extra_user_fields
           {
@@ -60,7 +59,6 @@ module Decidim
             # EndBlock
           }
         end
-        # rubocop:enable Style/TrailingCommaInHashLiteral
         # rubocop:enable Metrics/CyclomaticComplexity
       end
     end

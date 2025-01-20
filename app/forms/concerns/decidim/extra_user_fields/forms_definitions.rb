@@ -139,7 +139,6 @@ module Decidim
       def underage_limit
         current_organization.extra_user_fields["underage_limit"]
       end
-
     end
   end
 end

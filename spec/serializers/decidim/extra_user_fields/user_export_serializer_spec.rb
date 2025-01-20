@@ -15,8 +15,8 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       country:,
       phone_number:,
       location:,
-      underage: underage,
-      statutory_representative_email: statutory_representative_email,
+      underage:,
+      statutory_representative_email:,
       # Block ExtraUserFields ExtraUserFields
 
       # EndBlock

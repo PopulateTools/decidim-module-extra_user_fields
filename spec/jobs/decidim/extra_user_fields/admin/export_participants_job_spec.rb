@@ -5,9 +5,9 @@ require "spec_helper"
 module Decidim
   module ExtraUserFields
     module Admin
-      describe ExportParticipantsJob, type: :job do
+      describe ExportParticipantsJob do
         let(:organization) { create(:organization, extra_user_fields: {}) }
-        let(:user) { create :user, :admin, :confirmed, organization: organization }
+        let(:user) { create(:user, :admin, :confirmed, organization:) }
         let(:format) { "CSV" }
 
         it "sends an email with a file attached" do

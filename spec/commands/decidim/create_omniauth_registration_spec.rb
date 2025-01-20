@@ -28,8 +28,8 @@ module Decidim
             location:,
             phone_number:,
             postal_code:,
-            underage: underage,
-            statutory_representative_email: statutory_representative_email
+            underage:,
+            statutory_representative_email:
           }
         end
 
