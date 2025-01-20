@@ -24,4 +24,9 @@
   <% if current_organization.activated_extra_field?(:location) %>
     <%= f.text_field :location %>
   <% end %>
+
+  <% if current_organization.activated_extra_field?(:underage) %>
+    <%= f.hidden_field :underage, value: current_user.extended_data["underage"] || "0" %>
+    <%= f.hidden_field :statutory_representative_email, value: current_user.extended_data["statutory_representative_email"] || "" %>
+  <% end %>
 <% end %>
