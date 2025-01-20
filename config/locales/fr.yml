@@ -9,6 +9,15 @@ fr:
         location: Localisation
         phone_number: Numéro de téléphone
         postal_code: Code postal
+        statutory_representative_email: Email du représentant légal
+        underage: Mineur
+    errors:
+      models:
+        user:
+          attributes:
+            date_of_birth:
+              underage: invalide. Si vous êtes mineur, vous devez obtenir une autorisation
+                parentale
   decidim:
     admin:
       actions:
@@ -57,6 +66,11 @@ fr:
               description: Ce champ est un champ code postal. L'utilisateur pourra
                 choisir un code postal.
               label: Activer le champ code postal
+            underage:
+              description: Ce champ est un champ booléen. L'utilisateur pourra cocher
+                s'il est mineur.
+              label: Activer le champ d'autorisation parentale
+              limit: Cela définit la limite d'âge (ex. 18 ans)
           form:
             callout:
               help: Activez la fonctionnalité des champs d'inscription personnalisés
@@ -81,3 +95,13 @@ fr:
       registration_form:
         signup:
           legend: Plus d'information
+          underage: Je suis âgé de moins de %{limit} ans et j'accepte d'obtenir une
+            autorisation parentale
+    statutory_representative:
+      inform:
+        body: |
+          Bonjour,
+          Vous avez été désigné comme représentant légal de %{name} pour son inscription à %{organization}.
+          Cordialement,
+          L'équipe de %{organization}
+        subject: Vous avez été désigné comme représentant légal

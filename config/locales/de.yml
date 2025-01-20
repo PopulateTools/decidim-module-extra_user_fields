@@ -1,0 +1,82 @@
+---
+de:
+  activemodel:
+    attributes:
+      user:
+        country: Land
+        date_of_birth: Geburtsdatum
+        gender: Geschlecht
+        location: Standort
+        phone_number: Telefonnummer
+        postal_code: Postleitzahl
+    errors:
+      models:
+        user:
+          attributes:
+            date_of_birth:
+              underage: ungültig. Wenn Sie minderjährig sind, müssen Sie die Erlaubnis der Eltern einholen
+  decidim:
+    admin:
+      actions:
+        export: Exportieren
+      exports:
+        export_as: Exportieren im Format %{export_format}
+      extra_user_fields:
+        menu:
+          title: Benutzerdefinierte Anmeldefelder verwalten
+    components:
+      extra_user_fields:
+        name: Benutzerdefinierte Anmeldefelder
+    extra_user_fields:
+      admin:
+        exports:
+          users: Teilnehmer
+        extra_user_fields:
+          fields:
+            country:
+              description: Dieses Feld enthält eine Liste von Ländern. Der Benutzer kann ein Land auswählen.
+              label: Das Feld Land aktivieren
+            date_of_birth:
+              description: Dieses Feld ist ein Feld für das Geburtsdatum. Der Benutzer kann ein Datum auswählen.
+              label: Das Feld Geburtsdatum aktivieren
+            gender:
+              description: Dieses Feld ist ein Feld für die Geschlechtsidentität. Der Benutzer kann ein Geschlecht auswählen.
+              label: Das Feld Geschlecht aktivieren
+            location:
+              description: Dieses Feld ermöglicht das Hinzufügen von Text. Der Benutzer kann einen Ort auswählen.
+              label: Das Feld Standort aktivieren
+            phone_number:
+              description: Dieses Feld ist ein Telefonnummernfeld. Der Benutzer kann eine Nummer auswählen.
+              label: Das Feld Telefonnummer aktivieren
+            postal_code:
+              description: Dieses Feld ist für die Postleitzahl. Der Benutzer kann eine Postleitzahl auswählen.
+              label: Das Postleitzahlenfeld aktivieren.
+          form:
+            callout:
+              help: Aktivieren Sie die Funktion für benutzerdefinierte Anmeldefelder, um zusätzliche Felder in Ihrem Anmeldeformular zu verwalten. Auch bei aktivierter Option wird das Anmeldeformular nur aktualisiert, wenn mindestens ein zusätzliches Feld aktiviert ist.
+            extra_user_fields:
+              extra_user_fields_enabled: Benutzerdefinierte Anmeldefelder aktivieren
+              section: Verfügbare Anmeldefelder für das Anmeldeformular
+            global:
+              title: Aktivieren / Deaktivieren von benutzerdefinierten Anmeldefeldern
+          index:
+            save: Speichern
+            title: Benutzerdefinierte Anmeldefelder verwalten
+          update:
+            failure: Bei der Aktualisierung ist ein Fehler aufgetreten.
+            success: Die Anmeldefelder wurden erfolgreich aktualisiert.
+      genders:
+        female: Frau
+        male: Mann
+        other: Divers
+      registration_form:
+        signup:
+          legend: Weitere Informationen
+    statutory_representative:
+      inform:
+        body: |
+          Hallo,
+          Sie wurden als gesetzlicher Vertreter von %{name} für die Registrierung bei %{organization} benannt.
+          Beste grüße,
+          Das %{organization} Team
+        subject: Sie wurden als gesetzlicher Vertreter benannt
