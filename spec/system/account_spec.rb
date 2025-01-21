@@ -335,6 +335,7 @@ describe "Account" do
           within_flash_messages do
             expect(page).to have_content("You will receive an email to confirm your new email address")
           end
+          # 2 emails generated (confirmation + update)
         end
 
         after do
@@ -355,6 +356,8 @@ describe "Account" do
           perform_enqueued_jobs
           perform_enqueued_jobs
 
+          # the emails include 1 confirmation + 1 update emails added to the 2 previous emails
+          expect(emails.count).to eq(4)
           visit last_email_link
           expect(page).to have_content("Your email address has been successfully confirmed")
         end
@@ -492,6 +495,77 @@ describe "Account" do
 
           expect(page).to have_content("Some data bound to your authorization will be saved for security.")
         end
+      end
+    end
+  end
+
+  context "when on the notifications page in a PWA browser" do
+    let(:organization) { create(:organization, host: "pwa.lvh.me") }
+    let(:user) { create(:user, :confirmed, password:, organization:) }
+    let(:password) { "dqCFgjfDbC7dPbrv" }
+    let(:vapid_keys) do
+      {
+        enabled: true,
+        public_key: "BKmjw_A8tJCcZNQ72uG8QW15XHQnrGJjHjsmoUILUUFXJ1VNhOnJLc3ywR3eZKibX4HSqhB1hAzZFj__3VqzcPQ=",
+        private_key: "TF_MRbSSs_4BE1jVfOsILSJemND8cRMpiznWHgdsro0="
+      }
+    end
+
+    context "when VAPID keys are set" do
+      before do
+        Rails.application.secrets[:vapid] = vapid_keys
+        driven_by(:pwa_chrome)
+        switch_to_host(organization.host)
+        login_as user, scope: :user
+        visit decidim.notifications_settings_path
+      end
+
+      context "when on the account page" do
+        it "enables push notifications if supported browser" do
+          sleep 2
+          page.find("[for='allow_push_notifications']").click
+
+          # Wait for the browser to be subscribed
+          sleep 5
+
+          within "form.edit_user" do
+            find("*[type=submit]").click
+          end
+
+          within_flash_messages do
+            expect(page).to have_content("successfully")
+          end
+
+          find(:css, "#allow_push_notifications", visible: false).execute_script("this.checked = true")
+        end
+      end
+    end
+
+    context "when VAPID is disabled" do
+      before do
+        Rails.application.secrets[:vapid] = { enabled: false }
+        driven_by(:pwa_chrome)
+        switch_to_host(organization.host)
+        login_as user, scope: :user
+        visit decidim.notifications_settings_path
+      end
+
+      it "does not show the push notifications switch" do
+        expect(page).to have_no_selector(".push-notifications")
+      end
+    end
+
+    context "when VAPID keys are not set" do
+      before do
+        Rails.application.secrets.delete(:vapid)
+        driven_by(:pwa_chrome)
+        switch_to_host(organization.host)
+        login_as user, scope: :user
+        visit decidim.notifications_settings_path
+      end
+
+      it "does not show the push notifications switch" do
+        expect(page).to have_no_selector(".push-notifications")
       end
     end
   end
