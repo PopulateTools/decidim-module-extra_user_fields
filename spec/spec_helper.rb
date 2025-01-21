@@ -14,6 +14,7 @@ Capybara.register_driver :headless_chrome do |app|
   options.args << "--no-sandbox"
   options.args << "--disable-gpu"
   options.args << "--disable-dev-shm-usage"
+  options.args << "--remote-debugging-pipe"
   options.args << if ENV["BIG_SCREEN_SIZE"].present?
                     "--window-size=1920,3000"
                   else
