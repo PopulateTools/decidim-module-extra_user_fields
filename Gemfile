@@ -29,6 +29,6 @@ group :development do
 end
 
 group :test do
-  gem 'rubocop-factory_bot', '!= 2.26.0', require: false
-  gem 'rubocop-rspec_rails', '!= 2.29.0', require: false
+  gem "rubocop-factory_bot", "!= 2.26.0", require: false
+  gem "rubocop-rspec_rails", "!= 2.29.0", require: false
 end
