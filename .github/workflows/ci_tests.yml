@@ -122,6 +122,8 @@ jobs:
           sudo dpkg -i /tmp/chrome.deb
           rm /tmp/chrome.deb
         name: Install Chrome version ${{ env.CHROME_VERSION }}
+        with:
+          chromedriver-version: ${{ env.CHROME_VERSION }}
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
