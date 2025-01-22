@@ -65,8 +65,8 @@ jobs:
           path: ./spec/decidim_dummy_app/
           key: app-${{ github.sha }}
           restore-keys: app-${{ github.sha }}
-      - run: bundle exec rake parallel:create parallel:load_schema
-        name: Parallel tests
+      - run: bundle exec rails db:create db:schema:load
+        name: Install gems and create db
         shell: "bash"
         working-directory: ./spec/decidim_dummy_app/
       - run: |
