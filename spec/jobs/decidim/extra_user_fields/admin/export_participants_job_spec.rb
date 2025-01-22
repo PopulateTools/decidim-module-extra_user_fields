@@ -24,7 +24,8 @@ module Decidim
         context "when format is CSV" do
           it "uses the csv exporter" do
             export_data = double
-            expect(Decidim::Exporters::CSV).to(receive(:new).with(anything, Decidim::ExtraUserFields::UserExportSerializer)).and_return(double(export: export_data))
+            expect(Decidim::Exporters::CSV).to(receive(:new).with(anything,
+                                                                  Decidim::ExtraUserFields::UserExportSerializer)).and_return(double(export: export_data))
             expect(ExportMailer)
               .to(receive(:export).with(user, "participants", export_data))
               .and_return(double(deliver_now: true))

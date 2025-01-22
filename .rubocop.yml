@@ -18,7 +18,3 @@ AllCops:
 RSpec/FilePath:
   Exclude:
     - "spec/serializers/user_export_serializer_spec.rb"
-
-Style/FrozenStringLiteralComment:
-  Exclude:
-    - "spec/jobs/decidim/extra_user_fields/admin/export_participants_job_spec.rb"
