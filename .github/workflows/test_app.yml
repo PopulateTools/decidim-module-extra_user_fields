@@ -65,12 +65,10 @@ jobs:
           path: ./spec/decidim_dummy_app/
           key: app-${{ github.sha }}
           restore-keys: app-${{ github.sha }}
-      - run: |
-          bundle install
-          bundle exec rake db:create db:schema:load 
-          name: Install gems and create db
-          shell: "bash"
-          working-directory: ./spec/decidim_dummy_app/
+      - run: bundle exec rake parallel:create parallel:load_schema
+        name: Parallel tests
+        shell: "bash"
+        working-directory: ./spec/decidim_dummy_app/
       - run: |
           sudo Xvfb -ac $DISPLAY -screen 0 1920x1084x24 > /dev/null 2>&1 &
           ${{ inputs.test_command }}
