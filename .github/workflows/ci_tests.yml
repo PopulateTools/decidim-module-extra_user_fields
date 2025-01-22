@@ -125,9 +125,6 @@ jobs:
       - uses: nanasess/setup-chromedriver@v2
         with:
           chromedriver-version: ${{ env.CHROME_VERSION }}
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -148,9 +145,6 @@ jobs:
       - uses: nanasess/setup-chromedriver@v2
         with:
           chromedriver-version: ${{ env.CHROME_VERSION }}
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub
       - run: RAILS_ENV=test bundle exec rails assets:precompile
         name: Precompile assets
         working-directory: ./spec/decidim_dummy_app/
