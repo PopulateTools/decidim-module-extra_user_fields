@@ -1,5 +1,16 @@
 name: "[CI] ExtraUserFields"
-on: "push"
+on:
+  push:
+    branches:
+      - develop
+      - release/*
+      - "*-stable"
+  pull_request:
+    branches-ignore:
+      - "chore/l10n*"
+    paths:
+      - "*"
+      - ".github/**"
 
 env:
   CI: "true"
@@ -38,7 +49,7 @@ jobs:
 
   tests:
     name: Tests
-    needs: build_app.
+    needs: build_app
     uses: ./.github/workflows/test_app.yml
     with:
       test_command: "bundle exec rspec --pattern './spec/**/*_spec.rb'"
