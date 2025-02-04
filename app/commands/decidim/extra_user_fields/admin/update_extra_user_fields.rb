@@ -38,7 +38,7 @@ module Decidim
           )
         end
 
-        # rubocop:disable Style/TrailingCommaInHashLiteral
+        # rubocop:disable Metrics/CyclomaticComplexity
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
@@ -52,12 +52,14 @@ module Decidim
               "placeholder" => form.phone_number_placeholder.presence
             },
             "location" => { "enabled" => form.location.presence || false },
+            "underage" => { "enabled" => form.underage || false },
+            "underage_limit" => form.underage_limit || Decidim::ExtraUserFields::Engine::DEFAULT_UNDERAGE_LIMIT
             # Block ExtraUserFields SaveFieldInConfig
 
             # EndBlock
           }
         end
-        # rubocop:enable Style/TrailingCommaInHashLiteral
+        # rubocop:enable Metrics/CyclomaticComplexity
       end
     end
   end

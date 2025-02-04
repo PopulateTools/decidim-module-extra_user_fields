@@ -18,6 +18,8 @@ module Decidim
         let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
         let(:phone_number_placeholder) { "+34999888777" }
         let(:location) { true }
+        let(:underage) { true }
+        let(:underage_limit) { 18 }
         # Block ExtraUserFields RspecVar
 
         # EndBlock
@@ -34,6 +36,8 @@ module Decidim
             "phone_number_pattern" => phone_number_pattern,
             "phone_number_placeholder" => phone_number_placeholder,
             "location" => location,
+            "underage" => underage,
+            "underage_limit" => underage_limit,
             # Block ExtraUserFields ExtraUserFields
 
             # EndBlock
@@ -86,6 +90,8 @@ module Decidim
               expect(extra_user_fields).to include("country" => { "enabled" => true })
               expect(extra_user_fields).to include("phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => phone_number_placeholder })
               expect(extra_user_fields).to include("location" => { "enabled" => true })
+              expect(extra_user_fields).to include("underage" => { "enabled" => true })
+              expect(extra_user_fields).to include("underage_limit" => 18)
               # Block ExtraUserFields InclusionSpec
 
               # EndBlock

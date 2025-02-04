@@ -21,6 +21,8 @@ module Decidim
         let(:location) { "Paris" }
         let(:phone_number) { "0123456789" }
         let(:postal_code) { "75001" }
+        let(:underage) { "0" }
+        let(:statutory_representative_email) { nil }
         let(:extended_data) do
           {
             country:,
@@ -28,7 +30,9 @@ module Decidim
             gender:,
             location:,
             phone_number:,
-            postal_code:
+            postal_code:,
+            underage:,
+            statutory_representative_email:
           }
         end
 
@@ -46,7 +50,9 @@ module Decidim
               "date_of_birth" => date_of_birth,
               "gender" => gender,
               "phone_number" => phone_number,
-              "location" => location
+              "location" => location,
+              "underage" => underage,
+              "statutory_representative_email" => statutory_representative_email
             }
           }
         end
@@ -118,7 +124,9 @@ module Decidim
                 gender:,
                 location:,
                 phone_number:,
-                postal_code:
+                postal_code:,
+                underage:,
+                statutory_representative_email:
               }
             ).and_call_original
 
@@ -138,6 +146,33 @@ module Decidim
                 command.call
                 expect(User.last.newsletter_notifications_at).to be_nil
               end.to change(User, :count).by(1)
+            end
+          end
+
+          describe "when the user is underage and sends a valid email" do
+            let(:underage) { "1" }
+            let(:statutory_representative_email) { "user@example.fr" }
+
+            it "creates a user with the statutory representative email and sends email" do
+              expect do
+                expect(Decidim::ExtraUserFields::StatutoryRepresentativeMailer).to receive(:inform).with(instance_of(Decidim::User)).and_call_original
+
+                command.call
+
+                user = User.last
+                expect(user.extended_data["statutory_representative_email"]).to eq(statutory_representative_email)
+              end.to change(User, :count).by(1)
+            end
+          end
+
+          describe "when the user is underage and tries to duplicate email" do
+            let(:underage) { "1" }
+            let(:statutory_representative_email) { email }
+
+            it "broadcasts invalid" do
+              expect(Decidim::ExtraUserFields::StatutoryRepresentativeMailer).not_to receive(:inform).with(instance_of(Decidim::User)).and_call_original
+
+              expect { command.call }.to broadcast(:invalid)
             end
           end
         end

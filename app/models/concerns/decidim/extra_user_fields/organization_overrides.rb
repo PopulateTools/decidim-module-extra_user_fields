@@ -14,13 +14,17 @@ module Decidim
       end
 
       def at_least_one_extra_field?
-        extra_user_fields.reject { |key| key == "enabled" }
+        extra_user_fields.reject { |key| %w(enabled underage_limit).include?(key) }
                          .map { |_, value| value["enabled"] }.any?
       end
 
       # Check if the given value is enabled in extra_user_fields
       def activated_extra_field?(sym)
         extra_user_fields.dig(sym.to_s, "enabled") == true
+      end
+
+      def age_limit?
+        extra_user_fields["underage_limit"].to_i
       end
 
       def extra_user_field_configuration(sym)

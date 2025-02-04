@@ -19,13 +19,25 @@ describe "Admin manages officializations" do
     within ".layout-nav" do
       click_on "Participants"
     end
-  end
-
-  it "includes export dropdown button" do
     within ".sidebar-menu" do
       click_on "Participants"
     end
+  end
 
+  it "includes export dropdown button" do
     expect(page).to have_content("Export")
+  end
+
+  context "when clicking on export csv button" do
+    before do
+      find("span.exports").click
+      click_on "Export CSV"
+    end
+
+    it "redirects to officialization index page and display a flash message" do
+      expect(page).to have_title("Participants")
+      expect(page).to have_content("Export")
+      expect(page).to have_content("Your export is currently in progress. You will receive an email when it is complete")
+    end
   end
 end

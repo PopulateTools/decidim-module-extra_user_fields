@@ -1,9 +1,9 @@
 <% if current_organization.extra_user_fields_enabled? %>
   <div id="card__extra_user_fields" class="form__wrapper form__wrapper-block">
-    <h4 class="h4"><%= t(".signup.legend") %></h4>
+    <h2 class="h4"><%= t(".signup.legend") %></h2>
 
     <% if current_organization.activated_extra_field?(:date_of_birth) %>
-      <%= f.date_field :date_of_birth %>
+      <%= f.date_field :date_of_birth, id: "user_date_of_birth" %>
     <% end %>
 
     <% if current_organization.activated_extra_field?(:gender) %>
@@ -28,9 +28,28 @@
       <%= f.text_field :location %>
     <% end %>
 
+    <% if current_organization.activated_extra_field?(:underage) %>
+      <% if current_organization.activated_extra_field?(:date_of_birth) %>
+        <div class="fieldset hidden" id="underage_fieldset">
+          <%= f.check_box :underage, id: "underage_checkbox", label:  t(".signup.underage", limit: current_organization.age_limit?) %>
+          <div class="field <%= f.object.date_of_birth.present? ? '' : 'hidden' %>" id="statutory_representative_email_field">
+            <%= f.text_field :statutory_representative_email %>
+          </div>
+        </div>
+      <% else %>
+        <div class="fieldset">
+          <%= f.check_box :underage, id: "underage_checkbox", label:  t(".signup.underage", limit: current_organization.age_limit?) %>
+          <div class="field hidden" id="statutory_representative_email_field">
+            <%= f.text_field :statutory_representative_email %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
     <%# Block ExtraUserFields SignUpFormFields %>
 
     <%# EndBlock %>
 
   </div>
+  <%= append_javascript_pack_tag "decidim_extra_user_fields.js" %>
+  <%= append_stylesheet_pack_tag "decidim_extra_user_fields_css" %>
 <% end %>

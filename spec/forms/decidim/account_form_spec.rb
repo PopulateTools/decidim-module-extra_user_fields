@@ -3,6 +3,8 @@
 require "spec_helper"
 
 module Decidim
+  include ActiveStorage::Blob::Analyzable
+
   describe AccountForm do
     subject do
       described_class.new(
@@ -21,7 +23,9 @@ module Decidim
         date_of_birth:,
         gender:,
         phone_number:,
-        location:
+        location:,
+        underage:,
+        statutory_representative_email:
       ).with_context(
         current_organization: organization,
         current_user: user
@@ -38,7 +42,9 @@ module Decidim
         "date_of_birth" => { "enabled" => true },
         "gender" => { "enabled" => true },
         "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil },
-        "location" => { "enabled" => true }
+        "location" => { "enabled" => true },
+        "underage" => { "enabled" => true },
+        "underage_limit" => 18
       }
     end
     let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
@@ -59,6 +65,8 @@ module Decidim
     let(:location) { "Paris" }
     let(:phone_number) { "0123456789" }
     let(:postal_code) { "75001" }
+    let(:underage) { "0" }
+    let(:statutory_representative_email) { nil }
 
     context "with correct data" do
       it "is valid" do
@@ -75,7 +83,7 @@ module Decidim
     end
 
     context "with invalid phone number format" do
-      let(:phone_number_pattern) { "^(\\+34)?[0-1 ]{9,12}$" }
+      let(:phone_number) { "ABCDEFGHIJK" }
 
       it "is invalid" do
         expect(subject).not_to be_valid

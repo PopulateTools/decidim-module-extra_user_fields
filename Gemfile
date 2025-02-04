@@ -15,7 +15,6 @@ gem "puma", ">= 4.3"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
-
   gem "decidim-dev", DECIDIM_VERSION
 end
 
@@ -27,4 +26,9 @@ group :development do
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
   gem "web-console", "~> 3.5"
+end
+
+group :test do
+  gem "rubocop-factory_bot", "!= 2.26.0", require: false
+  gem "rubocop-rspec_rails", "!= 2.29.0", require: false
 end

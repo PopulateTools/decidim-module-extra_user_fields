@@ -1,0 +1,7 @@
+<div class="card-section">
+  <div class="row column">
+    <p><%= t(".description") %></p>
+    <%= form.check_box :underage, label: t(".label") %>
+    <%= form.select :underage_limit, ( Decidim::ExtraUserFields::Engine::DEFAULT_UNDERAGE_OPTIONS).to_a, selected: current_organization.extra_user_fields["underage_limit"] || Decidim::ExtraUserFields::Engine::DEFAULT_UNDERAGE_LIMIT, label: t(".limit") %>
+  </div>
+</div>

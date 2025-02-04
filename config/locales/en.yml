@@ -9,6 +9,14 @@ en:
         location: Location
         phone_number: Phone Number
         postal_code: Postal code
+        statutory_representative_email: Representative email
+        underage: Underage
+    errors:
+      models:
+        user:
+          attributes:
+            date_of_birth:
+              underage: invalid. If you are underage, you must obtain parental authorization
   decidim:
     admin:
       actions:
@@ -57,6 +65,11 @@ en:
               description: This field is a String field. If checked, user will have
                 to fill in a postal code
               label: Enable postal code field
+            underage:
+              description: This field is a Boolean field. User will be able to check
+                if is underage
+              label: Enable parental authorization field
+              limit: This sets the age limit (ex. 18 years old)
           form:
             callout:
               help: Enable custom extra user fields functionality to be able to manage
@@ -80,3 +93,12 @@ en:
       registration_form:
         signup:
           legend: More information
+          underage: I am under %{limit} years old and I agree to get a parental authorization
+    statutory_representative:
+      inform:
+        body: |
+          Hello,
+          You have been designated as the legal representative of %{name} for their registration with %{organization}.
+          Best regards,
+          The %{organization} Team
+        subject: You have been designated as the legal representative

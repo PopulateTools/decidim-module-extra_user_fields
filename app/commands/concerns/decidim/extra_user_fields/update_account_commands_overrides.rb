@@ -11,6 +11,7 @@ module Decidim
       private
 
       def update_personal_data
+        @user.locale = @form.locale
         @user.name = @form.name
         @user.nickname = @form.nickname
         @user.email = @form.email
@@ -26,7 +27,9 @@ module Decidim
           date_of_birth: @form.date_of_birth,
           gender: @form.gender,
           phone_number: @form.phone_number,
-          location: @form.location
+          location: @form.location,
+          underage: @form.underage,
+          statutory_representative_email: @form.statutory_representative_email
         )
       end
     end

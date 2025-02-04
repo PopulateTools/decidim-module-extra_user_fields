@@ -6,8 +6,10 @@ locales: [en]
 ignore_unused:
   - "decidim.components.extra_user_fields.name"
   - activemodel.attributes.user.*
+  - activemodel.errors.models.user.*
   - decidim.admin.extra_user_fields.menu.title
   - decidim.extra_user_fields.genders.*
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
+  - decidim.admin.exports.notice

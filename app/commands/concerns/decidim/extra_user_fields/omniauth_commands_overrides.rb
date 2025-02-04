@@ -8,6 +8,33 @@ module Decidim
     module OmniauthCommandsOverrides
       extend ActiveSupport::Concern
 
+      def call
+        return broadcast(:invalid) if same_email_representative?
+
+        verify_oauth_signature!
+
+        begin
+          if existing_identity
+            user = existing_identity.user
+            verify_user_confirmed(user)
+
+            return broadcast(:ok, user)
+          end
+          return broadcast(:invalid) if form.invalid?
+
+          transaction do
+            create_or_find_user
+            send_email_to_statutory_representative
+            @identity = create_identity
+          end
+          trigger_omniauth_registration
+
+          broadcast(:ok, @user)
+        rescue ActiveRecord::RecordInvalid => e
+          broadcast(:error, e.record)
+        end
+      end
+
       private
 
       def create_or_find_user
@@ -51,8 +78,22 @@ module Decidim
           date_of_birth: form.date_of_birth,
           gender: form.gender,
           phone_number: form.phone_number,
-          location: form.location
+          location: form.location,
+          underage: form.underage,
+          statutory_representative_email: form.statutory_representative_email
         )
+      end
+
+      def send_email_to_statutory_representative
+        return if form.statutory_representative_email.blank? || form.underage != "1"
+
+        Decidim::ExtraUserFields::StatutoryRepresentativeMailer.inform(@user).deliver_later
+      end
+
+      def same_email_representative?
+        return false if form.statutory_representative_email.blank?
+
+        form.statutory_representative_email == form.email
       end
     end
   end
