@@ -9,6 +9,15 @@ es:
         location: Localización
         phone_number: Teléfono
         postal_code: Código postal
+        statutory_representative_email: Correo electrónico del representante legal
+        underage: Menor de edad
+    errors:
+      models:
+        user:
+          attributes:
+            date_of_birth:
+              underage: no válido. Si eres menor de edad, deberás obtener autorización
+                parental.
   decidim:
     admin:
       actions:
@@ -57,6 +66,11 @@ es:
               description: este campo es un campo de texto. Si está marcado, el usuario
                 deberá ingresar un código postal.
               label: Habilitar campo de código postal
+            underage:
+              description: Este es un campo Boolean. El usuario podrá marcarlo si
+                es menor de edad
+              label: Activar campo de autorización parental
+              limit: Establece la edad límite (por ejemplo 18 años)
           form:
             callout:
               help: Activa la funcionalidad de campos de usuario adicionales personalizados
@@ -82,3 +96,12 @@ es:
       registration_form:
         signup:
           legend: Más información
+          underage: Soy menor de %{limit} años y acepto recibir una autorización parental
+    statutory_representative:
+      inform:
+        body: |
+          Hola,
+          Has sido designado como el representante legal de %{name} para su registro en  %{organization}.
+          Atentamente,
+          El equipo de %{organization}
+        subject: Has sido designado como representante legal

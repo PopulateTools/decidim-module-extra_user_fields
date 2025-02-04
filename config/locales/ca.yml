@@ -9,6 +9,15 @@ ca:
         location: Localització
         phone_number: Telèfon
         postal_code: Codi postal
+        statutory_representative_email: Correu electrònic del representant legal
+        underage: Menor d'edat
+    errors:
+      models:
+        user:
+          attributes:
+            date_of_birth:
+              underage: no vàlid. Si sou menor d'edat, haureu d'obtenir autorització
+                parental.
   decidim:
     admin:
       actions:
@@ -58,6 +67,11 @@ ca:
               description: Aquest camp és un camp de text. Si está activat, l'usuari
                 haurà d'introduir un codi postal.
               label: Habilitar camp de codi postal
+            underage:
+              description: Aquest és un camp Boolean. L'usuari podrà marcar-ho si
+                és menor d'edat
+              label: Activar camp d'autorització parental
+              limit: Estableix l'edat límit (per exemple 18 anys)
           form:
             callout:
               help: Activa la funcionalitat de camps d'usuari addicionals personalitzats
@@ -82,3 +96,12 @@ ca:
       registration_form:
         signup:
           legend: Més informació
+          underage: Sóc menor de %{limit} anys i accepto rebre una autorització parental
+    statutory_representative:
+      inform:
+        body: |
+          Hola,
+          Has estat designat com el representant legal de %{name} per al seu registre a %{organization}.
+          Atentament,
+          L'equip de %{organization}
+        subject: Has estat designat com a representant legal
