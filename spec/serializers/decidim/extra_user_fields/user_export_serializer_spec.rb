@@ -67,6 +67,24 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       expect(serialized).to include(location: resource.extended_data["location"])
     end
 
+    context "when users are blocked" do
+      let(:resource) { create(:user, :blocked, extended_data: registration_metadata, blocked_at:) }
+      let(:blocked_at) { Time.zone.now }
+      let(:blocking_user) { create(:user, :admin, :confirmed, organization: resource.organization) }
+      let(:blocking_justification) { "This is a spam user with suspicious activities" }
+      let(:user_block) { double(justification: blocking_justification) }
+
+      before do
+        allow(resource).to receive(:blocking).and_return(user_block)
+      end
+
+      it "includes the blocked status and justification" do
+        expect(serialized).to include(blocked: true)
+        expect(serialized).to include(blocked_at:)
+        expect(serialized).to include(blocking_justification:)
+      end
+    end
+
     # Block ExtraUserFields IncludeExtraField
 
     # EndBlock
