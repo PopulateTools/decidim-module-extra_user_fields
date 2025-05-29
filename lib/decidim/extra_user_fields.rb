@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "decidim/extra_user_fields/settings"
 require "decidim/extra_user_fields/admin"
 require "decidim/extra_user_fields/engine"
 require "decidim/extra_user_fields/admin_engine"
