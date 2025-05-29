@@ -97,6 +97,10 @@ en:
         female: Female
         male: Male
         other: Other
+      interests:
+        music: Music
+        philosophy: Philosophy
+        sports: Sports
       registration_form:
         signup:
           legend: More information

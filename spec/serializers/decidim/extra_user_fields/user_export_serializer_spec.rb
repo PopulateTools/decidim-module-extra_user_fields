@@ -15,6 +15,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
       country:,
       phone_number:,
       location:,
+      interests:,
       underage:,
       statutory_representative_email:,
       # Block ExtraUserFields ExtraUserFields
@@ -30,6 +31,7 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
   let(:country) { "Argentina" }
   let(:phone_number) { "0123456789" }
   let(:location) { "Cahors" }
+  let(:interests) { %w(music sports) }
   let(:underage) { true }
   let(:underage_limit) { 18 }
   let(:statutory_representative_email) { "parent@example.org" }
@@ -37,6 +39,12 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
 
   # EndBlock
   let(:serialized) { subject.serialize }
+
+  let(:interests_list) { [:sports, :philosophy, :music] }
+
+  before do
+    allow(Decidim::ExtraUserFields::Settings).to receive(:interests).and_return(interests_list)
+  end
 
   describe "#serialize" do
     it "includes the id" do
@@ -65,6 +73,10 @@ describe Decidim::ExtraUserFields::UserExportSerializer do
 
     it "includes the location" do
       expect(serialized).to include(location: resource.extended_data["location"])
+    end
+
+    it "includes the translated interests" do
+      expect(serialized).to include(interests: "Music, Sports")
     end
 
     context "when users are blocked" do

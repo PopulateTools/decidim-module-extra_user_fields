@@ -70,6 +70,10 @@ de:
           update:
             failure: Bei der Aktualisierung ist ein Fehler aufgetreten.
             success: Die Anmeldefelder wurden erfolgreich aktualisiert.
+      interests:
+        music: Musik
+        philosophy: Philosophie
+        sports: Sport
       genders:
         female: Frau
         male: Mann

@@ -19,6 +19,7 @@ module Decidim
         let(:date_of_birth) { "01/01/2000" }
         let(:gender) { "other" }
         let(:location) { "Paris" }
+        let(:interests) { %w(music sports) }
         let(:phone_number) { "0123456789" }
         let(:postal_code) { "75001" }
         let(:underage) { "0" }
@@ -29,6 +30,7 @@ module Decidim
             date_of_birth:,
             gender:,
             location:,
+            interests:,
             phone_number:,
             postal_code:,
             underage:,
@@ -51,6 +53,7 @@ module Decidim
               "gender" => gender,
               "phone_number" => phone_number,
               "location" => location,
+              "interests" => interests,
               "underage" => underage,
               "statutory_representative_email" => statutory_representative_email
             }
@@ -123,6 +126,7 @@ module Decidim
                 date_of_birth: Date.parse(date_of_birth),
                 gender:,
                 location:,
+                interests:,
                 phone_number:,
                 postal_code:,
                 underage:,

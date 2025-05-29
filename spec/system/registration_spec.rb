@@ -17,6 +17,8 @@ def fill_extra_user_fields
   fill_in :registration_user_postal_code, with: "00000"
   fill_in :registration_user_phone_number, with: "0123456789"
   fill_in :registration_user_location, with: "Cahors"
+  select "Sports", from: :registration_user_interests
+  select "Music", from: :registration_user_interests
   # Block ExtraUserFields FillExtraUserFields
 
   # EndBlock
@@ -44,6 +46,7 @@ describe "Extra user fields" do
       "country" => country,
       "phone_number" => phone_number,
       "location" => location,
+      "interests" => interests,
       # EndBlock
     }
   end
@@ -74,11 +77,18 @@ describe "Extra user fields" do
     { "enabled" => true }
   end
 
+  let(:interests) do
+    { "enabled" => true }
+  end
+
   # Block ExtraUserFields RspecVar
 
   # EndBlock
 
+  let(:interests_list) { [:sports, :philosophy, :music] }
+
   before do
+    allow(Decidim::ExtraUserFields::Settings).to receive(:interests).and_return(interests_list)
     switch_to_host(organization.host)
     visit decidim.new_user_registration_path
   end
@@ -91,6 +101,7 @@ describe "Extra user fields" do
       expect(page).to have_content("Postal code")
       expect(page).to have_content("Phone Number")
       expect(page).to have_content("Location")
+      expect(page).to have_content("Interests")
       # Block ExtraUserFields ContainsFieldSpec
 
       # EndBlock
@@ -147,6 +158,7 @@ describe "Extra user fields" do
   it_behaves_like "mandatory extra user fields", "postal_code"
   it_behaves_like "mandatory extra user fields", "phone_number"
   it_behaves_like "mandatory extra user fields", "location"
+  it_behaves_like "mandatory extra user fields", "interests"
   # Block ExtraUserFields ItBehavesLikeSpec
 
   # EndBlock
@@ -161,6 +173,7 @@ describe "Extra user fields" do
       expect(page).to have_no_content("Postal code")
       expect(page).to have_no_content("Phone Number")
       expect(page).to have_no_content("Location")
+      expect(page).to have_no_content("Interests")
       # Block ExtraUserFields DoesNotContainFieldSpec
 
       # EndBlock
@@ -174,6 +187,24 @@ describe "Extra user fields" do
       end
 
       expect(page).to have_content("message with a confirmation link has been sent")
+    end
+  end
+
+  context "when interests is not enabled" do
+    let(:interests) do
+      { "enabled" => false }
+    end
+
+    it "does not contain interests field" do
+      expect(page).to have_no_content("Interests")
+    end
+  end
+
+  context "when interests is enabled but no interests are set" do
+    let(:interests_list) { [] }
+
+    it "does not contain interests field" do
+      expect(page).to have_no_content("Interests")
     end
   end
 end

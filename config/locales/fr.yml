@@ -100,6 +100,10 @@ fr:
         female: Femme
         male: Homme
         other: Autre
+      interests:
+        music: Musique
+        philosophy: Philosophie
+        sports: Sports
       registration_form:
         signup:
           legend: Plus d'information

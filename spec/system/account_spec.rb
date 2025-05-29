@@ -22,6 +22,7 @@ describe "Account" do
       "country" => country,
       "phone_number" => phone_number,
       "location" => location,
+      "interests" => interests,
       # Block ExtraUserFields ExtraUserFields
 
       # EndBlock
@@ -54,11 +55,18 @@ describe "Account" do
     { "enabled" => true }
   end
 
+  let(:interests) do
+    { "enabled" => true }
+  end
+
   # Block ExtraUserFields RspecVar
 
   # EndBlock
 
+  let(:interests_list) { [:sports, :philosophy, :music] }
+
   before do
+    allow(Decidim::ExtraUserFields::Settings).to receive(:interests).and_return(interests_list)
     switch_to_host(organization.host)
     login_as user, scope: :user
   end
@@ -98,6 +106,8 @@ describe "Account" do
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
+          select "Sports", from: :user_interests
+          select "Music", from: :user_interests
           find("*[type=submit]").click
         end
       end
@@ -118,6 +128,8 @@ describe "Account" do
 
         # The user's password should not change when they did not update it
         expect(user.reload.encrypted_password).to eq(encrypted_password)
+        expect(user.extended_data["interests"]).to include("sports", "music")
+        expect(user.extended_data["interests"]).not_to include("philosophy")
       end
 
       context "when updating avatar" do
@@ -214,6 +226,20 @@ describe "Account" do
       it_behaves_like "does not display extra user field", "location", "Location"
     end
 
+    context "when interests is not enabled" do
+      let(:interests) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "interests", "Interests"
+    end
+
+    context "when interests is enabled but no interests are set" do
+      let(:interests_list) { [] }
+
+      it_behaves_like "does not display extra user field", "interests", "Interests"
+    end
+
     describe "when update password" do
       before do
         within "form.edit_user" do
@@ -228,6 +254,8 @@ describe "Account" do
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
+          select "Sports", from: :user_interests
+          select "Music", from: :user_interests
           find("*[type=submit]").click
         end
         click_on "Change password"
@@ -288,6 +316,8 @@ describe "Account" do
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
+          select "Sports", from: :user_interests
+          select "Music", from: :user_interests
           find("*[type=submit]").click
         end
       end

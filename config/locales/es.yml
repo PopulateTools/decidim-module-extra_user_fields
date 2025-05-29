@@ -101,6 +101,10 @@ es:
         female: Mujer
         male: Hombre
         other: Otro
+      interests:
+        music: Música
+        philosophy: Filosofía
+        sports: Deportes
       registration_form:
         signup:
           legend: Más información

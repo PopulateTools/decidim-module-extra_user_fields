@@ -100,6 +100,10 @@ ca:
         female: Dona
         male: Home
         other: Altre
+      interests:
+        music: Música
+        philosophy: Filosofia
+        sports: Esports
       registration_form:
         signup:
           legend: Més informació
