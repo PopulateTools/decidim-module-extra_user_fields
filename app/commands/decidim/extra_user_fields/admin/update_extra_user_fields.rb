@@ -52,6 +52,7 @@ module Decidim
               "placeholder" => form.phone_number_placeholder.presence
             },
             "location" => { "enabled" => form.location.presence || false },
+            "interests" => { "enabled" => form.interests.presence || false },
             "underage" => { "enabled" => form.underage || false },
             "underage_limit" => form.underage_limit || Decidim::ExtraUserFields::Engine::DEFAULT_UNDERAGE_LIMIT
             # Block ExtraUserFields SaveFieldInConfig

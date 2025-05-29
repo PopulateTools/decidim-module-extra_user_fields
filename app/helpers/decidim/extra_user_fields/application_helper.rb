@@ -11,6 +11,16 @@ module Decidim
         end
       end
 
+      def interests_options_for_select
+        Decidim::ExtraUserFields::Settings.interests.map do |interest|
+          [interest, I18n.t(interest, scope: "decidim.extra_user_fields.interests")]
+        end
+      end
+
+      def interests_defined?
+        Decidim::ExtraUserFields::Settings.interests.present?
+      end
+
       def phone_number_extra_user_field_pattern
         current_organization.extra_user_field_configuration(:phone_number)["pattern"]
       end

@@ -45,6 +45,11 @@
         </div>
       <% end %>
     <% end %>
+
+    <% if current_organization.activated_extra_field?(:interests) && f.object.interests_defined? %>
+      <%= f.collection_select :interests, f.object.interests_options_for_select, :first, :last, {}, { multiple: true } %>
+    <% end %>
+
     <%# Block ExtraUserFields SignUpFormFields %>
 
     <%# EndBlock %>

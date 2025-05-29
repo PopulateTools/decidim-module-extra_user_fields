@@ -1,0 +1,10 @@
+<div class="card-section">
+  <div class="row column">
+    <%= form.check_box(
+          :interests,
+          disabled: Decidim::ExtraUserFields::Settings.interests.blank?,
+          label: t(".label"),
+          help_text: Decidim::ExtraUserFields::Settings.interests.blank? ? t(".disabled_description_html") : t(".description")
+        ) %>
+  </div>
+</div>

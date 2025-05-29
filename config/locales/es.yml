@@ -6,6 +6,7 @@ es:
         country: País
         date_of_birth: Fecha de nacimiento
         gender: Género
+        interests: Intereses
         location: Localización
         phone_number: Teléfono
         postal_code: Código postal
@@ -48,6 +49,13 @@ es:
               description: Este campo es una lista de géneros. Si está marcado, el
                 usuario tendrá que elegir un género.
               label: Habilitar campo de género
+            interests:
+              description: Este campo es una lista de intereses. Si está marcado,
+                el usuario podrá elegir una lista de ellos.
+              disabled_description_html: Para que este campo pueda estar disponible
+                se ha de configurar una lista de intereses desde un initializer definiendo
+                <code class="label">Decidim::ExtraUserFields::Settings.interests</code>
+              label: Habilitar campo de intereses
             location:
               description: Este campo es un campo de texto. Si está marcado, el usuario
                 deberá completar una ubicación.

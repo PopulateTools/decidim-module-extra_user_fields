@@ -6,6 +6,7 @@ en:
         country: Country
         date_of_birth: Date of birth
         gender: Gender
+        interests: Interests
         location: Location
         phone_number: Phone Number
         postal_code: Postal code
@@ -47,6 +48,12 @@ en:
               description: This field is a list of genders. If checked, user will
                 have to choose a gender
               label: Enable gender field
+            interests:
+              description: This field is a list of interests. If checked, user will
+                be able to choose a list of interests.
+              disabled_description_html: To make this field available set a list of
+                interests with an initializer defining <code class="label">Decidim::ExtraUserFields::Settings.interests</code>
+              label: Enable interests field
             location:
               description: This field is a String field. If checked, user will have
                 to fill in a location

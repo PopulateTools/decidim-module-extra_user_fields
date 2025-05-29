@@ -6,6 +6,7 @@ de:
         country: Land
         date_of_birth: Geburtsdatum
         gender: Geschlecht
+        interests: Interessen
         location: Standort
         phone_number: Telefonnummer
         postal_code: Postleitzahl
@@ -42,6 +43,10 @@ de:
             gender:
               description: Dieses Feld ist ein Feld für die Geschlechtsidentität. Der Benutzer kann ein Geschlecht auswählen.
               label: Das Feld Geschlecht aktivieren
+            interests:
+              description: Dieses Feld enthält eine Liste von Interessen. Ist dieses Feld aktiviert, kann der Nutzer eine Interessenliste auswählen.
+              disabled_description_html: Um dieses Feld verfügbar zu machen, legen Sie eine Interessenliste mit einem Initialisierer fest, der <codei class="label">Decidim::ExtraUserFields::Settings.interests</code> definiert.
+              label: Interessenfeld aktivieren
             location:
               description: Dieses Feld ermöglicht das Hinzufügen von Text. Der Benutzer kann einen Ort auswählen.
               label: Das Feld Standort aktivieren

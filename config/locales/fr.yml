@@ -6,6 +6,7 @@ fr:
         country: Pays
         date_of_birth: Date de naissance
         gender: Genre
+        interests: Centres d'intérêt
         location: Localisation
         phone_number: Numéro de téléphone
         postal_code: Code postal
@@ -48,6 +49,13 @@ fr:
               description: Ce champ contient une liste de genres. L'utilisateur pourra
                 choisir un genre.
               label: Activer le champ genre
+            interests:
+              description: Ce champ contient une liste de centres d'intérêt. Si cette
+                option est cochée, l'utilisateur pourra choisir une liste.
+              disabled_description_html: Pour rendre ce champ disponible, définissez
+                une liste de centres d'intérêt avec un initialiseur définissant <code
+                class="label">Decidim::ExtraUserFields::Settings.interests</code>
+              label: Activer le champ Centres d'intérêt
             location:
               description: Ce champ permet l'ajout de texte. L'utilisateur pourra
                 choisir une localisation.

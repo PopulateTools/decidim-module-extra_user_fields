@@ -21,6 +21,7 @@ module Decidim
         attribute :location, String
         attribute :underage, ActiveRecord::Type::Boolean
         attribute :statutory_representative_email, String
+        attribute :interests, Array[String]
 
         # EndBlock
 
@@ -44,6 +45,7 @@ module Decidim
                   "valid_email_2/email": { disposable: true },
                   if: :underage_accepted?
         validate :birth_date_under_limit
+        validates :interests, presence: true, if: :interests?
 
         # EndBlock
       end
@@ -59,6 +61,7 @@ module Decidim
         self.location = extended_data[:location]
         self.underage = extended_data[:underage]
         self.statutory_representative_email = extended_data[:statutory_representative_email]
+        self.interests = extended_data[:interests]
 
         # Block ExtraUserFields MapModel
 
@@ -104,6 +107,10 @@ module Decidim
 
       def underage_accepted?
         underage? && underage == "1"
+      end
+
+      def interests?
+        extra_user_fields_enabled && current_organization.activated_extra_field?(:interests) && Decidim::ExtraUserFields::Settings.interests.present?
       end
 
       # EndBlock

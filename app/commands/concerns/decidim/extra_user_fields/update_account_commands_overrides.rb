@@ -29,7 +29,8 @@ module Decidim
           phone_number: @form.phone_number,
           location: @form.location,
           underage: @form.underage,
-          statutory_representative_email: @form.statutory_representative_email
+          statutory_representative_email: @form.statutory_representative_email,
+          interests: @form.interests.compact_blank
         )
       end
     end

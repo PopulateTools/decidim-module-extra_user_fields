@@ -6,6 +6,7 @@ ca:
         country: País
         date_of_birth: Data de naixement
         gender: Gènere
+        interests: Intessos
         location: Localització
         phone_number: Telèfon
         postal_code: Codi postal
@@ -49,6 +50,12 @@ ca:
               description: Aquest camp és una llista de gèneres. Si está activat,
                 l'usuari haurà de triar un gènere.
               label: Habilitar camp de gènere
+            interests:
+              description: Aquest camp és una llista d'interessos. Si està marcat,
+                l'usuari podrà triar una llista d'interessos.
+              disabled_description_html: Perquè aquest camp estigui disponible, configureu
+                una llista d'interessos amb un inicialitzador que defineixi <codeclass="label">Decidim::ExtraUserFields::Settings.interests</code>
+              label: Activa el camp d'interessos
             location:
               description: Aquest camp és un camp de text. Si está activat, l'usuari
                 haurà de completar una ubicació.
