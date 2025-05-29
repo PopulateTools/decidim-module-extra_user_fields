@@ -39,6 +39,7 @@ module Decidim
         end
 
         # rubocop:disable Metrics/CyclomaticComplexity
+        # rubocop:disable Metrics/PerceivedComplexity
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
@@ -60,6 +61,7 @@ module Decidim
             # EndBlock
           }
         end
+        # rubocop:enable Metrics/PerceivedComplexity
         # rubocop:enable Metrics/CyclomaticComplexity
       end
     end
