@@ -26,7 +26,7 @@
   <% end %>
 
   <% if current_organization.activated_extra_field?(:interests) && f.object.interests_defined? %>
-    <%= f.collection_select :interests, f.object.interests_options_for_select, :first, :last, {}, { multiple: true } %>
+    <%= f.collection_select :interests, f.object.interests_options_for_select, :first, :last, f.object.interests_help_text_attributes, { multiple: true } %>
   <% end %>
 
   <% if current_organization.activated_extra_field?(:underage) %>

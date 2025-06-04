@@ -21,6 +21,12 @@ module Decidim
         Decidim::ExtraUserFields::Settings.interests.present?
       end
 
+      def interests_help_text_attributes
+        return {} unless I18n.exists?("interests_help", scope: "decidim.extra_user_fields")
+
+        { help_text: I18n.t("interests_help", scope: "decidim.extra_user_fields") }
+      end
+
       def phone_number_extra_user_field_pattern
         current_organization.extra_user_field_configuration(:phone_number)["pattern"]
       end
