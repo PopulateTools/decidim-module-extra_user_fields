@@ -47,7 +47,7 @@
     <% end %>
 
     <% if current_organization.activated_extra_field?(:interests) && f.object.interests_defined? %>
-      <%= f.collection_select :interests, f.object.interests_options_for_select, :first, :last, {}, { multiple: true } %>
+      <%= f.collection_select :interests, f.object.interests_options_for_select, :first, :last, f.object.interests_help_text_attributes, { multiple: true, class: "js-multiselect-field" } %>
     <% end %>
 
     <%# Block ExtraUserFields SignUpFormFields %>
@@ -56,5 +56,6 @@
 
   </div>
   <%= append_javascript_pack_tag "decidim_extra_user_fields.js" %>
+  <%= append_javascript_pack_tag "decidim_multiselect_fields.js" %>
   <%= append_stylesheet_pack_tag "decidim_extra_user_fields_css" %>
 <% end %>
