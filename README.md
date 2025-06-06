@@ -2,6 +2,8 @@
 
 This module allows administrators to define a set of extra fields for users. The fields are configurable in the admin panel of the organization. When enabled, they are shown in the user profile and in the registration form.
 
+Test
+
 Supported extra fields for users:
 
 * Country
