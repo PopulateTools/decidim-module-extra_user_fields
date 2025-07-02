@@ -51,7 +51,7 @@ module Decidim
       def translated_interests(keys)
         return if keys.blank?
 
-        keys.map { |key| I18n.t(key, scope: "decidim.extra_user_fields.interests") }.join(", ")
+        keys.filter_map { |key| I18n.t(key, scope: "decidim.extra_user_fields.interests") if key.present? }.join(", ")
       end
     end
   end
