@@ -9,7 +9,10 @@ FactoryBot.modify do
       create_static_pages { true }
     end
 
-    name { Faker::Company.unique.name }
+    name do
+      Decidim.available_locales.index_with { |_locale| Faker::Company.unique.name }
+    end
+
     reference_prefix { Faker::Name.suffix }
     time_zone { "UTC" }
     twitter_handler { Faker::Hipster.word }
@@ -25,7 +28,6 @@ FactoryBot.modify do
     users_registration_mode { :enabled }
     official_img_footer { Decidim::Dev.test_file("avatar.jpg", "image/jpeg") }
     official_url { Faker::Internet.url }
-    highlighted_content_banner_enabled { false }
     enable_omnipresent_banner { false }
     badges_enabled { true }
     user_groups_enabled { true }
@@ -34,7 +36,7 @@ FactoryBot.modify do
     admin_terms_of_service_body { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     force_users_to_authenticate_before_access_organization { false }
     machine_translation_display_priority { "original" }
-    external_domain_whitelist { ["example.org", "twitter.com", "facebook.com", "youtube.com", "github.com", "mytesturl.me"] }
+    external_domain_allowlist { ["example.org", "twitter.com", "facebook.com", "youtube.com", "github.com", "mytesturl.me"] }
     smtp_settings do
       {
         "from" => "test@example.org",

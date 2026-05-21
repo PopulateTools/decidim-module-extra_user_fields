@@ -1,0 +1,81 @@
+// Reusable heatmap coloring for any table.
+// Cells must provide CSS custom properties: --i (0-1 intensity), --tc (text color).
+// Activate by adding data-heatmap attribute to the table or wrapper.
+
+[data-heatmap] {
+  td.heatmap-cell--colored {
+    background-color: hsl(
+      calc(50 * (1 - var(--i))),
+      calc(90% - var(--i) * 12%),
+      calc(86% - var(--i) * 36%)
+    );
+    color: var(--tc);
+  }
+
+  td.heatmap-cell--gray {
+    background-color: hsl(0, 0%, calc(95% - var(--i) * 35%));
+    color: #1a1a1a;
+  }
+
+  td.heatmap-total {
+    background-color: hsl(215, calc(50% + var(--i) * 15%), calc(90% - var(--i) * 40%));
+    color: var(--tc);
+  }
+}
+
+// Legend
+.heatmap-legend {
+  --heatmap-heat-1: hsl(50, 90%, 86%);
+  --heatmap-heat-2: hsl(38, 87%, 77%);
+  --heatmap-heat-3: hsl(25, 84%, 68%);
+  --heatmap-heat-4: hsl(12, 81%, 59%);
+  --heatmap-heat-5: hsl(0, 78%, 50%);
+  --heatmap-total-1: hsl(215, 53%, 87%);
+  --heatmap-total-2: hsl(215, 57%, 77%);
+  --heatmap-total-3: hsl(215, 61%, 67%);
+  --heatmap-total-4: hsl(215, 63%, 57%);
+  --heatmap-total-5: hsl(215, 65%, 50%);
+  --heatmap-non-specified: hsl(0, 0%, 80%);
+
+  @apply flex items-center gap-3 mt-3 text-sm text-gray-2;
+
+  &__gradient {
+    @apply flex h-4 rounded overflow-hidden;
+
+    width: 160px;
+
+    &-step {
+      @apply flex-1;
+    }
+
+    &--heat {
+      @for $i from 1 through 5 {
+        .heatmap-legend__gradient-step:nth-child(#{$i}) {
+          background-color: var(--heatmap-heat-#{$i});
+        }
+      }
+    }
+
+    &--total {
+      @for $i from 1 through 5 {
+        .heatmap-legend__gradient-step:nth-child(#{$i}) {
+          background-color: var(--heatmap-total-#{$i});
+        }
+      }
+    }
+  }
+
+  &__separator {
+    @apply h-4 w-px bg-gray-6;
+  }
+
+  &__non-specified {
+    @apply ml-4 text-gray-2;
+  }
+
+  &__non-specified-swatch {
+    @apply inline-block w-4 h-4 rounded align-middle;
+
+    background-color: var(--heatmap-non-specified);
+  }
+}

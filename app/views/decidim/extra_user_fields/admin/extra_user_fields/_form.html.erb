@@ -1,7 +1,7 @@
 <%= cell("decidim/announcement", t(".callout.help")) %>
 
 <div class="form__wrapper">
-  <div class="card" data-component="accordion" id="accordion-global">
+  <div class="card" data-controller="accordion" id="accordion-global">
     <div class="card-divider">
       <button class="card-divider-button" data-open="true" data-controls="panel-global" type="button">
         <%= icon "arrow-right-s-line" %>
@@ -9,14 +9,14 @@
       </button>
     </div>
 
-    <div id="panel-global" class="card-section">
+    <div id="panel-global" class="card-section" aria-label="<%= t(".global.title") %>">
       <div class="row column">
-        <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled"), data: { toggle: "accordion-setup" } %>
+        <%= form.check_box :enabled, label: t(".extra_user_fields.extra_user_fields_enabled"), data: { controller: :toggle, "toggle-toggle-value": "accordion-setup accordion-extras" } %>
       </div>
     </div>
   </div>
 
-  <div class="card" data-component="accordion" id="accordion-setup" <%= "hidden" unless form.object.enabled %>>
+  <div class="card" data-controller="accordion" id="accordion-setup" <%= "hidden" unless form.object.enabled %>>
     <div class="card-divider">
       <button class="card-divider-button" data-open="true" data-controls="panel-setup" type="button">
         <%= icon "arrow-right-s-line" %>
@@ -24,14 +24,83 @@
       </button>
     </div>
 
-    <div id="panel-setup" class="card-section">
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/date_of_birth", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/country", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/postal_code", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/gender", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/phone_number", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/location", locals: { form: form } %>
-      <%= render partial: "decidim/extra_user_fields/admin/extra_user_fields/fields/underage", locals: { form: form } %>
+    <div id="panel-setup" class="card-section" aria-label="<%= t(".extra_user_fields.section") %>">
+      <%= render layout: "decidim/extra_user_fields/admin/extra_user_fields/field_table" do %>
+        <tbody>
+          <% (Decidim::ExtraUserFields::PROFILE_FIELDS - ["phone_number"]).each do |field_name| %>
+            <%= render "decidim/extra_user_fields/admin/extra_user_fields/field_row",
+                       label: t("#{field_name}.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields"),
+                       help_text: t("#{field_name}.description", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields"),
+                       field_name: field_name,
+                       form: form %>
+          <% end %>
+        </tbody>
+
+        <tbody data-controller="field-state" data-field-state-enabled-state-value="optional" data-field-state-disabled-state-value="disabled">
+          <% phone_enabled = form.object.phone_number_enabled %>
+          <tr data-field-state-target="row">
+            <td>
+              <%= t("phone_number.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields") %>
+              <br><span class="help-text"><%= t("phone_number.description", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields") %></span>
+            </td>
+            <td class="text-center">
+              <%= form.check_box :phone_number_enabled, label: "", aria: { label: "#{t("phone_number.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields")} #{t("aria.enabled", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleEnabled", "field-state-target": "enabled" } %>
+            </td>
+            <td class="text-center">
+              <%= form.check_box :phone_number_required, label: "", aria: { label: "#{t("phone_number.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields")} #{t("aria.required", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleRequired", "field-state-target": "required" } %>
+            </td>
+          </tr>
+          <tr data-field-state-target="subfields" <%= "hidden" unless phone_enabled %>>
+            <td colspan="3" class="pl-4">
+              <%= form.text_field :phone_number_pattern, help_text: t("phone_number.pattern_help_html", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields"), label: t("phone_number.pattern", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields"), placeholder: "^(\\+34|0034|34)?[ -]*[6-9][ -]*([0-9][ -]*){8}$", data: { type: :phone_number } %>
+              <%= form.translated :text_field, :phone_number_placeholder, label: t("phone_number.placeholder", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields"), placeholder: "+34987654321" %>
+            </td>
+          </tr>
+        </tbody>
+        <tbody data-controller="field-state" data-field-state-enabled-state-value="optional" data-field-state-disabled-state-value="disabled">
+          <% underage_enabled = form.object.underage_enabled %>
+          <tr data-field-state-target="row">
+            <td rowspan="2">
+              <%= t("underage.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields") %>
+              <br><span class="help-text"><%= t("underage.description", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields") %></span>
+            </td>
+            <td class="text-center">
+              <%= form.check_box :underage_enabled, label: "", aria: { label: "#{t("underage.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields")} #{t("aria.enabled", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleEnabled", "field-state-target": "enabled" } %>
+            </td>
+            <td class="text-center">
+              <%= form.check_box :underage_required, label: "", aria: { label: "#{t("underage.label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields")} #{t("aria.required", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleRequired", "field-state-target": "required" } %>
+            </td>
+          </tr>
+          <tr data-field-state-target="subfields" <%= "hidden" unless underage_enabled %>>
+            <td colspan="2" class="text-center">
+              <%= form.select :underage_limit, Decidim::ExtraUserFields.underage_options.to_a, { selected: form.object.underage_limit || Decidim::ExtraUserFields.underage_limit, label: t("underage.limit_label", scope: "decidim.extra_user_fields.admin.extra_user_fields.fields", default: "Age limit") } %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card" data-controller="accordion" id="accordion-extras" <%= "hidden" unless form.object.enabled %>>
+    <div class="card-divider">
+      <button class="card-divider-button" data-open="true" data-controls="panel-extras" type="button">
+        <%= icon "arrow-right-s-line" %>
+        <h2 class="card-title"><%= t(".extra_user_fields.section_extras") %></h2>
+      </button>
+    </div>
+
+    <div id="panel-extras" class="card-section" aria-label="<%= t(".extra_user_fields.section_extras") %>">
+      <div class="row column">
+        <p class="help-text"><%= t(".extra_user_fields.section_extras_description") %></p>
+      </div>
+
+      <%= render layout: "decidim/extra_user_fields/admin/extra_user_fields/field_table" do %>
+        <tbody>
+          <%= render "decidim/extra_user_fields/admin/extra_user_fields/fields/custom_select_fields", form: form %>
+          <%= render "decidim/extra_user_fields/admin/extra_user_fields/fields/custom_boolean_fields", form: form %>
+          <%= render "decidim/extra_user_fields/admin/extra_user_fields/fields/custom_text_fields", form: form %>
+        </tbody>
+      <% end %>
     </div>
   </div>
 </div>

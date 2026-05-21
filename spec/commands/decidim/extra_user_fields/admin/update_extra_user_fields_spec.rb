@@ -9,42 +9,45 @@ module Decidim
         let(:organization) { create(:organization, extra_user_fields: {}) }
         let(:user) { create(:user, :admin, :confirmed, organization:) }
 
-        let(:extra_user_fields_enabled) { true }
-        let(:postal_code) { true }
-        let(:country) { true }
-        let(:gender) { true }
-        let(:date_of_birth) { true }
-        let(:phone_number) { true }
         let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
         let(:phone_number_placeholder) { "+34999888777" }
-        let(:location) { true }
-        let(:underage) { true }
-        let(:underage_limit) { 18 }
-        # Block ExtraUserFields RspecVar
 
-        # EndBlock
-
-        # rubocop:disable Style/TrailingCommaInHashLiteral
         let(:form_params) do
           {
-            "enabled" => extra_user_fields_enabled,
-            "postal_code" => postal_code,
-            "country" => country,
-            "gender" => gender,
-            "date_of_birth" => date_of_birth,
-            "phone_number" => phone_number,
+            "enabled" => true,
+            "country_enabled" => true,
+            "country_required" => true,
+            "gender_enabled" => true,
+            "gender_required" => false,
+            "age_range_enabled" => true,
+            "age_range_required" => false,
+            "date_of_birth_enabled" => true,
+            "date_of_birth_required" => true,
+            "postal_code_enabled" => true,
+            "postal_code_required" => false,
+            "phone_number_enabled" => true,
+            "phone_number_required" => false,
             "phone_number_pattern" => phone_number_pattern,
-            "phone_number_placeholder" => phone_number_placeholder,
-            "location" => location,
-            "underage" => underage,
-            "underage_limit" => underage_limit,
-            # Block ExtraUserFields ExtraUserFields
-
-            # EndBlock
+            "phone_number_placeholder_en" => phone_number_placeholder,
+            "location_enabled" => false,
+            "location_required" => false,
+            "underage_enabled" => true,
+            "underage_required" => false,
+            "underage_limit" => 18,
+            "select_fields" => {
+              "participant_type" => { "enabled" => "true", "required" => "false" },
+              "non_existing_field" => { "enabled" => "true", "required" => "false" }
+            },
+            "boolean_fields" => {
+              "ngo" => { "enabled" => "true", "required" => "false" },
+              "non_existing_field" => { "enabled" => "true", "required" => "false" }
+            },
+            "text_fields" => {
+              "motto" => { "enabled" => "true", "required" => "false" },
+              "non_existing_field" => { "enabled" => "true", "required" => "false" }
+            }
           }
         end
-        # rubocop:enable Style/TrailingCommaInHashLiteral
-
         let(:form) do
           ExtraUserFieldsForm.from_params(
             form_params
@@ -84,17 +87,20 @@ module Decidim
 
               extra_user_fields = organization.extra_user_fields
               expect(extra_user_fields).to include("enabled" => true)
-              expect(extra_user_fields).to include("country" => { "enabled" => true })
-              expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true })
-              expect(extra_user_fields).to include("gender" => { "enabled" => true })
-              expect(extra_user_fields).to include("country" => { "enabled" => true })
-              expect(extra_user_fields).to include("phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => phone_number_placeholder })
-              expect(extra_user_fields).to include("location" => { "enabled" => true })
-              expect(extra_user_fields).to include("underage" => { "enabled" => true })
-              expect(extra_user_fields).to include("underage_limit" => 18)
-              # Block ExtraUserFields InclusionSpec
-
-              # EndBlock
+              expect(extra_user_fields).to include("country" => { "enabled" => true, "required" => true })
+              expect(extra_user_fields).to include("date_of_birth" => { "enabled" => true, "required" => true })
+              expect(extra_user_fields).to include("postal_code" => { "enabled" => true, "required" => false })
+              expect(extra_user_fields).to include("gender" => { "enabled" => true, "required" => false })
+              expect(extra_user_fields).to include("age_range" => { "enabled" => true, "required" => false })
+              phone = extra_user_fields["phone_number"]
+              expect(phone).to include("enabled" => true, "required" => false, "pattern" => phone_number_pattern)
+              expect(phone["placeholder"]).to include("en" => phone_number_placeholder)
+              expect(extra_user_fields).to include("location" => { "enabled" => false, "required" => false })
+              expect(extra_user_fields).to include("underage" => { "enabled" => true, "required" => false, "limit" => 18 })
+              expect(extra_user_fields["select_fields"]).to include("participant_type" => { "enabled" => true, "required" => false })
+              expect(extra_user_fields["boolean_fields"]).to include("ngo" => { "enabled" => true, "required" => false })
+              expect(extra_user_fields["text_fields"]).to include("motto" => { "enabled" => true, "required" => false })
+              expect(extra_user_fields).not_to have_key("underage_limit")
             end
           end
         end

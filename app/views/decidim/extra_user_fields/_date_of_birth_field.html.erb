@@ -1,0 +1,20 @@
+<% if current_organization.activated_extra_field?(:date_of_birth) %>
+  <div><%= f.date_field :date_of_birth, data: { controller: "date-picker" } %></div>
+  <script>
+    // This script ensures that if the date picker input is cleared, the hidden input is also cleared, preventing stale data from being submitted.
+    // looks like a bug in Decidim
+    document.addEventListener('decidim:loaded', function() {
+      const hiddenInput = document.querySelector('input[name$="[date_of_birth]"][type="date"]');
+      if (!hiddenInput) return;
+
+      const datePickerInput = document.querySelector(`#${hiddenInput.id}_date`);
+      if (!datePickerInput) return;
+
+      datePickerInput.addEventListener('change', function() {
+        if (this.value === '') {
+          hiddenInput.value = '';
+        }
+      });
+    });
+  </script>
+<% end %>

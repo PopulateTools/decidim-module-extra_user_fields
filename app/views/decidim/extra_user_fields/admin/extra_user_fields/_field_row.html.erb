@@ -1,0 +1,12 @@
+<%# locals: (label:, help_text: nil, field_name:, form:) %>
+<tr data-controller="field-state" data-field-state-enabled-state-value="optional" data-field-state-disabled-state-value="disabled" data-field-state-target="row">
+  <td>
+    <%= label %><% if help_text.present? %><br><span class="help-text"><%= help_text %></span><% end %>
+  </td>
+  <td class="text-center">
+    <%= form.check_box :"#{field_name}_enabled", label: "", aria: { label: "#{label} #{t("aria.enabled", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleEnabled", "field-state-target": "enabled" } %>
+  </td>
+  <td class="text-center">
+    <%= form.check_box :"#{field_name}_required", label: "", aria: { label: "#{label} #{t("aria.required", scope: "decidim.extra_user_fields.admin.extra_user_fields")}" }, data: { action: "field-state#toggleRequired", "field-state-target": "required" } %>
+  </td>
+</tr>

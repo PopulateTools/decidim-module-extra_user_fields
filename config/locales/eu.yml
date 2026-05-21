@@ -1,0 +1,92 @@
+---
+eu:
+  activemodel:
+    attributes:
+      user:
+        age_range: Zenbat urte dituzu?
+        country: Herria
+        date_of_birth: Jaioteguna
+        gender: Zer generotako pertsona zara?
+        location: Helbidea
+        phone_number: Telefono zenbakia
+        postal_code: Posta kodea
+  decidim:
+    admin:
+      actions:
+        export: Esportatu
+      exports:
+        export_as: "%{export_format} gisa esportatu"
+      extra_user_fields:
+        menu:
+          title: Kudeatu extra user fields
+    components:
+      extra_user_fields:
+        name: ExtraUserFields
+    extra_user_fields:
+      admin:
+        exports:
+          users: Parte-hartzaileak
+        extra_user_fields:
+          aria:
+            enabled: gaituta
+            required: beharrezkoa
+          fields:
+            age_range:
+              description: Eremu hau adin tarte bat da. Erabiltzaileek adin tarte
+                bat aukeratu ahal izango dute.
+              label: Adin tartearen eremua aktibatu
+            country:
+              description: Eremu hau herrien zerrenda bat da. Erabiltzaileek herri
+                bat aukeratu ahal izango dute.
+              label: Herriaren eremua aktibatu
+            date_of_birth:
+              description: Eremu hau data bat da. Erabiltzaileak bere jaioteguna jarri
+                ahal izango du data aukeratuz.
+              label: Jaiotegunaren  eremua aktibatu
+            gender:
+              description: Eremu hau generoen zerrenda bat da. Erabiltzaileak generoa
+                aukeratu ahal izango du erregistroa egitean.
+              label: Generoaren eremua aktibatu
+            location:
+              description: Eremu hau testua da. Erabiltzaileak helbidea idatzi ahal
+                izango du bertan.
+              label: Helbidearen eremua aktibatu
+            phone_number:
+              description: Eremu hau testua da. Erabiltzaileak bere telefono zenbakia
+                idatzi ahal izango du bertan.
+              label: Telefono zenbakiaren  eremua aktibatu
+            postal_code:
+              description: Eremu hau testua da. Erabiltzaileak bere posta kodea idatzi
+                ahal izango du bertan.
+              label: Posta kodearen eremua aktibatu
+          form:
+            callout:
+              help: Extra user fields-en funtzionaltasunak aktibatu. Honi esker erregistroa
+                egiteko unean eremu gehigarriak agertuko dira. Gogoratu aukera hau
+                aktibatuta ere, <strong> erregistroaren formularioan behean aktibatutako
+                eremuak baino ez dituela gehituko.</strong>
+            extra_user_fields:
+              extra_user_fields_enabled: Extra User Fields aktibatu
+              section: Eregistroa egiteko formularioan erabilgarri dauden eremu gehigarriak.
+            global:
+              title: Funtzionatasuna Aktibatu / Desaktibatu
+          index:
+            save: Ezarpenak gorde
+            title: Extra user fields kudeatu
+          update:
+            failure: Erakundearen datuak eguneratzean errore bat sortu da
+            success: Extra user fields zuzen eguneratu dira erakundean
+      age_ranges:
+        17_to_30: 17tik 30era
+        31_to_60: 31tik 60ra
+        61_or_more: 61 edo gehiago
+        prefer_not_to_say: Ez esan nahi
+        up_to_16: 16 edo gutxiago
+      genders:
+        female: Emakumea
+        male: Gizona
+        other: Beste bat
+        prefer_not_to_say: Ez esan nahi
+      registration_form:
+        signup:
+          legend: Argibide gehiago

@@ -38,28 +38,77 @@ module Decidim
           )
         end
 
-        # rubocop:disable Metrics/CyclomaticComplexity
         def extra_user_fields
           {
             "enabled" => form.enabled.presence || false,
-            "date_of_birth" => { "enabled" => form.date_of_birth.presence || false },
-            "country" => { "enabled" => form.country.presence || false },
-            "postal_code" => { "enabled" => form.postal_code.presence || false },
-            "gender" => { "enabled" => form.gender.presence || false },
-            "phone_number" => {
-              "enabled" => form.phone_number.presence || false,
-              "pattern" => form.phone_number_pattern.presence,
-              "placeholder" => form.phone_number_placeholder.presence
-            },
-            "location" => { "enabled" => form.location.presence || false },
-            "underage" => { "enabled" => form.underage || false },
-            "underage_limit" => form.underage_limit || Decidim::ExtraUserFields::Engine::DEFAULT_UNDERAGE_LIMIT
-            # Block ExtraUserFields SaveFieldInConfig
-
-            # EndBlock
+            **standard_fields,
+            **phone_number_fields,
+            "underage" => underage_fields,
+            "select_fields" => normalize_select_fields,
+            "boolean_fields" => normalize_boolean_fields,
+            "text_fields" => normalize_text_fields
           }
         end
-        # rubocop:enable Metrics/CyclomaticComplexity
+
+        def standard_fields
+          (Decidim::ExtraUserFields::PROFILE_FIELDS - %w(phone_number)).index_with do |field|
+            enabled = form.public_send(:"#{field}_enabled") == true
+            {
+              "enabled" => enabled,
+              "required" => enabled && form.public_send(:"#{field}_required") == true
+            }
+          end
+        end
+
+        def phone_number_fields
+          enabled = form.phone_number_enabled == true
+          {
+            "phone_number" => {
+              "enabled" => enabled,
+              "required" => enabled && form.phone_number_required == true,
+              "pattern" => form.phone_number_pattern.presence,
+              "placeholder" => form.phone_number_placeholder.presence
+            }.compact
+          }
+        end
+
+        def underage_fields
+          enabled = form.underage_enabled == true
+          {
+            "enabled" => enabled,
+            "required" => enabled && form.underage_required == true,
+            "limit" => form.underage_limit || Decidim::ExtraUserFields.underage_limit
+          }
+        end
+
+        def normalize_select_fields
+          normalize_collection_fields(:select_fields)
+        end
+
+        def normalize_boolean_fields
+          normalize_collection_fields(:boolean_fields, allow_required: false)
+        end
+
+        def normalize_text_fields
+          normalize_collection_fields(:text_fields)
+        end
+
+        def normalize_collection_fields(name, allow_required: true)
+          data = form.public_send(name)
+          return {} unless data.is_a?(Hash)
+
+          data.transform_values do |field_data|
+            next({ "enabled" => false, "required" => false }) if field_data.blank? || !field_data.is_a?(Hash)
+
+            enabled = field_data["enabled"] == "true"
+            required = allow_required && field_data["required"] == "true"
+
+            {
+              "enabled" => enabled,
+              "required" => enabled && required
+            }
+          end
+        end
       end
     end
   end

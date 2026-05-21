@@ -18,12 +18,13 @@ module Decidim
     let(:extra_user_fields) do
       {
         "enabled" => true,
-        "country" => { "enabled" => true },
-        "postal_code" => { "enabled" => true },
-        "date_of_birth" => { "enabled" => true },
-        "gender" => { "enabled" => true },
-        "phone_number" => { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil },
-        "location" => { "enabled" => true }
+        "country" => { "enabled" => true, "required" => false },
+        "postal_code" => { "enabled" => true, "required" => false },
+        "date_of_birth" => { "enabled" => true, "required" => false },
+        "gender" => { "enabled" => true, "required" => false },
+        "age_range" => { "enabled" => true, "required" => false },
+        "phone_number" => { "enabled" => true, "required" => false, "pattern" => phone_number_pattern, "placeholder" => nil },
+        "location" => { "enabled" => true, "required" => false }
       }
     end
     let(:phone_number_pattern) { "^(\\+34)?[0-9 ]{9,12}$" }
@@ -35,6 +36,7 @@ module Decidim
     let(:country) { "Argentina" }
     let(:date_of_birth) { "01/01/2000" }
     let(:gender) { "other" }
+    let(:age_range) { "17_to_30" }
     let(:location) { "Paris" }
     let(:phone_number) { "0123456789" }
     let(:postal_code) { "75001" }
@@ -50,6 +52,7 @@ module Decidim
         postal_code:,
         date_of_birth:,
         gender:,
+        age_range:,
         phone_number:,
         location:
       }
@@ -103,12 +106,6 @@ module Decidim
           it { is_expected.not_to be_valid }
         end
       end
-
-      context "and a user_group has the email" do
-        let!(:user_group) { create(:user_group, organization:, email:) }
-
-        it { is_expected.not_to be_valid }
-      end
     end
 
     context "when the name is an email" do
@@ -154,7 +151,7 @@ module Decidim
 
       context "when the nickname already exists" do
         context "and a user has the nickname" do
-          let!(:another_user) { create(:user, organization:, nickname: name.upcase) }
+          let!(:another_user) { create(:user, organization:, nickname: name) }
 
           it { is_expected.to be_valid }
 
@@ -167,12 +164,6 @@ module Decidim
 
             it { is_expected.to be_valid }
           end
-        end
-
-        context "and a user_group has the nickname" do
-          let!(:user_group) { create(:user_group, organization:, nickname: name) }
-
-          it { is_expected.to be_valid }
         end
       end
 

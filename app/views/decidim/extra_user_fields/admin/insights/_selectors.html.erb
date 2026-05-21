@@ -1,0 +1,7 @@
+<%= form_tag(request.path, method: :get) do %>
+  <div class="insights-selectors">
+    <%= insight_selector_field(:rows, available_fields, current_row_field) { |f| field_label(f) } %>
+    <%= insight_selector_field(:cols, available_fields, current_col_field) { |f| field_label(f) } %>
+    <%= insight_selector_field(:metric, available_metrics, current_metric) { |m| metric_label(m) } %>
+  </div>
+<% end %>

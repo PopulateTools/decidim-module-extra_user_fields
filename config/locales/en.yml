@@ -3,9 +3,10 @@ en:
   activemodel:
     attributes:
       user:
+        age_range: How old are you?
         country: Country
         date_of_birth: Date of birth
-        gender: Gender
+        gender: Which gender do you identify with?
         location: Location
         phone_number: Phone Number
         postal_code: Postal code
@@ -24,6 +25,47 @@ en:
       exports:
         export_as: Export %{export_format}
       extra_user_fields:
+        benchmarking:
+          export_name: Benchmarking
+          menu_title: Benchmarking
+          no_data: No participation data found for the selected spaces.
+          select_spaces: Choose participatory spaces for comparison
+          select_spaces_prompt: Select one or more participatory spaces to compare.
+          table_label: Benchmarking comparison table
+          title: Comparative stats across spaces
+        insights:
+          column_total: Column Total
+          description: Explore participant activity across profile dimensions. Select
+            a metric and two profile fields to see how participation is distributed.
+          export_name: Insights
+          fields:
+            age_span: Age span
+            country: Country
+            gender: Gender
+            location: Location
+            postal_code: Postal code
+          legend:
+            fewer: Fewer
+            higher_total: Higher total
+            lower_total: Lower total
+            more: More
+            non_specified: Not specified / Prefer not to say
+          menu_title: Insights
+          metrics:
+            budget_votes: Budget votes
+            comments: Comments
+            participants: Participants
+            proposals_created: Proposals created
+            proposals_supported: Proposals supported
+          no_data: No participation data found for this space with the selected criteria.
+          non_specified: Not specified / Prefer not to say
+          pivot_table_label: Participation data table
+          row_total: Row Total
+          selectors:
+            cols: Columns (X axis)
+            metric: Metric
+            rows: Rows (Y axis)
+          title: Participatory Space Insights
         menu:
           title: Manage extra user fields
     components:
@@ -34,27 +76,39 @@ en:
         exports:
           users: Participants
         extra_user_fields:
+          aria:
+            enabled: enabled
+            required: required
+          boolean_fields:
+            ngo:
+              description: This field is a Boolean field. User will be able to check
+                if is a NGO
+              label: Enable NGO field
           fields:
+            age_range:
+              description: This field is a list of age ranges. The user will have
+                to choose an age range
+              label: Age range
             country:
-              description: This field is a list of countries. If checked, user will
-                have to choose a country
-              label: Enable country field
+              description: This field is a list of countries. The user will have to
+                choose a country
+              label: Country
             date_of_birth:
-              description: This field is a Date field. If checked, user will have
-                to register a birth date by using a Date picker
-              label: Enable date of birth field
+              description: This field is a Date field. The user will have to register
+                a birth date by using a Date picker
+              label: Date of birth
             gender:
-              description: This field is a list of genders. If checked, user will
-                have to choose a gender
-              label: Enable gender field
+              description: This field is a list of genders. The user will have to
+                choose a gender
+              label: Gender
             location:
-              description: This field is a String field. If checked, user will have
-                to fill in a location
-              label: Enable location field
+              description: This field is a String field. The user will have to fill
+                in a location
+              label: Location
             phone_number:
-              description: This field is a telephone field. If checked, user will
-                have to fill in a phone number
-              label: Enable phone number field
+              description: This field is a telephone field. The user will have to
+                fill in a phone number
+              label: Phone number
               pattern: Phone numbers validation pattern (regexp)
               pattern_help_html: Copy this regular expression <code class="label">^(\+34|0034|34)?[
                 -]*[6-9][ -]*([0-9][ -]*){8}$</code> to validate this phone format
@@ -62,14 +116,15 @@ en:
                 target="_blank">here</a>.
               placeholder: Phone number placeholder
             postal_code:
-              description: This field is a String field. If checked, user will have
-                to fill in a postal code
-              label: Enable postal code field
+              description: This field is a String field. The user will have to fill
+                in a postal code
+              label: Postal code
             underage:
               description: This field is a Boolean field. User will be able to check
                 if is underage
               label: Enable parental authorization field
               limit: This sets the age limit (ex. 18 years old)
+              limit_label: Age limit
           form:
             callout:
               help: Enable custom extra user fields functionality to be able to manage
@@ -78,22 +133,73 @@ en:
             extra_user_fields:
               extra_user_fields_enabled: Enable extra user fields
               section: Available extra fields for signup form
+              section_extras: Additional custom fields
+              section_extras_description: If you have configured any extra user fields,
+                you can manage them here (See section "Configuration through an initializer"
+                in the plugin README).
+              table:
+                enabled: Enabled
+                field: Field
+                required: Required
             global:
               title: Activate / deactivate functionality
+            states:
+              disabled: Disabled
+              enabled: Enabled
+              optional: Optional
+              required: Required
           index:
             save: Save configuration
             title: Manage extra user fields
+          select_fields:
+            participant_type:
+              description: This field is a list of participant types. If checked,
+                user will have to choose a participant type
+              label: Enable participant type field
+          text_fields:
+            motto:
+              description: This field is a String field. If checked, user can fill
+                in a personal phrase or motto
+              label: Enable "My Motto" field
           update:
             failure: An error occurred on update
             success: Extra user fields correctly updated in organization
+      age_ranges:
+        17_to_30: 17 to 30
+        31_to_60: 31 to 60
+        61_or_more: 61 or older
+        prefer_not_to_say: Prefer not to say
+        up_to_16: 16 or younger
+      boolean_fields:
+        ngo:
+          label: I am a member of a non-governmental organization (NGO)
+      errors:
+        select_fields: The field "%{field}" is not valid.
+      force_extra_user_fields:
+        redirect_message: Please complete your profile information before continuing.
       genders:
         female: Female
         male: Male
         other: Other
+        prefer_not_to_say: Prefer not to say
+      insight_age_spans:
+        21_to_30: 21 to 30
+        31_to_40: 31 to 40
+        41_to_50: 41 to 50
+        51_to_60: 51 to 60
+        61_or_more: More than 60
+        up_to_20: Less than 20
       registration_form:
         signup:
           legend: More information
           underage: I am under %{limit} years old and I agree to get a parental authorization
+      select_fields:
+        participant_type:
+          label: Are you participating as an individual, or officially on behalf of
+            an organization?
+      text_fields:
+        motto:
+          label: What is your motto?
     statutory_representative:
       inform:
         body: |

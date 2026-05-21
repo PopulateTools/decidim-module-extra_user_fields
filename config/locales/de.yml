@@ -3,18 +3,22 @@ de:
   activemodel:
     attributes:
       user:
+        age_range: Wie alt sind Sie?
         country: Land
         date_of_birth: Geburtsdatum
-        gender: Geschlecht
+        gender: Welches Geschlecht identifizieren Sie?
         location: Standort
         phone_number: Telefonnummer
         postal_code: Postleitzahl
+        statutory_representative_email: E-Mail des gesetzlichen Vertreters
+        underage: Minderjährig
     errors:
       models:
         user:
           attributes:
             date_of_birth:
-              underage: ungültig. Wenn Sie minderjährig sind, müssen Sie die Erlaubnis der Eltern einholen
+              underage: ungültig. Wenn Sie minderjährig sind, müssen Sie die Erlaubnis
+                der Eltern einholen
   decidim:
     admin:
       actions:
@@ -22,6 +26,50 @@ de:
       exports:
         export_as: Exportieren im Format %{export_format}
       extra_user_fields:
+        benchmarking:
+          export_name: Vergleichsanalyse
+          menu_title: Vergleichsanalyse
+          no_data: Für die ausgewählten Räume wurden keine Teilnahmedaten gefunden.
+          select_spaces: Wählen Sie partizipative Räume zum Vergleich
+          select_spaces_prompt: Wählen Sie einen oder mehrere partizipative Räume
+            zum Vergleich aus.
+          table_label: Vergleichsanalyse-Tabelle
+          title: Vergleichende Statistiken über Räume hinweg
+        insights:
+          column_total: Spaltensumme
+          description: Erkunden Sie die Teilnehmeraktivität über Profildimensionen
+            hinweg. Wählen Sie eine Metrik und zwei Profilfelder aus, um zu sehen,
+            wie die Teilnahme verteilt ist.
+          export_name: Einblicke
+          fields:
+            age_span: Altersgruppe
+            country: Land
+            gender: Geschlecht
+            location: Standort
+            postal_code: Postleitzahl
+          legend:
+            fewer: Weniger
+            higher_total: Höhere Summe
+            lower_total: Niedrigere Summe
+            more: Mehr
+            non_specified: Nicht angegeben / Möchte nicht sagen
+          menu_title: Einblicke
+          metrics:
+            budget_votes: Budgetstimmen
+            comments: Kommentare
+            participants: Teilnehmer
+            proposals_created: Erstellte Vorschläge
+            proposals_supported: Unterstützte Vorschläge
+          no_data: Für diesen Bereich wurden mit den ausgewählten Kriterien keine
+            Teilnahmedaten gefunden.
+          non_specified: Nicht angegeben / Möchte nicht sagen
+          pivot_table_label: Teilnahmedatentabelle
+          row_total: Zeilensumme
+          selectors:
+            cols: Spalten (X-Achse)
+            metric: Metrik
+            rows: Zeilen (Y-Achse)
+          title: Einblicke in den partizipativen Raum
         menu:
           title: Benutzerdefinierte Anmeldefelder verwalten
     components:
@@ -32,51 +80,132 @@ de:
         exports:
           users: Teilnehmer
         extra_user_fields:
+          aria:
+            enabled: aktiviert
+            required: erforderlich
+          boolean_fields:
+            ngo:
+              description: Dieses Feld ist ein boolesches Feld. Der Benutzer kann
+                angeben, ob er einer NGO angehört
+              label: NGO-Feld aktivieren
           fields:
+            age_range:
+              description: Dieses Feld ist eine Liste von Altersgruppen. Der Benutzer
+                kann eine Altersgruppe auswählen.
+              label: Das Feld Altersgruppe aktivieren
             country:
-              description: Dieses Feld enthält eine Liste von Ländern. Der Benutzer kann ein Land auswählen.
+              description: Dieses Feld enthält eine Liste von Ländern. Der Benutzer
+                kann ein Land auswählen.
               label: Das Feld Land aktivieren
             date_of_birth:
-              description: Dieses Feld ist ein Feld für das Geburtsdatum. Der Benutzer kann ein Datum auswählen.
+              description: Dieses Feld ist ein Feld für das Geburtsdatum. Der Benutzer
+                kann ein Datum auswählen.
               label: Das Feld Geburtsdatum aktivieren
             gender:
-              description: Dieses Feld ist ein Feld für die Geschlechtsidentität. Der Benutzer kann ein Geschlecht auswählen.
+              description: Dieses Feld ist ein Feld für die Geschlechtsidentität.
+                Der Benutzer kann ein Geschlecht auswählen.
               label: Das Feld Geschlecht aktivieren
             location:
-              description: Dieses Feld ermöglicht das Hinzufügen von Text. Der Benutzer kann einen Ort auswählen.
+              description: Dieses Feld ermöglicht das Hinzufügen von Text. Der Benutzer
+                kann einen Ort auswählen.
               label: Das Feld Standort aktivieren
             phone_number:
-              description: Dieses Feld ist ein Telefonnummernfeld. Der Benutzer kann eine Nummer auswählen.
+              description: Dieses Feld ist ein Telefonnummernfeld. Der Benutzer kann
+                eine Nummer auswählen.
               label: Das Feld Telefonnummer aktivieren
             postal_code:
-              description: Dieses Feld ist für die Postleitzahl. Der Benutzer kann eine Postleitzahl auswählen.
+              description: Dieses Feld ist für die Postleitzahl. Der Benutzer kann
+                eine Postleitzahl auswählen.
               label: Das Postleitzahlenfeld aktivieren.
+            underage:
+              description: Dieses Feld ist ein boolesches Feld. Der Benutzer kann
+                angeben, ob er minderjährig ist
+              label: Feld für elterliche Genehmigung aktivieren
+              limit: Dies legt die Altersgrenze fest (z.B. 18 Jahre)
+              limit_label: Altersgrenze
           form:
             callout:
-              help: Aktivieren Sie die Funktion für benutzerdefinierte Anmeldefelder, um zusätzliche Felder in Ihrem Anmeldeformular zu verwalten. Auch bei aktivierter Option wird das Anmeldeformular nur aktualisiert, wenn mindestens ein zusätzliches Feld aktiviert ist.
+              help: Aktivieren Sie die Funktion für benutzerdefinierte Anmeldefelder,
+                um zusätzliche Felder in Ihrem Anmeldeformular zu verwalten. Auch
+                bei aktivierter Option wird das Anmeldeformular nur aktualisiert,
+                wenn mindestens ein zusätzliches Feld aktiviert ist.
             extra_user_fields:
               extra_user_fields_enabled: Benutzerdefinierte Anmeldefelder aktivieren
               section: Verfügbare Anmeldefelder für das Anmeldeformular
+              section_extras: Zusätzliche benutzerdefinierte Felder
+              section_extras_description: Wenn Sie zusätzliche Benutzerfelder konfiguriert
+                haben, können Sie diese hier verwalten (siehe Abschnitt "Konfiguration
+                über einen Initializer" im Plugin-README).
+              table:
+                enabled: Aktiviert
+                field: Feld
+                required: Erforderlich
             global:
               title: Aktivieren / Deaktivieren von benutzerdefinierten Anmeldefeldern
+            states:
+              disabled: Deaktiviert
+              enabled: Aktiviert
+              optional: Optional
+              required: Erforderlich
           index:
             save: Speichern
             title: Benutzerdefinierte Anmeldefelder verwalten
+          select_fields:
+            participant_type:
+              description: Dieses Feld ist eine Liste von Teilnehmertypen. Der Benutzer
+                muss einen Teilnehmertyp auswählen
+              label: Teilnehmertyp-Feld aktivieren
+          text_fields:
+            motto:
+              description: Dieses Feld ist ein Textfeld. Der Benutzer kann einen persönlichen
+                Satz oder ein Motto eingeben
+              label: Feld "Mein Motto" aktivieren
           update:
             failure: Bei der Aktualisierung ist ein Fehler aufgetreten.
             success: Die Anmeldefelder wurden erfolgreich aktualisiert.
+      age_ranges:
+        17_to_30: 17 bis 30
+        31_to_60: 31 bis 60
+        61_or_more: 61 oder älter
+        prefer_not_to_say: Bevorzuge es, nicht zu sagen
+        up_to_16: 16 oder jünger
+      boolean_fields:
+        ngo:
+          label: Ich bin Mitglied einer Nichtregierungsorganisation (NGO)
+      errors:
+        select_fields: Das Feld "%{field}" ist ungültig.
+      force_extra_user_fields:
+        redirect_message: Bitte vervollständigen Sie Ihre Profilinformationen, bevor
+          Sie fortfahren.
       genders:
         female: Frau
         male: Mann
         other: Divers
+        prefer_not_to_say: Bevorzuge es, nicht zu sagen
+      insight_age_spans:
+        21_to_30: 21 bis 30
+        31_to_40: 31 bis 40
+        41_to_50: 41 bis 50
+        51_to_60: 51 bis 60
+        61_or_more: Mehr als 60
+        up_to_20: Weniger als 20
       registration_form:
         signup:
           legend: Weitere Informationen
+          underage: Ich bin unter %{limit} Jahre alt und stimme zu, eine elterliche
+            Genehmigung einzuholen
+      select_fields:
+        participant_type:
+          label: Nehmen Sie als Einzelperson oder offiziell im Namen einer Organisation
+            teil?
+      text_fields:
+        motto:
+          label: Was ist Ihr Motto?
     statutory_representative:
       inform:
         body: |
           Hallo,
           Sie wurden als gesetzlicher Vertreter von %{name} für die Registrierung bei %{organization} benannt.
-          Beste grüße,
+          Beste Grüße,
           Das %{organization} Team
         subject: Sie wurden als gesetzlicher Vertreter benannt

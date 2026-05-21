@@ -14,12 +14,14 @@ module Decidim
         verify_oauth_signature!
 
         begin
-          if existing_identity
-            user = existing_identity.user
-            verify_user_confirmed(user)
+          if (@identity = existing_identity)
+            @user = existing_identity.user
+            verify_user_confirmed(@user)
+            trigger_omniauth_event("decidim.user.omniauth_login")
 
-            return broadcast(:ok, user)
+            return broadcast(:ok, @user)
           end
+
           return broadcast(:invalid) if form.invalid?
 
           transaction do
@@ -27,15 +29,21 @@ module Decidim
             send_email_to_statutory_representative
             @identity = create_identity
           end
-          trigger_omniauth_registration
+          trigger_omniauth_event
 
           broadcast(:ok, @user)
+        rescue Decidim::NeedTosAcceptance
+          broadcast(:add_tos_errors, @user)
         rescue ActiveRecord::RecordInvalid => e
           broadcast(:error, e.record)
         end
       end
 
       private
+
+      attr_reader :form, :verified_email
+
+      REGEXP_SANITIZER = /[<>?%&\^*#@()\[\]=+:;"{}\\|]/
 
       def create_or_find_user
         @user = User.find_or_initialize_by(
@@ -47,28 +55,29 @@ module Decidim
           # If user has left the account unconfirmed and later on decides to sign
           # in with omniauth with an already verified account, the account needs
           # to be marked confirmed.
-          @user.skip_confirmation! if !@user.confirmed? && @user.email == verified_email
-        else
-          generated_password = SecureRandom.hex
-
-          @user.email = (verified_email || form.email)
-          @user.name = form.name
-          @user.nickname = form.normalized_nickname
-          @user.newsletter_notifications_at = nil
-          @user.password = generated_password
-          @user.password_confirmation = generated_password
-          if form.avatar_url.present?
-            url = URI.parse(form.avatar_url)
-            filename = File.basename(url.path)
-            file = url.open
-            @user.avatar.attach(io: file, filename:)
+          if !@user.confirmed? && @user.email == verified_email
+            @user.skip_confirmation!
+            @user.after_confirmation
           end
-          @user.skip_confirmation! if verified_email
-        end
+          @user.tos_agreement = "1"
+          @user.extended_data = extended_data
+          @user.save!
+        else
+          @user.email = (verified_email || form.email)
+          @user.name = form.name.gsub(REGEXP_SANITIZER, "")
+          @user.nickname = form.normalized_nickname
+          @user.newsletter_notifications_at = form.newsletter_at
+          @user.password = SecureRandom.hex
+          attach_avatar(form.avatar_url) if form.avatar_url.present?
+          @user.tos_agreement = form.tos_agreement
+          @user.accepted_tos_version = Time.current
+          raise NeedTosAcceptance if @user.tos_agreement.blank?
 
-        @user.tos_agreement = "1"
-        @user.extended_data = extended_data
-        @user.save!
+          @user.skip_confirmation! if verified_email
+          @user.extended_data = extended_data
+          @user.save!
+          @user.after_confirmation if verified_email
+        end
       end
 
       def extended_data
@@ -77,9 +86,13 @@ module Decidim
           postal_code: form.postal_code,
           date_of_birth: form.date_of_birth,
           gender: form.gender,
+          age_range: form.age_range,
           phone_number: form.phone_number,
           location: form.location,
           underage: form.underage,
+          select_fields: form.select_fields,
+          boolean_fields: form.boolean_fields,
+          text_fields: form.text_fields,
           statutory_representative_email: form.statutory_representative_email
         )
       end

@@ -9,14 +9,11 @@ on:
   pull_request:
     branches-ignore:
       - "chore/l10n*"
-    paths:
-      - "*"
-      - ".github/**"
 
 env:
   CI: "true"
-  RUBY_VERSION: 3.1.1
-  NODE_VERSION: 18.17.1
+  RUBY_VERSION: 3.3.4
+  NODE_VERSION: 22.14.0
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
@@ -33,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - uses: actions/setup-node@master

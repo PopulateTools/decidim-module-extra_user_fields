@@ -18,10 +18,24 @@ module Decidim
         let(:country) { "Argentina" }
         let(:date_of_birth) { "01/01/2000" }
         let(:gender) { "other" }
+        let(:age_range) { "17_to_30" }
         let(:location) { "Paris" }
         let(:phone_number) { "0123456789" }
         let(:postal_code) { "75001" }
         let(:underage) { "0" }
+        let(:select_fields) do
+          {
+            participant_type: "individual"
+          }
+        end
+        let(:boolean_fields) do
+          ["ngo"]
+        end
+        let(:text_fields) do
+          {
+            motto: "I think, therefore I am"
+          }
+        end
         let(:statutory_representative_email) { nil }
         let(:extended_data) do
           {
@@ -32,6 +46,7 @@ module Decidim
             phone_number:,
             postal_code:,
             underage:,
+            age_range:,
             statutory_representative_email:
           }
         end
@@ -49,9 +64,13 @@ module Decidim
               "postal_code" => postal_code,
               "date_of_birth" => date_of_birth,
               "gender" => gender,
+              "age_range" => age_range,
               "phone_number" => phone_number,
               "location" => location,
               "underage" => underage,
+              "select_fields" => select_fields,
+              "boolean_fields" => boolean_fields,
+              "text_fields" => text_fields,
               "statutory_representative_email" => statutory_representative_email
             }
           }
@@ -122,10 +141,14 @@ module Decidim
                 country:,
                 date_of_birth: Date.parse(date_of_birth),
                 gender:,
+                age_range:,
                 location:,
                 phone_number:,
                 postal_code:,
                 underage:,
+                select_fields:,
+                boolean_fields:,
+                text_fields:,
                 statutory_representative_email:
               }
             ).and_call_original

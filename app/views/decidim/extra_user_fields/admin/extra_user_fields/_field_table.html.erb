@@ -1,0 +1,15 @@
+<table class="table-list extra-fields-table">
+  <colgroup>
+    <col style="width: 60%">
+    <col style="width: 20%">
+    <col style="width: 20%">
+  </colgroup>
+  <thead>
+    <tr>
+      <th><%= t("decidim.extra_user_fields.admin.extra_user_fields.form.extra_user_fields.table.field") %></th>
+      <th class="text-center"><%= t("decidim.extra_user_fields.admin.extra_user_fields.form.extra_user_fields.table.enabled") %></th>
+      <th class="text-center"><%= t("decidim.extra_user_fields.admin.extra_user_fields.form.extra_user_fields.table.required") %></th>
+    </tr>
+  </thead>
+  <%= yield %>
+</table>

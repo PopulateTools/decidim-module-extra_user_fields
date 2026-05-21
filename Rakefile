@@ -5,14 +5,14 @@ require "decidim/dev/common_rake"
 
 def install_module(path)
   Dir.chdir(path) do
-    system("bundle exec rake decidim_extra_user_fields:install:migrations")
-    system("bundle exec rake db:migrate")
+    system("bundle exec rails decidim_extra_user_fields:install:migrations")
+    system("bundle exec rails db:migrate")
   end
 end
 
 def seed_db(path)
   Dir.chdir(path) do
-    system("bundle exec rake db:seed")
+    system("bundle exec rails db:seed")
   end
 end
 

@@ -1,3 +1,3 @@
-<!-- insert_after "erb[loud]:contains('email_field')" original "d629550ba83d41a6d1c41553b7adbed311549633" -->
+<!-- insert_after "erb[loud]:contains('email_field')" original "d4f7f89f8d233477e5f6a4e4a7391b052ac3c0c6" -->
 
 <%= render partial: "/decidim/extra_user_fields/profile_form", locals: { f: f } %>

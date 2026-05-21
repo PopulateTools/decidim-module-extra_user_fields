@@ -1,0 +1,12 @@
+<% f.object.custom_select_fields_options.each do |field, options| %>
+  <% required = f.object.custom_select_field_required?(field) %>
+  <div class="fieldset">
+    <%= f.select :"select_fields_#{field}",
+                  options.respond_to?(:call) ? options.call(self) : options,
+                  { label: t("decidim.extra_user_fields.select_fields.#{field}.label", default: field.to_s.humanize),
+                    help_text: t("decidim.extra_user_fields.select_fields.#{field}.description", default: nil),
+                    required: required,
+                    include_blank: "" },
+                  { name: "user[select_fields][#{field}]" } %>
+  </div>
+<% end %>

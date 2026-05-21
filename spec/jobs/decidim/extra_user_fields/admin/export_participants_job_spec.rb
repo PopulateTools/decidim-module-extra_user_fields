@@ -11,24 +11,20 @@ module Decidim
         let(:format) { "CSV" }
 
         it "sends an email with a file attached" do
-          ExportParticipantsJob.perform_now(organization, user, format)
+          perform_enqueued_jobs { ExportParticipantsJob.perform_now(organization, user, format) }
           email = last_email
           expect(email.subject).to include("participants")
-          attachment = email.attachments.first
-
-          expect(attachment.read.length).to be_positive
-          expect(attachment.mime_type).to eq("application/zip")
-          expect(attachment.filename).to match(/^participants-[0-9]+-[0-9]+-[0-9]+-[0-9]+\.zip$/)
+          expect(last_email_body).to include("Your download is ready.")
         end
 
         context "when format is CSV" do
           it "uses the csv exporter" do
-            export_data = double
+            export_data = double(read: "", filename: "participants")
             expect(Decidim::Exporters::CSV).to(receive(:new).with(anything,
                                                                   Decidim::ExtraUserFields::UserExportSerializer)).and_return(double(export: export_data))
             expect(ExportMailer)
-              .to(receive(:export).with(user, "participants", export_data))
-              .and_return(double(deliver_now: true))
+              .to(receive(:export).with(user, kind_of(Decidim::PrivateExport)))
+              .and_return(double(deliver_later: true))
             ExportParticipantsJob.perform_now(organization, user, format)
           end
         end
@@ -37,13 +33,13 @@ module Decidim
           let(:format) { "JSON" }
 
           it "uses the json exporter" do
-            export_data = double
+            export_data = double(read: "", filename: "participants")
             expect(Decidim::Exporters::JSON)
               .to(receive(:new).with(anything, Decidim::ExtraUserFields::UserExportSerializer))
               .and_return(double(export: export_data))
             expect(ExportMailer)
-              .to(receive(:export).with(user, "participants", export_data))
-              .and_return(double(deliver_now: true))
+              .to(receive(:export).with(user, kind_of(Decidim::PrivateExport)))
+              .and_return(double(deliver_later: true))
             ExportParticipantsJob.perform_now(organization, user, format)
           end
         end
@@ -52,13 +48,13 @@ module Decidim
           let(:format) { "Excel" }
 
           it "uses the excel exporter" do
-            export_data = double
+            export_data = double(read: "", filename: "participants")
             expect(Decidim::Exporters::Excel)
               .to(receive(:new).with(anything, Decidim::ExtraUserFields::UserExportSerializer))
               .and_return(double(export: export_data))
             expect(ExportMailer)
-              .to(receive(:export).with(user, "participants", export_data))
-              .and_return(double(deliver_now: true))
+              .to(receive(:export).with(user, kind_of(Decidim::PrivateExport)))
+              .and_return(double(deliver_later: true))
             ExportParticipantsJob.perform_now(organization, user, format)
           end
         end

@@ -12,22 +12,22 @@ describe "Account" do
   let(:organization) { create(:organization, extra_user_fields:) }
   let(:user) { create(:user, :confirmed, organization:, password:) }
   let(:password) { "dqCFgjfDbC7dPbrv" }
-  # rubocop:disable Style/TrailingCommaInHashLiteral
+
   let(:extra_user_fields) do
     {
       "enabled" => true,
       "date_of_birth" => date_of_birth,
       "postal_code" => postal_code,
       "gender" => gender,
+      "select_fields" => select_fields,
+      "boolean_fields" => boolean_fields,
+      "text_fields" => text_fields,
+      "age_range" => age_range,
       "country" => country,
       "phone_number" => phone_number,
-      "location" => location,
-      # Block ExtraUserFields ExtraUserFields
-
-      # EndBlock
+      "location" => location
     }
   end
-  # rubocop:enable Style/TrailingCommaInHashLiteral
 
   let(:date_of_birth) do
     { "enabled" => true }
@@ -45,6 +45,10 @@ describe "Account" do
     { "enabled" => true }
   end
 
+  let(:age_range) do
+    { "enabled" => true }
+  end
+
   let(:phone_number) do
     { "enabled" => true, "pattern" => phone_number_pattern, "placeholder" => nil }
   end
@@ -54,9 +58,9 @@ describe "Account" do
     { "enabled" => true }
   end
 
-  # Block ExtraUserFields RspecVar
-
-  # EndBlock
+  let(:select_fields) { { "participant_type" => { "enabled" => true, "required" => false } } }
+  let(:boolean_fields) { { "ngo" => { "enabled" => true, "required" => false } } }
+  let(:text_fields) { { "motto" => { "enabled" => true, "required" => false } } }
 
   before do
     switch_to_host(organization.host)
@@ -80,10 +84,25 @@ describe "Account" do
       visit decidim.account_path
     end
 
-    it_behaves_like "accessible page"
+    # TODO: Uncomment when Decidim fixes the bug in upload_modal.js
+    # There's an extra comma in the img tag (`<img src="data:,",`) that causes
+    # W3C HTML validation to fail.
+    # See: decidim-core-0.31.0/app/packs/src/decidim/direct_uploads/upload_modal.js:173
+    # context "when all extra fields are accessible-compatible" do
+    #   let(:date_of_birth) { { "enabled" => false } }
+    #
+    #   # NOTE: We skip running the accessibility test when `date_of_birth` is enabled
+    #   # because the custom Decidim datepicker JavaScript removes accessibility attributes
+    #   # like `title`, `aria-label`, and causes Axe validation errors.
+    #   #
+    #   # This test runs only when `date_of_birth` is disabled to avoid false negatives.
+    #
+    #   it_behaves_like "accessible page"
+    # end
 
     describe "updating personal data" do
       let!(:encrypted_password) { user.encrypted_password }
+      let(:motto) { "I think, therefore I am." }
 
       before do
         within "form.edit_user" do
@@ -92,9 +111,13 @@ describe "Account" do
           fill_in :user_personal_url, with: "https://example.org"
           fill_in :user_about, with: "A Serbian-American inventor, electrical engineer, mechanical engineer, physicist, and futurist."
 
-          fill_in :user_date_of_birth, with: "01/01/2000"
+          fill_in_datepicker :user_date_of_birth_date, with: "01/01/2000"
           select "Other", from: :user_gender
+          select "17 to 30", from: :user_age_range
           select "Argentina", from: :user_country
+          select "Individual", from: :user_select_fields_participant_type
+          check "I am a member of a non-governmental organization (NGO)"
+          fill_in :user_text_fields_motto, with: motto
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
@@ -107,6 +130,10 @@ describe "Account" do
           expect(page).to have_content("successfully")
         end
 
+        expect(page).to have_field(with: "Nikola Tesla")
+        expect(page).to have_field(with: "I think, therefore I am.")
+        expect(page).to have_select(selected: "Individual")
+
         user.reload
 
         within_user_menu do
@@ -115,6 +142,8 @@ describe "Account" do
 
         expect(page).to have_content("example.org")
         expect(page).to have_content("Serbian-American")
+        expect(page).to have_content("Nikola Tesla")
+        expect(page).to have_content("A Serbian-American inventor, electrical engineer, mechanical engineer, physicist, and futurist.")
 
         # The user's password should not change when they did not update it
         expect(user.reload.encrypted_password).to eq(encrypted_password)
@@ -132,7 +161,7 @@ describe "Account" do
         end
 
         it "shows error when image is too big" do
-          find("#user_avatar_button").click
+          find_by_id("user_avatar_button").click
 
           within ".upload-modal" do
             click_on "Remove"
@@ -161,6 +190,35 @@ describe "Account" do
         it "does not update the user's data" do
           within("label[for='user_phone_number']") do
             expect(page).to have_content("There is an error in this field.")
+          end
+        end
+      end
+
+      context "with text field blank" do
+        let(:motto) { "" }
+
+        it "does not update the user's data" do
+          within_flash_messages do
+            expect(page).to have_content("successfully")
+          end
+
+          expect(page).to have_field(with: "Nikola Tesla")
+          expect(page).to have_no_field(with: "I think, therefore I am.")
+          expect(page).to have_select(selected: "Individual")
+        end
+
+        context "with text field mandatory" do
+          let(:text_fields) { { "motto" => { "enabled" => true, "required" => true } } }
+
+          it "displays the field as mandatory" do
+            within "label[for='user_text_fields_motto']" do
+              expect(page).to have_css("span.label-required")
+            end
+            within "form.edit_user" do
+              fill_in :user_text_fields_motto, with: ""
+              find("*[type=submit]").click
+            end
+            expect(page).to have_content("cannot be blank")
           end
         end
       end
@@ -198,6 +256,14 @@ describe "Account" do
       it_behaves_like "does not display extra user field", "gender", "Gender"
     end
 
+    context "when age_range is not enabled" do
+      let(:age_range) do
+        { "enabled" => false }
+      end
+
+      it_behaves_like "does not display extra user field", "age_range", "Age range"
+    end
+
     context "when phone number is not enabled" do
       let(:phone_number) do
         { "enabled" => false }
@@ -214,6 +280,30 @@ describe "Account" do
       it_behaves_like "does not display extra user field", "location", "Location"
     end
 
+    context "when select_fields is not enabled" do
+      let(:select_fields) do
+        { "another_field" => { "enabled" => true, "required" => false } }
+      end
+
+      it_behaves_like "does not display extra user field", "select_fields", "Select fields"
+    end
+
+    context "when boolean_fields is not enabled" do
+      let(:boolean_fields) do
+        { "another_field" => { "enabled" => true, "required" => false } }
+      end
+
+      it_behaves_like "does not display extra user field", "boolean_fields", "Boolean fields"
+    end
+
+    context "when text_fields is not enabled" do
+      let(:text_fields) do
+        { "another_field" => { "enabled" => true, "required" => false } }
+      end
+
+      it_behaves_like "does not display extra user field", "text_fields", "Text fields"
+    end
+
     describe "when update password" do
       before do
         within "form.edit_user" do
@@ -222,9 +312,13 @@ describe "Account" do
           fill_in :user_personal_url, with: "https://example.org"
           fill_in :user_about, with: "A Serbian-American inventor, electrical engineer, mechanical engineer, physicist, and futurist."
 
-          fill_in :user_date_of_birth, with: "01/01/2000"
+          fill_in_datepicker :user_date_of_birth_date, with: "01/01/2000"
           select "Other", from: :user_gender
+          select "17 to 30", from: :user_age_range
           select "Argentina", from: :user_country
+          select "Individual", from: :user_select_fields_participant_type
+          check "I am a member of a non-governmental organization (NGO)"
+          fill_in :user_text_fields_motto, with: "I think, therefore I am."
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
@@ -282,9 +376,13 @@ describe "Account" do
           fill_in :user_personal_url, with: "https://example.org"
           fill_in :user_about, with: "A Serbian-American inventor, electrical engineer, mechanical engineer, physicist, and futurist."
 
-          fill_in :user_date_of_birth, with: "01/01/2000"
+          fill_in_datepicker :user_date_of_birth_date, with: "01/01/2000"
           select "Other", from: :user_gender
+          select "17 to 30", from: :user_age_range
           select "Argentina", from: :user_country
+          select "Individual", from: :user_select_fields_participant_type
+          check "I am a member of a non-governmental organization (NGO)"
+          fill_in :user_text_fields_motto, with: "I think, therefore I am."
           fill_in :user_postal_code, with: "00000"
           fill_in :user_phone_number, with: "0123456789"
           fill_in :user_location, with: "Cahors"
@@ -302,7 +400,7 @@ describe "Account" do
 
         it "toggles the current password" do
           expect(page).to have_content("In order to confirm the changes to your account, please provide your current password.")
-          expect(find("#user_old_password")).to be_visible
+          expect(find_by_id("user_old_password")).to be_visible
           expect(page).to have_content "Current password"
           expect(page).to have_no_content "Password"
         end
@@ -415,44 +513,6 @@ describe "Account" do
       end
     end
 
-    context "when on the interests page" do
-      before do
-        visit decidim.user_interests_path
-      end
-
-      it "does not find any scopes" do
-        expect(page).to have_content("My interests")
-        expect(page).to have_content("This organization does not have any scope yet")
-      end
-
-      context "when scopes are defined" do
-        let!(:scopes) { create_list(:scope, 3, organization:) }
-        let!(:subscopes) { create_list(:subscope, 3, parent: scopes.first) }
-
-        before do
-          visit decidim.user_interests_path
-        end
-
-        it "display translated scope name" do
-          expect(page).to have_content("My interests")
-          within "label[for='user_scopes_#{scopes.first.id}_checked']" do
-            expect(page).to have_content(translated(scopes.first.name))
-          end
-        end
-
-        it "allows to choose interests" do
-          label_field = "label[for='user_scopes_#{scopes.first.id}_checked']"
-          expect(page).to have_content("My interests")
-          find(label_field).click
-          click_on "Update my interests"
-
-          within_flash_messages do
-            expect(page).to have_content("Your interests have been successfully updated.")
-          end
-        end
-      end
-    end
-
     context "when on the delete my account page" do
       before do
         visit decidim.delete_account_path
@@ -463,9 +523,8 @@ describe "Account" do
       end
 
       it "the user can delete their account" do
-        fill_in :delete_user_delete_account_delete_reason, with: "I just want to delete my account"
-
-        within ".form__wrapper-block" do
+        within ".delete-account" do
+          fill_in :delete_user_delete_account_delete_reason, with: "I just want to delete my account"
           click_on "Delete my account"
         end
 
@@ -513,7 +572,8 @@ describe "Account" do
 
     context "when VAPID keys are set" do
       before do
-        Rails.application.secrets[:vapid] = vapid_keys
+        allow(Decidim).to receive(:vapid_public_key).and_return(vapid_keys[:public_key])
+        allow(Decidim).to receive(:vapid_private_key).and_return(vapid_keys[:private_key])
         driven_by(:pwa_chrome)
         switch_to_host(organization.host)
         login_as user, scope: :user
@@ -536,28 +596,15 @@ describe "Account" do
             expect(page).to have_content("successfully")
           end
 
-          find(:css, "#allow_push_notifications", visible: false).execute_script("this.checked = true")
+          find_by_id("allow_push_notifications", visible: false).execute_script("this.checked = true")
         end
-      end
-    end
-
-    context "when VAPID is disabled" do
-      before do
-        Rails.application.secrets[:vapid] = { enabled: false }
-        driven_by(:pwa_chrome)
-        switch_to_host(organization.host)
-        login_as user, scope: :user
-        visit decidim.notifications_settings_path
-      end
-
-      it "does not show the push notifications switch" do
-        expect(page).to have_no_selector(".push-notifications")
       end
     end
 
     context "when VAPID keys are not set" do
       before do
-        Rails.application.secrets.delete(:vapid)
+        allow(Decidim).to receive(:vapid_public_key).and_return(nil)
+        allow(Decidim).to receive(:vapid_private_key).and_return(nil)
         driven_by(:pwa_chrome)
         switch_to_host(organization.host)
         login_as user, scope: :user

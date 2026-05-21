@@ -13,7 +13,7 @@ module Decidim
       def extra_user_fields
         extended_data = resource.extended_data.symbolize_keys
 
-        [:gender, :country, :postal_code, :date_of_birth, :phone_number, :location, :underage, :statutory_representative_email].index_with do |key|
+        extra_fields.index_with do |key|
           extended_data[key]
         end
       end
@@ -29,16 +29,17 @@ module Decidim
       def extra_fields
         [
           :gender,
+          :age_range,
           :country,
           :postal_code,
           :date_of_birth,
           :phone_number,
           :location,
           :underage,
+          :select_fields,
+          :boolean_fields,
+          :text_fields,
           :statutory_representative_email
-          # Block ExtraUserFields AddExtraField
-
-          # EndBlock
         ]
       end
     end

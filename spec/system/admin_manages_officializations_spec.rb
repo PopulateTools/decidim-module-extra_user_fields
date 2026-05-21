@@ -30,7 +30,7 @@ describe "Admin manages officializations" do
 
   context "when clicking on export csv button" do
     before do
-      find("span.exports").click
+      click_on "Export"
       click_on "Export CSV"
     end
 

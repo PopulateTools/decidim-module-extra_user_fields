@@ -1,0 +1,72 @@
+<% if pivot_table_presenter.empty? %>
+  <div class="card">
+    <div class="card-section">
+      <p class="help-text"><%= t("decidim.admin.extra_user_fields.insights.no_data") %></p>
+    </div>
+  </div>
+<% else %>
+  <div class="insights-pivot-wrapper">
+    <div class="card">
+      <div class="card-section p-0">
+        <div class="table-scroll" tabindex="0" role="region" aria-label="<%= t("decidim.admin.extra_user_fields.insights.pivot_table_label") %>">
+          <table class="table-list insights-table" data-heatmap>
+            <caption class="sr-only"><%= t("decidim.admin.extra_user_fields.insights.pivot_table_label") %></caption>
+            <thead>
+              <tr>
+                <th class="insights-table__corner-header">
+                  <%= field_label(current_row_field) %> \ <%= field_label(current_col_field) %>
+                </th>
+                <% pivot_table_presenter.col_values.each do |col| %>
+                  <th scope="col" class="insights-table__col-header">
+                    <%= field_value_label(current_col_field, col) %>
+                  </th>
+                <% end %>
+                <th scope="col" class="insights-table__row-total-header">
+                  <%= t("decidim.admin.extra_user_fields.insights.row_total") %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% pivot_table_presenter.row_values.each do |row| %>
+                <% row_total_value = pivot_table_presenter.row_total(row) %>
+                <tr>
+                  <th scope="row" class="insights-table__row-header">
+                    <%= field_value_label(current_row_field, row) %>
+                  </th>
+                  <% pivot_table_presenter.col_values.each do |col| %>
+                    <% value = pivot_table_presenter.cell(row, col) %>
+                    <% cell_type = (row.nil? || col.nil?) ? "gray" : "colored" %>
+                    <td class="insights-table__cell heatmap-cell--<%= cell_type %>" style="<%= pivot_table_presenter.cell_style(value, row, col) %>">
+                      <%= count_with_percentage(value, pivot_table_presenter.grand_total) %>
+                    </td>
+                  <% end %>
+                  <td class="insights-table__row-total heatmap-total" style="<%= pivot_table_presenter.row_total_style(row_total_value) %>">
+                    <%= count_with_percentage(row_total_value, pivot_table_presenter.grand_total) %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row" class="insights-table__footer-label">
+                  <%= t("decidim.admin.extra_user_fields.insights.column_total") %>
+                </th>
+                <% pivot_table_presenter.col_values.each do |col| %>
+                  <% col_total_value = pivot_table_presenter.col_total(col) %>
+                  <td class="insights-table__col-total heatmap-total" style="<%= pivot_table_presenter.col_total_style(col_total_value) %>">
+                    <%= count_with_percentage(col_total_value, pivot_table_presenter.grand_total) %>
+                  </td>
+                <% end %>
+                <td class="insights-table__grand-total">
+                  <%= number_with_delimiter(pivot_table_presenter.grand_total) %>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= render partial: "decidim/extra_user_fields/admin/insights/legend" %>
+<% end %>

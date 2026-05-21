@@ -21,9 +21,24 @@ module Decidim
     let(:country) { "Argentina" }
     let(:date_of_birth) { "01/01/2000" }
     let(:gender) { "other" }
+    let(:age_range) { "17_to_30" }
     let(:location) { "Paris" }
     let(:phone_number) { "0123456789" }
     let(:postal_code) { "75001" }
+    let(:underage) { false }
+    let(:select_fields) do
+      {
+        "participant_type" => "individual"
+      }
+    end
+    let(:boolean_fields) do
+      ["ngo"]
+    end
+    let(:text_fields) do
+      {
+        "motto" => false
+      }
+    end
 
     let(:attributes) do
       {
@@ -38,8 +53,13 @@ module Decidim
         postal_code:,
         date_of_birth:,
         gender:,
+        age_range:,
         phone_number:,
-        location:
+        location:,
+        underage:,
+        select_fields:,
+        boolean_fields:,
+        text_fields:
       }
     end
 

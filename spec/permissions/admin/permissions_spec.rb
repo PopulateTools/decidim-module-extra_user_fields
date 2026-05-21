@@ -7,14 +7,8 @@ module Decidim::ExtraUserFields::Admin
     subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
     let(:organization) { create(:organization) }
-    let(:context) do
-      {
-        current_organization: organization
-      }
-    end
-    let(:action) do
-      { scope: :admin, action: :read, subject: :extra_user_fields }
-    end
+    let(:context) { { current_organization: organization } }
+    let(:action) { { scope: :admin, action: :read, subject: :extra_user_fields } }
     let(:permission_action) { Decidim::PermissionAction.new(**action) }
 
     context "when user is admin" do
@@ -23,11 +17,15 @@ module Decidim::ExtraUserFields::Admin
       it { is_expected.to be_truthy }
 
       context "when scope is not admin" do
-        let(:action) do
-          { scope: :foo, action: :read, subject: :extra_user_fields }
-        end
+        let(:action) { { scope: :foo, action: :read, subject: :extra_user_fields } }
 
         it_behaves_like "permission is not set"
+      end
+
+      context "when reading insights" do
+        let(:action) { { scope: :admin, action: :read, subject: :insights } }
+
+        it { is_expected.to be_truthy }
       end
     end
 
@@ -35,17 +33,19 @@ module Decidim::ExtraUserFields::Admin
       let(:user) { create(:user, organization:) }
 
       context "and tries to read extra user fields" do
-        let(:action) do
-          { scope: :admin, action: :read, subject: :extra_user_fields }
-        end
+        let(:action) { { scope: :admin, action: :read, subject: :extra_user_fields } }
 
         it_behaves_like "permission is not set"
       end
 
       context "and tries to update extra user fields" do
-        let(:action) do
-          { scope: :admin, action: :update, subject: :extra_user_fields }
-        end
+        let(:action) { { scope: :admin, action: :update, subject: :extra_user_fields } }
+
+        it_behaves_like "permission is not set"
+      end
+
+      context "and tries to read insights" do
+        let(:action) { { scope: :admin, action: :read, subject: :insights } }
 
         it_behaves_like "permission is not set"
       end

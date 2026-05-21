@@ -1,10 +1,14 @@
 <% if current_organization.extra_user_fields_enabled? %>
-  <% if current_organization.activated_extra_field?(:date_of_birth) %>
-    <%= f.date_field :date_of_birth %>
-  <% end %>
+  <%= render "decidim/extra_user_fields/date_of_birth_field", f: f, current_organization: current_organization %>
 
   <% if current_organization.activated_extra_field?(:gender) %>
-    <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last %>
+    <%= f.collection_select :gender, f.object.gender_options_for_select, :first, :last,
+                            { required: f.object.gender_required?, include_blank: "" } %>
+  <% end %>
+
+  <% if current_organization.activated_extra_field?(:age_range) %>
+    <%= f.collection_select :age_range, f.object.age_range_options_for_select, :first, :last,
+                            { required: f.object.age_range_required?, include_blank: "" } %>
   <% end %>
 
   <% if current_organization.activated_extra_field?(:country) %>
@@ -18,7 +22,7 @@
   <% end %>
 
   <% if current_organization.activated_extra_field?(:phone_number) %>
-    <%= f.telephone_field :phone_number, placeholder: translated_attribute(f.object.phone_number_extra_user_field_placeholder), pattern: f.object.phone_number_extra_user_field_pattern %>
+    <%= f.phone_field :phone_number, placeholder: translated_attribute(f.object.phone_number_extra_user_field_placeholder), pattern: f.object.phone_number_extra_user_field_pattern %>
   <% end %>
 
   <% if current_organization.activated_extra_field?(:location) %>
@@ -28,5 +32,17 @@
   <% if current_organization.activated_extra_field?(:underage) %>
     <%= f.hidden_field :underage, value: current_user.extended_data["underage"] || "0" %>
     <%= f.hidden_field :statutory_representative_email, value: current_user.extended_data["statutory_representative_email"] || "" %>
+  <% end %>
+
+  <% if current_organization.activated_extra_field?(:select_fields) %>
+    <%= render partial: "decidim/extra_user_fields/select_fields", locals: { f: f } %>
+  <% end %>
+
+  <% if current_organization.activated_extra_field?(:boolean_fields) %>
+    <%= render partial: "decidim/extra_user_fields/boolean_fields", locals: { f: f } %>
+  <% end %>
+
+  <% if current_organization.activated_extra_field?(:text_fields) %>
+    <%= render partial: "decidim/extra_user_fields/text_fields", locals: { f: f } %>
   <% end %>
 <% end %>

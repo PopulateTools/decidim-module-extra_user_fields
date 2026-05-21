@@ -50,9 +50,13 @@ module Decidim
           postal_code: form.postal_code,
           date_of_birth: form.date_of_birth,
           gender: form.gender,
+          age_range: form.age_range,
           phone_number: form.phone_number,
           location: form.location,
           underage: form.underage,
+          select_fields: form.select_fields,
+          boolean_fields: form.boolean_fields,
+          text_fields: form.text_fields,
           statutory_representative_email: form.statutory_representative_email
         )
       end

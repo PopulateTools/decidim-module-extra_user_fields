@@ -3,9 +3,10 @@ es:
   activemodel:
     attributes:
       user:
+        age_range: Cuántos años tienes?
         country: País
         date_of_birth: Fecha de nacimiento
-        gender: Género
+        gender: Con qué género te identificas?
         location: Localización
         phone_number: Teléfono
         postal_code: Código postal
@@ -25,6 +26,50 @@ es:
       exports:
         export_as: Exportar como %{export_format}
       extra_user_fields:
+        benchmarking:
+          export_name: Análisis comparativo
+          menu_title: Análisis comparativo
+          no_data: No se encontraron datos de participación para los espacios seleccionados.
+          select_spaces: Elija espacios participativos para comparar
+          select_spaces_prompt: Seleccione uno o más espacios participativos para
+            comparar.
+          table_label: Tabla de análisis comparativo
+          title: Estadísticas comparativas entre espacios
+        insights:
+          column_total: Total de columna
+          description: Explora la actividad de los participantes en las dimensiones
+            del perfil. Selecciona una métrica y dos campos de perfil para ver cómo
+            se distribuye la participación.
+          export_name: Estadísticas
+          fields:
+            age_span: Rango de edad
+            country: País
+            gender: Género
+            location: Localización
+            postal_code: Código postal
+          legend:
+            fewer: Menos
+            higher_total: Total más alto
+            lower_total: Total más bajo
+            more: Más
+            non_specified: No especificado / Prefiero no decirlo
+          menu_title: Estadísticas
+          metrics:
+            budget_votes: Votos presupuestarios
+            comments: Comentarios
+            participants: Participantes
+            proposals_created: Propuestas creadas
+            proposals_supported: Propuestas apoyadas
+          no_data: No se encontraron datos de participación para este espacio con
+            los criterios seleccionados.
+          non_specified: No especificado / Prefiero no decirlo
+          pivot_table_label: Tabla de datos de participación
+          row_total: Total de fila
+          selectors:
+            cols: Columnas (eje X)
+            metric: Métrica
+            rows: Filas (eje Y)
+          title: Estadísticas del espacio participativo
         menu:
           title: Administrar campos de usuario adicionales
     components:
@@ -35,7 +80,19 @@ es:
         exports:
           users: Participantes
         extra_user_fields:
+          aria:
+            enabled: habilitado
+            required: obligatorio
+          boolean_fields:
+            ngo:
+              description: Este campo es un campo booleano. El usuario podrá marcar
+                si pertenece a una ONG
+              label: Habilitar campo ONG
           fields:
+            age_range:
+              description: Este campo es una lista de rangos de edad. Si está marcado,
+                el usuario tendrá que elegir un rango de edad.
+              label: Habilitar campo de rango de edad
             country:
               description: Este campo es una lista de países. Si está marcado, el
                 usuario tendrá que elegir un país.
@@ -71,6 +128,7 @@ es:
                 es menor de edad
               label: Activar campo de autorización parental
               limit: Establece la edad límite (por ejemplo 18 años)
+              limit_label: Edad límite
           form:
             callout:
               help: Activa la funcionalidad de campos de usuario adicionales personalizados
@@ -80,23 +138,74 @@ es:
             extra_user_fields:
               extra_user_fields_enabled: Activa los campos de usuario adicionales
               section: Campos adicionales disponibles para el formulario de inscripción
+              section_extras: Campos personalizados adicionales
+              section_extras_description: Si has configurado campos de usuario adicionales,
+                puedes gestionarlos aquí (Consulta la sección "Configuración mediante
+                un inicializador" en el README del plugin).
+              table:
+                enabled: Habilitado
+                field: Campo
+                required: Obligatorio
             global:
               title: Activar / desactivar la funcionalidad
+            states:
+              disabled: Desactivado
+              enabled: Activado
+              optional: Opcional
+              required: Obligatorio
           index:
             save: Guarda la configuración
             title: Gestiona campos de usuario adicionales
+          select_fields:
+            participant_type:
+              description: Este campo es una lista de tipos de participantes. Si está
+                marcado, el usuario tendrá que elegir un tipo de participante
+              label: Habilitar campo de tipo de participante
+          text_fields:
+            motto:
+              description: Este campo es un campo de texto. Si está marcado, el usuario
+                puede completar una frase o lema personal
+              label: Habilitar campo "Mi lema"
           update:
             failure: Se ha producido un error en la actualización
             success: Campos de usuario adicionales actualizados correctamente en la
               organización
+      age_ranges:
+        17_to_30: 17 a 30
+        31_to_60: 31 a 60
+        61_or_more: 61 o más
+        prefer_not_to_say: Prefiero no decirlo
+        up_to_16: 16 o menos
+      boolean_fields:
+        ngo:
+          label: Soy miembro de una organización no gubernamental (ONG)
+      errors:
+        select_fields: El campo "%{field}" no es válido.
+      force_extra_user_fields:
+        redirect_message: Por favor, completa la información de tu perfil antes de
+          continuar.
       genders:
         female: Mujer
         male: Hombre
         other: Otro
+        prefer_not_to_say: Prefiero no decirlo
+      insight_age_spans:
+        21_to_30: 21 a 30
+        31_to_40: 31 a 40
+        41_to_50: 41 a 50
+        51_to_60: 51 a 60
+        61_or_more: Más de 60
+        up_to_20: Menos de 20
       registration_form:
         signup:
           legend: Más información
           underage: Soy menor de %{limit} años y acepto recibir una autorización parental
+      select_fields:
+        participant_type:
+          label: "¿Participas como individuo o oficialmente en nombre de una organización?"
+      text_fields:
+        motto:
+          label: "¿Cuál es tu lema?"
     statutory_representative:
       inform:
         body: |

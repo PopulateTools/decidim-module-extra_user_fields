@@ -1,0 +1,15 @@
+<% f.object.custom_boolean_fields.each do |field| %>
+  <div class="fieldset">
+    <%= label_tag f.field_id("boolean_fields_#{field}") do %>
+      <%= check_box_tag "user[boolean_fields][]",
+                        field,
+                        f.object.boolean_fields.include?(field),
+                    id: f.field_id("boolean_fields_#{field}") %>
+
+      <%= t("decidim.extra_user_fields.boolean_fields.#{field}.label", default: field.to_s.humanize) %>
+      <% if (help = t("decidim.extra_user_fields.boolean_fields.#{field}.description", default: "")).present? %>
+        <span class="help-text"><%= help %></span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

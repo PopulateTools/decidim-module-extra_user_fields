@@ -1,0 +1,24 @@
+<div class="heatmap-legend">
+  <span><%= t("decidim.admin.extra_user_fields.insights.legend.fewer") %></span>
+  <div class="heatmap-legend__gradient heatmap-legend__gradient--heat">
+    <% 5.times do %>
+      <div class="heatmap-legend__gradient-step"></div>
+    <% end %>
+  </div>
+  <span><%= t("decidim.admin.extra_user_fields.insights.legend.more") %></span>
+
+  <span class="heatmap-legend__separator"></span>
+
+  <span><%= t("decidim.admin.extra_user_fields.insights.legend.lower_total") %></span>
+  <div class="heatmap-legend__gradient heatmap-legend__gradient--total">
+    <% 5.times do %>
+      <div class="heatmap-legend__gradient-step"></div>
+    <% end %>
+  </div>
+  <span><%= t("decidim.admin.extra_user_fields.insights.legend.higher_total") %></span>
+
+  <span class="heatmap-legend__non-specified">
+    <span class="heatmap-legend__non-specified-swatch"></span>
+    <%= t("decidim.admin.extra_user_fields.insights.legend.non_specified") %>
+  </span>
+</div>

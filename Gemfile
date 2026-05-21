@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-DECIDIM_VERSION = "~> 0.28"
+DECIDIM_VERSION = "~> 0.31.0"
 
 source "https://rubygems.org"
 
@@ -8,10 +8,10 @@ ruby RUBY_VERSION
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-extra_user_fields", path: "."
+gem "decidim-initiatives", DECIDIM_VERSION
 
-gem "bootsnap", "~> 1.3"
-gem "country_select", "~> 4.0"
-gem "puma", ">= 4.3"
+gem "bootsnap", "~> 1.7"
+gem "puma", ">= 6.3.1"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -23,12 +23,5 @@ group :development do
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.1"
   gem "rubocop-faker"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
   gem "web-console", "~> 4.2"
-end
-
-group :test do
-  gem "rubocop-factory_bot", "!= 2.26.0", require: false
-  gem "rubocop-rspec_rails", "!= 2.29.0", require: false
 end

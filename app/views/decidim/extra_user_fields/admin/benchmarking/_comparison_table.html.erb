@@ -1,0 +1,67 @@
+<div class="insights-pivot-wrapper">
+  <div class="card">
+    <div class="card-section p-0">
+      <div class="table-scroll" tabindex="0" role="region" aria-label="<%= t("decidim.admin.extra_user_fields.benchmarking.table_label") %>">
+        <table class="table-list insights-table insights-table--comparison" data-heatmap>
+          <caption class="sr-only"><%= t("decidim.admin.extra_user_fields.benchmarking.table_label") %></caption>
+          <thead>
+            <%# Row 1: Space names spanning their column groups %>
+            <tr>
+              <th class="insights-table__corner-header" rowspan="2">
+                <%= field_label(current_row_field) %> \ <%= field_label(current_col_field) %>
+              </th>
+              <% comparative_pivot_presenter.spaces.each do |space| %>
+                <th class="insights-table__space-header" colspan="<%= comparative_pivot_presenter.unified_col_values.size %>">
+                  <%= space_name(space) %>
+                </th>
+              <% end %>
+              <th class="insights-table__row-total-header" rowspan="2">
+                <%= t("decidim.admin.extra_user_fields.insights.row_total") %>
+              </th>
+            </tr>
+            <%# Row 2: Column values repeated per space %>
+            <tr>
+              <% comparative_pivot_presenter.spaces.each_with_index do |space, si| %>
+                <% comparative_pivot_presenter.unified_col_values.each_with_index do |col, ci| %>
+                  <th scope="col" class="insights-table__col-header<%= ' insights-table__space-divider' if ci == 0 && si > 0 %>">
+                    <%= field_value_label(current_col_field, col) %>
+                  </th>
+                <% end %>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% comparative_pivot_presenter.unified_row_values.each do |row| %>
+              <tr>
+                <th scope="row" class="insights-table__row-header">
+                  <%= field_value_label(current_row_field, row) %>
+                </th>
+                <% comparative_pivot_presenter.spaces.each_with_index do |space, si| %>
+                  <% comparative_pivot_presenter.unified_col_values.each_with_index do |col, ci| %>
+                    <%= benchmarking_data_cell(space, row, col, space_index: si, col_index: ci) %>
+                  <% end %>
+                <% end %>
+                <%= benchmarking_row_total_cell(row) %>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row" class="insights-table__footer-label">
+                <%= t("decidim.admin.extra_user_fields.insights.column_total") %>
+              </th>
+              <% comparative_pivot_presenter.spaces.each_with_index do |space, si| %>
+                <% comparative_pivot_presenter.unified_col_values.each_with_index do |col, ci| %>
+                  <%= benchmarking_col_total_cell(space, col, space_index: si, col_index: ci) %>
+                <% end %>
+              <% end %>
+              <%= benchmarking_grand_total_cell %>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: "decidim/extra_user_fields/admin/insights/legend" %>

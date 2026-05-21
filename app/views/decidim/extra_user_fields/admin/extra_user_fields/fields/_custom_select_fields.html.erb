@@ -1,0 +1,17 @@
+<% (form.object.select_fields || {}).each do |field, field_state| %>
+  <tr data-controller="field-state" data-field-state-enabled-state-value="optional" data-field-state-disabled-state-value="disabled" data-field-state-target="row">
+    <td>
+      <%= t("decidim.extra_user_fields.admin.extra_user_fields.select_fields.#{field}.label", default: field.to_s.humanize) %>
+      <% description = t("decidim.extra_user_fields.admin.extra_user_fields.select_fields.#{field}.description", default: "") %>
+      <% if description.present? %><br><span class="help-text"><%= description %></span><% end %>
+    </td>
+    <td class="text-center">
+      <input type="hidden" name="extra_user_fields[select_fields][<%= field %>][enabled]" value="false" id="extra_user_fields_select_field_<%= field %>">
+      <input type="checkbox" name="extra_user_fields[select_fields][<%= field %>][enabled]" value="true" aria-label="<%= t("decidim.extra_user_fields.admin.extra_user_fields.select_fields.#{field}.label", default: field.to_s.humanize) %> <%= t("decidim.extra_user_fields.admin.extra_user_fields.aria.enabled") %>" data-field-state-target="enabled" data-action="field-state#toggleEnabled" <%= "checked" if field_state["enabled"] %>>
+    </td>
+    <td class="text-center">
+      <input type="hidden" name="extra_user_fields[select_fields][<%= field %>][required]" value="false">
+      <input type="checkbox" name="extra_user_fields[select_fields][<%= field %>][required]" value="true" aria-label="<%= t("decidim.extra_user_fields.admin.extra_user_fields.select_fields.#{field}.label", default: field.to_s.humanize) %> <%= t("decidim.extra_user_fields.admin.extra_user_fields.aria.required") %>" data-field-state-target="required" data-action="field-state#toggleRequired" <%= "checked" if field_state["required"] %> <%= "disabled" unless field_state["enabled"] %>>
+    </td>
+  </tr>
+<% end %>

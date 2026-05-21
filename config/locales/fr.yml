@@ -3,9 +3,10 @@ fr:
   activemodel:
     attributes:
       user:
+        age_range: Quel âge avez-vous?
         country: Pays
         date_of_birth: Date de naissance
-        gender: Genre
+        gender: Quel genre identifiez-vous?
         location: Localisation
         phone_number: Numéro de téléphone
         postal_code: Code postal
@@ -25,6 +26,50 @@ fr:
       exports:
         export_as: Exporter au format %{export_format}
       extra_user_fields:
+        benchmarking:
+          export_name: Analyse comparative
+          menu_title: Analyse comparative
+          no_data: Aucune donnée de participation trouvée pour les espaces sélectionnés.
+          select_spaces: Choisissez des espaces participatifs à comparer
+          select_spaces_prompt: Sélectionnez un ou plusieurs espaces participatifs
+            à comparer.
+          table_label: Tableau d'analyse comparative
+          title: Statistiques comparatives entre espaces
+        insights:
+          column_total: Total colonne
+          description: Explorez l'activité des participants selon les dimensions de
+            profil. Sélectionnez une métrique et deux champs de profil pour voir comment
+            la participation est répartie.
+          export_name: Aperçus
+          fields:
+            age_span: Tranche d'âge
+            country: Pays
+            gender: Genre
+            location: Localisation
+            postal_code: Code postal
+          legend:
+            fewer: Moins
+            higher_total: Total élevé
+            lower_total: Total faible
+            more: Plus
+            non_specified: Non spécifié / Préfère ne pas dire
+          menu_title: Aperçus
+          metrics:
+            budget_votes: Votes budgétaires
+            comments: Commentaires
+            participants: Participants
+            proposals_created: Propositions créées
+            proposals_supported: Propositions soutenues
+          no_data: Aucune donnée de participation trouvée pour cet espace avec les
+            critères sélectionnés.
+          non_specified: Non spécifié / Préfère ne pas dire
+          pivot_table_label: Tableau des données de participation
+          row_total: Total ligne
+          selectors:
+            cols: Colonnes (axe X)
+            metric: Métrique
+            rows: Lignes (axe Y)
+          title: Aperçus de l'espace participatif
         menu:
           title: Gérer les champs d'inscription personnalisés
     components:
@@ -35,27 +80,39 @@ fr:
         exports:
           users: Participants
         extra_user_fields:
+          aria:
+            enabled: activé
+            required: obligatoire
+          boolean_fields:
+            ngo:
+              description: Ce champ est un champ booléen. L'utilisateur pourra cocher
+                s'il représente une ONG.
+              label: Activer le champ ONG
           fields:
+            age_range:
+              description: Ce champ est une liste de tranches d'âge. L'utilisateur
+                devra choisir une tranche d'âge
+              label: Tranche d'âge
             country:
-              description: Ce champ contient une liste de pays. L'utilisateur pourra
-                choisir un pays.
-              label: Activer le champ pays
+              description: Ce champ contient une liste de pays. L'utilisateur devra
+                choisir un pays
+              label: Pays
             date_of_birth:
               description: Ce champ est un champ date de naissance. L'utilisateur
-                pourra choisir une date.
-              label: Activer le champ date de naissance
+                devra saisir une date de naissance
+              label: Date de naissance
             gender:
-              description: Ce champ contient une liste de genres. L'utilisateur pourra
-                choisir un genre.
-              label: Activer le champ genre
+              description: Ce champ contient une liste de genres. L'utilisateur devra
+                choisir un genre
+              label: Genre
             location:
-              description: Ce champ permet l'ajout de texte. L'utilisateur pourra
-                choisir une localisation.
-              label: Activer le champ localisation
+              description: Ce champ permet l'ajout de texte. L'utilisateur devra saisir
+                une localisation
+              label: Localisation
             phone_number:
               description: Ce champ est un champ de numéro de téléphone. L'utilisateur
-                pourra choisir un numéro.
-              label: Activer le champ numéro de téléphone
+                devra saisir un numéro
+              label: Numéro de téléphone
               pattern: Motif de validation des numéros de téléphone (regex)
               pattern_help_html: Copiez cette expression régulière <code class="label">^(\+34|0034|34)?[
                 -]*[6-9][ -]*([0-9][ -]*){8}$</code> pour valider ce format de téléphone
@@ -63,14 +120,15 @@ fr:
                 <a href="https://rubular.com/r/dJZGjlLIadxElo" target="_blank">ici</a>.
               placeholder: Placeholder pour le numéro de téléphone
             postal_code:
-              description: Ce champ est un champ code postal. L'utilisateur pourra
-                choisir un code postal.
-              label: Activer le champ code postal
+              description: Ce champ est un champ code postal. L'utilisateur devra
+                saisir un code postal
+              label: Code postal
             underage:
               description: Ce champ est un champ booléen. L'utilisateur pourra cocher
-                s'il est mineur.
+                s'il est mineur
               label: Activer le champ d'autorisation parentale
               limit: Cela définit la limite d'âge (ex. 18 ans)
+              limit_label: Limite d'âge
           form:
             callout:
               help: Activez la fonctionnalité des champs d'inscription personnalisés
@@ -80,23 +138,75 @@ fr:
             extra_user_fields:
               extra_user_fields_enabled: Activer les champs d'inscription personnalisés
               section: Champs d'inscription disponibles pour le formulaire d'inscription
+              section_extras: Champs supplémentaires personnalisés
+              section_extras_description: Si vous avez configuré des champs d'utilisateur
+                supplémentaires, vous pouvez les gérer ici (Voir la section "Configuration
+                via un initializer" dans le README du plugin).
+              table:
+                enabled: Activé
+                field: Champ
+                required: Obligatoire
             global:
               title: Activer / Désactiver les champs d'inscription personnalisés
+            states:
+              disabled: Désactivé
+              enabled: Activé
+              optional: Optionnel
+              required: Obligatoire
           index:
             save: Sauvegarder
             title: Gérer les champs d'inscription personnalisés
+          select_fields:
+            participant_type:
+              description: Ce champ est une liste de types de participants. L'utilisateur
+                devra choisir un type de participant.
+              label: Activer le champ type de participant
+          text_fields:
+            motto:
+              description: Ce champ permet l'ajout de texte. L'utilisateur pourra
+                choisir un slogan.
+              label: Activer le champ slogan
           update:
             failure: Une erreur est survenue lors de la mise à jour
-            success: Les champs d'inscription ont été mis à jour avec succ§s
+            success: Les champs d'inscription ont été mis à jour avec succès
+      age_ranges:
+        17_to_30: 17 à 30
+        31_to_60: 31 à 60
+        61_or_more: 61 ou plus
+        prefer_not_to_say: Préfère ne pas dire
+        up_to_16: 16 ou moins
+      boolean_fields:
+        ngo:
+          label: Je suis membre d'une organisation non gouvernementale (ONG)
+      errors:
+        select_fields: Le champ "%{field}" n'est pas valide.
+      force_extra_user_fields:
+        redirect_message: Veuillez compléter les informations de votre profil avant
+          de continuer.
       genders:
         female: Femme
         male: Homme
         other: Autre
+        prefer_not_to_say: Préfère ne pas dire
+      insight_age_spans:
+        21_to_30: 21 à 30
+        31_to_40: 31 à 40
+        41_to_50: 41 à 50
+        51_to_60: 51 à 60
+        61_or_more: Plus de 60
+        up_to_20: Moins de 20
       registration_form:
         signup:
           legend: Plus d'information
           underage: Je suis âgé de moins de %{limit} ans et j'accepte d'obtenir une
             autorisation parentale
+      select_fields:
+        participant_type:
+          label: Participez-vous en tant qu'individu ou officiellement au nom d'une
+            organisation?
+      text_fields:
+        motto:
+          label: Quelle est votre devise?
     statutory_representative:
       inform:
         body: |

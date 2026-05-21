@@ -3,7 +3,7 @@ on:
     inputs:
       ruby_version:
         description: 'Ruby Version'
-        default: "3.1.1"
+        default: "3.3.4"
         required: false
         type: string
       test_command:
@@ -13,7 +13,7 @@ on:
       chrome_version:
         description: 'Chrome & Chromedriver version'
         required: false
-        default: "126.0.6478.182"
+        default: "139.0.7258.66"
         type: string
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
     services:
       validator:
         image: ghcr.io/validator/validator:latest
-        ports: ["8888:8888"]
+        ports: [ "8888:8888" ]
       postgres:
         image: postgres:14
         ports: ["5432:5432"]
@@ -41,8 +41,15 @@ jobs:
           --health-retries 5
         env:
           POSTGRES_PASSWORD: postgres
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - uses: ruby/setup-ruby@v1
@@ -59,7 +66,7 @@ jobs:
         name: Install Chrome version ${{inputs.chrome_version}}
         with:
           chromedriver-version: ${{inputs.chrome_version}}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         id: app-cache
         with:
           path: ./spec/decidim_dummy_app/
